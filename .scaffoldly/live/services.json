@@ -1,0 +1,74 @@
+{
+  "auth-sls-rest-api": {
+    "api-id": "mjgcztimde",
+    "api-resource-id": "w9oxsw4xe1",
+    "base-url": "https://sso.saml.to/auth",
+    "role-arn": "arn:aws:iam::580360238192:role/auth-sls-rest-api-live",
+    "service-name": "auth-sls-rest-api",
+    "service-slug": "auth",
+    "topic-arn": "arn:aws:sns:us-east-1:580360238192:live-auth-sls-rest-api",
+    "websocket-api-id": null,
+    "websocket-url": null,
+    "origins": "saml.to"
+  },
+  "config-sls-rest-api": {
+    "api-id": "hdg58jpi58",
+    "api-resource-id": "9m4yskfgs1",
+    "base-url": "https://sso.saml.to/config",
+    "bucket": "live-config-sls-rest-api20230221145456764900000001",
+    "bucket-topic-arn": "arn:aws:sns:us-east-1:580360238192:live-config-sls-rest-api-s3",
+    "role-arn": "arn:aws:iam::580360238192:role/config-sls-rest-api-live",
+    "service-name": "config-sls-rest-api",
+    "service-slug": "config",
+    "topic-arn": "arn:aws:sns:us-east-1:580360238192:live-config-sls-rest-api",
+    "websocket-api-id": null,
+    "websocket-url": null,
+    "origins": "saml.to"
+  },
+  "crm-sls-rest-api": {
+    "api-id": "3oltgpse31",
+    "api-resource-id": "0zvwosai19",
+    "base-url": "https://sso.saml.to/crm",
+    "service-name": "crm-sls-rest-api",
+    "service-slug": "crm",
+    "origins": "saml.to"
+  },
+  "email-sls-rest-api": {
+    "api-id": "knyq2dqi20",
+    "api-resource-id": "a9mno4ty71",
+    "base-url": "https://sso.saml.to/email",
+    "role-arn": "arn:aws:iam::580360238192:role/email-sls-rest-api-live",
+    "service-name": "email-sls-rest-api",
+    "service-slug": "email",
+    "topic-arn": "arn:aws:sns:us-east-1:580360238192:live-email-sls-rest-api",
+    "websocket-api-id": null,
+    "websocket-url": null,
+    "origins": "saml.to"
+  },
+  "github-sls-rest-api": {
+    "api-id": "nvpwp8a6k1",
+    "api-resource-id": "r4osg24s8b",
+    "base-url": "https://sso.saml.to/github",
+    "bucket": "live-github-sls-rest-api20220721125307704900000001",
+    "bucket-topic-arn": "arn:aws:sns:us-east-1:580360238192:live-github-sls-rest-api-s3",
+    "role-arn": "arn:aws:iam::580360238192:role/github-sls-rest-api-live",
+    "service-name": "github-sls-rest-api",
+    "service-slug": "github",
+    "topic-arn": "arn:aws:sns:us-east-1:580360238192:live-github-sls-rest-api",
+    "websocket-api-id": null,
+    "websocket-url": null,
+    "origins": "saml.to"
+  },
+  "waitlist-sls-rest-api": {
+    "api-id": "9mfq3s2xsa",
+    "api-resource-id": "8eau47z2kd",
+    "base-url": "https://sso.saml.to/waitlist",
+    "role-arn": "arn:aws:iam::580360238192:role/waitlist-sls-rest-api-live",
+    "service-name": "waitlist-sls-rest-api",
+    "service-slug": "waitlist",
+    "topic-arn": "arn:aws:sns:us-east-1:580360238192:live-waitlist-sls-rest-api",
+    "websocket-api-id": null,
+    "websocket-url": null,
+    "origins": "saml.to"
+  }
+}

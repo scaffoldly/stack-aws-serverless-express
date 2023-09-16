@@ -1,0 +1,45 @@
+{
+  "name": "Stack",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "remoteUser": "root",
+  "mounts": [],
+  "containerEnv": {
+    "DEBUG": "1",
+    "NODE_ENV": "local",
+    "LOCALSTACK_VOLUME_DIR": "${containerWorkspaceFolder}/.cache",
+    "TF_PLUGIN_CACHE_DIR": "${containerWorkspaceFolder}/.cache",
+    "LAMBDA_DOCKER_NETWORK": "bridge"
+  },
+  "remoteEnv": {},
+  "waitFor": "onCreateCommand",
+  "updateContentCommand": "yarn",
+  "postAttachCommand": {
+    "supervisord": "/usr/bin/supervisord -c /etc/supervisor/supervisord.conf -s"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/terraform:1": {
+      "version": "1.4.6",
+      "tflint": "0.46.1",
+      "terragrunt": "0.46.3"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // "nrwl.angular-console",
+        "esbenp.prettier-vscode",
+        "firsttris.vscode-jest-runner",
+        "dbaeumer.vscode-eslint"
+      ],
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "prettier.prettierPath": "./node_modules/prettier",
+        "editor.formatOnSave": true,
+        "git.autofetch": true
+      }
+    }
+  }
+}

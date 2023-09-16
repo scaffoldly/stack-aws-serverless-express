@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+
+  <title>GitHub JWT Token Generator</title>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-a11y="true"></script>
+
+  <script>
+    function login() {
+      const redirectUrl = new URL(window.location.href)
+      redirectUrl.hash = "success"
+
+      const url = 'api/v1/jwts/github';
+      const data = {
+        clientId: $('#clientId').val(),
+        scope: $('#scope').val() || undefined,
+        redirectUri: redirectUrl.toString(),
+        remember: true,
+      };
+      $('#tokenFormGroup').hide('slow');
+      $('#githubFormGroup').hide('slow');
+      $('#response').show('slow');
+      $('#responseBody').html(`Loading...`);
+      $.ajax({
+        url: url,
+        type: 'PUT',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        dataType: 'json',
+      })
+        .done((response) => {
+          console.log('Success!', JSON.stringify(response));
+          handleResponse(response);
+        })
+        .fail((err) => {
+          console.log('Login Failure', JSON.stringify(err));
+          $('#responseBody').html(JSON.stringify(err.responseJSON, null, 2));
+        });
+    }
+
+    function refresh(token) {
+      $('#response').show('slow');
+      $('#responseBody').html(`Loading...`);
+      const data = {
+        token: token || $('#token').val(),
+      };
+      $.ajax({
+        url: 'api/v1/jwts/refresh',
+        type: 'POST',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        dataType: 'json',
+      })
+        .done((response) => {
+          console.log('Success!', JSON.stringify(response));
+          handleResponse(response)
+        })
+        .fail((err) => {
+          console.log('Refresh Failure', JSON.stringify(err));
+          $('#responseBody').html(JSON.stringify(err.responseJSON, null, 2));
+        });
+    }
+
+    function identity() {
+      $('#responseBody').html(`Loading...`);
+      $.ajax({
+        url: 'api/v1/jwts/github/me',
+        type: 'GET',
+        contentType: 'application/json',
+        headers: {
+          'Authorization': `Bearer ${$('#token').val()}`
+        }
+      })
+        .done((response) => {
+          console.log('Success!', JSON.stringify(response));
+          handleResponse(response)
+        })
+        .fail((err) => {
+          console.log('Refresh Failure', JSON.stringify(err));
+          $('#responseBody').html(JSON.stringify(err.responseJSON, null, 2));
+        });
+    }
+
+    function handleResponse(response) {
+      $('#responseBody').html(JSON.stringify(response, null, 2));
+      if (response.token && response.payload) {
+        $('#redirectFormGroup').hide('slow', () => {
+          $('#token').val(response.token);
+          $('#verifyButton').attr('href', `https://jwt.scaffold.ly/#jwt=${response.token}`);
+          $('#tokenFormGroup').show('slow');
+        });
+      } else if (response.oauthRedirectUri) {
+        $('#redirectButton').attr('href', response.oauthRedirectUri)
+        $('#redirectFormGroup').show('slow');
+      }
+    }
+
+    function copyToken() {
+      navigator.clipboard.writeText($('#token').val()).then(() => {
+        console.log('Copied token!');
+      });
+    }
+
+    $(document).ready(() => {
+      const url = new URL(window.location.href);
+
+      if (url.searchParams.get('jwt')) {
+        $('#githubFormGroup').hide();
+        refresh(url.searchParams.get('jwt'))
+        return;
+      }
+
+      if (url.searchParams.get('email')) {
+        $('#email').val(url.searchParams.get('email'));
+      }
+      $('#redirectUri').val(url.toString())
+      console.log('Ready!');
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <form id="jwt">
+      <div class="row">
+        <div class="col-8 offset-2 pt-5">
+          <h1>GitHub JWT Token Generator</h1>
+          <p>
+            This form is a helper page to do <code>POST</code> requests to
+            <code>api/v1/jwts</code> on <code>auth-sls-rest-api</code> for JWT Token Generation
+          </p>
+          <hr />
+          <div class="form-group" id="githubFormGroup">
+            <label for="clientId">Client ID</label>
+            <input name="clientId" type="text" class="form-control" id="clientId" aria-describedby="clientIdHelp"
+              placeholder="abcdef0123456789ab" />
+            <small id="clientIdHelp" class="form-text text-muted">The client ID on the GitHub Oauth Application</small>
+            <label for="scope" class="pt-3">Scopes</label>
+            <input name="scope" type="text" class="form-control" id="scope" aria-describedby="scopeHelp"
+              placeholder="repo read:org" />
+            <small id="clientIdHelp" class="form-text text-muted">(Optional) Any <a
+                href="https://docs.github.com/en/developers/apps/building-oauth-apps/scopes-for-oauth-apps#available-scopes"
+                target="_blank">additonal scopes</a> beyond
+              <code>user:email</code> (space delimited)</small>
+            <label for="redirectUri" class="pt-3">Redirect URI</label>
+            <input name="redirectUri" type="text" class="form-control" id="redirectUri"
+              aria-describedby="redirectUriHelp" />
+            <small id="redirectUriHelp" class="form-text text-muted">Must match the Redirect URI on the GitHub Oauth
+              Application</small>
+            <div class="form-group pt-3">
+              <span class="btn btn-primary" onclick="login()">GitHub Login</span>
+            </div>
+          </div>
+          <div id="redirectFormGroup" class="form-group" style="display: none">
+            <label for="redirect">Oauth Redirect</label>
+            <div class="form-group pt-3">
+              <a href="#" id="redirectButton" class="form-control btn btn-primary"
+                aria-describedby="redirectHelp">Navigate to
+                <code>oauthRedirectUrl</code></a>
+            </div>
+            <small id="redirectHelp" class="form-text text-muted">Normally, automatic redirection or a popup window to
+              the generated <code>oauthRedirectUrl</code> can happen, however, for demonstative purposes, the response
+              is shown below.
+          </div>
+          <div id="tokenFormGroup" style="display: none">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Bearer</span>
+              </div>
+              <textarea id="token" class="form-control" style="min-height: 125px" aria-label="Bearer Token"
+                readonly></textarea>
+              <div class="input-group-append">
+                <button class="btn btn-light btn-sm" type="button" onclick="copyToken()">
+                  <i class="fas fa-copy"></i>
+                </button>
+              </div>
+            </div>
+            <div class="form-group pt-3">
+              <div class="d-flex flex-row justify-content-between align-items-center">
+                <div>
+                  <code class="btn btn-primary btn-sm" onclick="identity()">
+                    GET v1/jwts/github/me
+                  </code>
+                  <code class="btn btn-primary btn-sm" onclick="refresh()">
+                    POST v1/jwts/refresh
+                  </code>
+                </div>
+                <div>
+                  <a id="verifyButton" href="#" class="btn btn-primary" target="_blank">Verify</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="response" class="pt-3" style="display: none">
+            <div class="d-flex flex-row justify-content-start align-items-center pb-2">
+              <a href="github.html" class="btn btn-dark btn-sm mr-2"><i class="fas fa-arrow-left"></i></a>
+              <h2 class="m-0 p-0">Backend Response</h2>
+            </div>
+            <div class="alert alert-secondary text-wrap mw-100" role="alert">
+              <pre><code id="responseBody"></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+
+</html>

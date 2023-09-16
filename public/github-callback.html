@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en" style="height: 100%;">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <title>GitHub Authentication</title>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+  <script>
+    function showError(message) {
+      $('#spinner').hide()
+      $('#spinnerMessage').html('Oh no!')
+      $('#error').html(message)
+      $('#error').show()
+    }
+
+    $(document).ready(() => {
+      console.log("Ready!")
+      const params = new URLSearchParams(window.location.search);
+
+      const state = params.get('state')
+      const installationId = params.get('installation_id')
+      const code = params.get('code')
+      const setupAction = params.get('setup_action')
+
+      if (params.get('error_description')) {
+        showError(params.get('error_description'))
+        return
+      }
+
+      if (!code) {
+        showError("code is missing in the request")
+        return
+      }
+
+      if (!state && !installationId) {
+        showError("state or installation_id are missing in the request")
+        return
+      }
+
+      const request = {
+        url: `${window.location.origin}/auth/api/v1/jwts/github`,
+        type: 'POST',
+        contentType: 'application/json',
+        dataType: "json",
+        data: JSON.stringify({ code, state: state || installationId }),
+        retries: 5,
+        retryCount: 0,
+      }
+
+      const onDone = (response) => {
+        console.log("Success!");
+        const { token, user } = response
+        if (!token) {
+          showError("Missing token")
+          return;
+        }
+        if (!user) {
+          showError("Missing user")
+          return;
+        }
+        const { redirectUri } = user;
+        if (!redirectUri) {
+          showError("Missing redirect")
+          return;
+        }
+
+        const url = new URL(redirectUri);
+        url.searchParams.set("jwt", token);
+        if (setupAction) {
+          url.searchParams.set("action", setupAction)
+        }
+
+        document.location.href = url.toString();
+      }
+
+      const onFail = (error) => {
+        if (error.status === 404 && request.retries > 0) {
+          request.retries -= 1;
+          request.retryCount += 1;
+          setTimeout(() => $.ajax(request).done(onDone).fail(onFail), request.retryCount * 1000)
+          return;
+        }
+        showError(err.responseText ? JSON.parse(err.responseText).message : "Unknown error")
+      }
+
+      $.ajax(request).done(onDone).fail(onFail)
+    });
+  </script>
+</head>
+
+<body style="height: 100%;">
+  <div class="container d-flex justify-content-center align-items-center h-100">
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <div id="spinner" class="spinner-border" style="width: 5rem; height: 5rem;" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <h1 id="spinnerMessage" class="mt-3">Loading...</h1>
+      <div id="error" class="alert alert-danger text-center" role="alert" style="display: none">Unknown
+        error</div>
+    </div>
+  </div>
+</body>
+
+</html>
