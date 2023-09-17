@@ -2541,7 +2541,7 @@
     traverse "^0.6.6"
     ws "^7.5.3"
 
-"@serverless/utils@^6.13.1", "@serverless/utils@^6.8.2":
+"@serverless/utils@6", "@serverless/utils@^6.13.1", "@serverless/utils@^6.8.2":
   version "6.13.1"
   resolved "https://registry.yarnpkg.com/@serverless/utils/-/utils-6.13.1.tgz#bff40cbe82b4337185ab52b6f57bfe647b037700"
   integrity sha512-yokWzlsIaAd3TWzNgIDz6l8HZmtYZs9caaLuheZ0IiZ/bDWSCLBWn84HKkdWZOmFnYxejyPNJEOwE59mtSR3Ow==
@@ -4232,7 +4232,7 @@ aws-lambda@^1.0.6:
     js-yaml "^3.14.1"
     watchpack "^2.0.0-beta.10"
 
-aws-sdk@*, aws-sdk@^2.1260.0, aws-sdk@^2.1404.0, aws-sdk@^2.756.0, aws-sdk@^2.814.0:
+aws-sdk@*, aws-sdk@^2.1234.0, aws-sdk@^2.1260.0, aws-sdk@^2.1404.0, aws-sdk@^2.1459.0, aws-sdk@^2.756.0, aws-sdk@^2.814.0:
   version "2.1459.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1459.0.tgz#9df2c684dc2da4882eb0f963d89fcfdc1eaa4793"
   integrity sha512-My45PgQYhRTh6fOeZ94ELUoXzza/6gTy0J22aK4iy0DEA+uE5gjr1VthnIwbLYNMeEqn8xwJZuNJqvi/WaUUcQ==
@@ -4479,7 +4479,7 @@ bl@^4.0.3, bl@^4.1.0:
     inherits "^2.0.4"
     readable-stream "^3.4.0"
 
-bluebird@^3.4.7, bluebird@^3.5.4, bluebird@^3.7.2:
+bluebird@3, bluebird@^3.4.7, bluebird@^3.5.4, bluebird@^3.7.2:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
@@ -5581,6 +5581,11 @@ duration@^0.2.2:
   dependencies:
     d "1"
     es5-ext "~0.10.46"
+
+dynamodb-streams-readable@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/dynamodb-streams-readable/-/dynamodb-streams-readable-2.0.1.tgz#beb6d352557bf227ac5b4528725aff58a5f07831"
+  integrity sha512-H0TxPsYxA332cpceubVUXlFsSiKfjPmhu2cAo7u89ifFIJiJgd7lV7X5LO9suRIslpZtCU1lnB6fltnQbantdA==
 
 eastasianwidth@^0.2.0:
   version "0.2.0"
@@ -10592,6 +10597,24 @@ serverless-dotenv-plugin@^6.0.0:
     chalk "^4.1.2"
     dotenv "^16.0.3"
     dotenv-expand "^10.0.0"
+
+serverless-offline-dynamodb-streams@^6.2.3:
+  version "6.2.3"
+  resolved "https://registry.yarnpkg.com/serverless-offline-dynamodb-streams/-/serverless-offline-dynamodb-streams-6.2.3.tgz#bf564c67c5c061395a80d65801e00a36e4895874"
+  integrity sha512-PT+QO+R35TK2CrKZpnyrbHuERfB8DMVCYmLPpYl8BxJFYkBl0n3V/ntnn6f7DuEuEeWayf/asg6GIdV9JNWMRg==
+  dependencies:
+    aws-sdk "^2.1234.0"
+    dynamodb-streams-readable "^2.0.1"
+    lodash "^4.17.21"
+
+serverless-offline-resources@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/serverless-offline-resources/-/serverless-offline-resources-0.1.6.tgz#de1ad5cde302df9d083d56e0d2f3ad002be8902c"
+  integrity sha512-SB7Eiv1++v2VeiSpkl1oN0FrLLY6mNrs9/XHJOxiOxXLunZ7YKDRh6jMbmYNNh0HteRhPSyf1bKM04QUe7yNLw==
+  dependencies:
+    aws-sdk "^2.1459.0"
+    bluebird "^3.7.2"
+    lodash "^4.17.21"
 
 serverless-offline@^12.0.4:
   version "12.0.4"

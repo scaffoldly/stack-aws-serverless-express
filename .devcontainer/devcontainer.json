@@ -39,6 +39,7 @@
         "AmazonWebServices.aws-toolkit-vscode"
       ],
       "settings": {
+        "aws.telemetry": false,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "prettier.prettierPath": "./node_modules/prettier",
         "editor.formatOnSave": true,

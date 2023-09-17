@@ -4,6 +4,7 @@ plugins:
   - serverless-bundle
   - serverless-dotenv-plugin
   - serverless-plugin-resource-tagging
+  - serverless-offline-resources
   - serverless-offline
 
 provider:
@@ -103,8 +104,11 @@ custom:
     noPrependStageInUrl: true
     prefix: ${file(serverless.config.js):service-slug}
 
+  offline-resources:
+    stages:
+      - local
+
   bundle:
-    packager: yarn
     externals:
       - tsoa
     copyFiles:
