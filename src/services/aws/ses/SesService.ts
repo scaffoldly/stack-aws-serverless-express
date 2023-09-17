@@ -4,10 +4,7 @@ import { EmailSendResult, EmailService } from '../../interfaces/EmailService';
 import { templates } from './templates';
 
 export class SesService implements EmailService {
-  constructor(
-    private fromName: string,
-    private fromEmail: string,
-  ) {}
+  constructor(private fromName: string, private fromEmail: string) {}
 
   async sendTotp(email: string, token: string): Promise<EmailSendResult> {
     const ses = await SES();

@@ -28,6 +28,7 @@
     "src/models/interfaces/**/*.ts",
     "src/services/openapi/**/*.ts",
     ".build/**/*",
-    ".webpack/**/*"
+    ".webpack/**/*",
+    "scripts/**/*"
   ]
 }
