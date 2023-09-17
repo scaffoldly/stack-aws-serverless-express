@@ -35,5 +35,6 @@
 
     /* Advanced Options */
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "include": ["src/**/*", "tests/**/*"]
 }

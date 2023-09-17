@@ -5,14 +5,5 @@
 #
 # This file is *safe* to add to source control and will increase the speed of builds
 ---
-- serviceName: config-sls-rest-api
-  version: null
-- serviceName: crm-sls-rest-api
-  version: 1.0.5-1
-- serviceName: email-sls-rest-api
-  version: null
-- serviceName: github-sls-rest-api
-  version: 1.0.94
-- serviceName: waitlist-sls-rest-api
-  version: 1.0.5-0
+[]
 

@@ -22,4 +22,4 @@ export const githubLogin = {
   expires: Joi.number().optional(),
 };
 
-export const githubLoginSchema = Joi.object(githubLogin).label('GithubLogin');
+export const githubLoginSchema = Joi.object(githubLogin).meta({ className: 'GithubLogin' });

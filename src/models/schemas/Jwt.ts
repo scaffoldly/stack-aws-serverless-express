@@ -18,4 +18,4 @@ export const jwt = {
   expires: Joi.number().required(),
 };
 
-export const jwtSchema = Joi.object(jwt).label('Jwt');
+export const jwtSchema = Joi.object(jwt).meta({ className: 'Jwt' });

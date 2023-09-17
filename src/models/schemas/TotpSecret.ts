@@ -13,4 +13,4 @@ export const totpSecret = {
   encryptedSecret: encryptedFieldSchema.required(),
 };
 
-export const totpSecretSchema = Joi.object(totpSecret).label('TotpSecret');
+export const totpSecretSchema = Joi.object(totpSecret).meta({ className: 'TotpSecret' });

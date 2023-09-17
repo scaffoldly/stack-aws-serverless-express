@@ -353,7 +353,7 @@ export class GithubLoginService implements LoginService<GithubJwtRequest, Github
       );
 
       response.installations = installs.reduce((acc, install) => {
-        if (!install.account || !install.account.login) {
+        if (!install.account || !('login' in install.account) || !install.account.login) {
           return acc;
         }
         const item: InstallationResponse = {

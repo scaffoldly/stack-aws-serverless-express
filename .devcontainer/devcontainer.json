@@ -29,16 +29,17 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        // "nrwl.angular-console",
         "esbenp.prettier-vscode",
         "firsttris.vscode-jest-runner",
-        "dbaeumer.vscode-eslint"
+        "dbaeumer.vscode-eslint",
+        "AmazonWebServices.aws-toolkit-vscode"
       ],
       "settings": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "prettier.prettierPath": "./node_modules/prettier",
         "editor.formatOnSave": true,
-        "git.autofetch": true
+        "git.autofetch": true,
+        "typescript.tsdk": "./node_modules/typescript/lib"
       }
     }
   }

@@ -7,7 +7,6 @@ yarn dotenv
 yarn openapi
 
 yarn types
-yarn dynamodb
 
 yarn tsoa
 yarn build
