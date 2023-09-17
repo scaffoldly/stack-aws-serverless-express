@@ -4,7 +4,17 @@ import {
   HttpRequest,
   SERVICE_SLUG,
 } from '@scaffoldly/serverless-util';
-import { Controller, Post, Response, Body, Request, Res, Route, Tags, TsoaResponse } from 'tsoa';
+import {
+  Controller,
+  Post,
+  Response,
+  Body,
+  Request,
+  Res,
+  Route,
+  Tags,
+  TsoaResponse,
+} from '@tsoa/runtime';
 import { EmailLoginRequest, EmailLoginResponse } from '../interfaces/email';
 import { JwtResponse } from '../interfaces/jwt';
 import { EmailLoginService } from '../services/EmailLoginService';

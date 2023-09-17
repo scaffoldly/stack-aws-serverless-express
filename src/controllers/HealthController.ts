@@ -1,4 +1,4 @@
-import { Controller, Get, Route, Tags } from 'tsoa';
+import { Controller, Get, Route, Tags } from '@tsoa/runtime';
 import packageJson from '../../package.json';
 
 export type HealthResponse = {

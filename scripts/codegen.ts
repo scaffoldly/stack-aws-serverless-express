@@ -1,10 +1,10 @@
 import { convertFromDirectory } from 'joi-to-typescript';
-import { generateSpec, generateRoutes } from 'tsoa';
+import { generateSpec, generateRoutes } from '@tsoa/cli';
 import fs from 'fs';
 import packageJson from '../package.json';
 
-const { NODE_ENV } = process.env;
-const envVars = NODE_ENV
+export const { NODE_ENV } = process.env;
+export const envVars = NODE_ENV
   ? JSON.parse(
       fs.readFileSync(fs.openSync(`.scaffoldly/${NODE_ENV}/env-vars.json`, 'r')).toString(),
     )

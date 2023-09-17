@@ -1,5 +1,15 @@
 import { ErrorResponse, HttpRequest, SNS } from '@scaffoldly/serverless-util';
-import { Controller, Post, Response, Body, Route, Tags, Request, Header, Hidden } from 'tsoa';
+import {
+  Controller,
+  Post,
+  Response,
+  Body,
+  Route,
+  Tags,
+  Request,
+  Header,
+  Hidden,
+} from '@tsoa/runtime';
 import { env } from '../env';
 import { Any } from '../interfaces';
 import { GithubMembershipEventV1, GithubTargetMembershipEventV1 } from '../interfaces/github';

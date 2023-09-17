@@ -1,6 +1,6 @@
 import { handleDynamoDBStreamRecord, HttpError } from '@scaffoldly/serverless-util';
 import { DynamoDBStreamEvent } from 'aws-lambda';
-import { Body, Controller, Header, Hidden, Post, Route, Tags } from 'tsoa';
+import { Body, Controller, Header, Hidden, Post, Route, Tags } from '@tsoa/runtime';
 import {
   GithubIdentityEventV1,
   GithubInstallationEventV1,

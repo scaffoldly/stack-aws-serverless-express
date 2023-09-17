@@ -18,7 +18,7 @@ import {
   Security,
   Tags,
   TsoaResponse,
-} from 'tsoa';
+} from '@tsoa/runtime';
 import { JwtResponse, JwksResponse, TokenRequest } from '../interfaces/jwt';
 import { JwtService } from '../services/JwtService';
 

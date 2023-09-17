@@ -20,7 +20,7 @@ import {
   Tags,
   TsoaResponse,
   Query,
-} from 'tsoa';
+} from '@tsoa/runtime';
 import { env } from '../env';
 import {
   GithubJwtRequest,

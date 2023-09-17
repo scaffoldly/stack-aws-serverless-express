@@ -13,12 +13,11 @@
     "serverless": "serverless",
     "dotenv": "dotenv-out -f typescript -e .env -e .scaffoldly/.env -c $NODE_ENV -o src",
     "openapi": "openapi-generator -g axios -i .scaffoldly/$NODE_ENV -o src/services/openapi -r auth-sls-rest-api",
-    "codegen": "ts-node codegen/index.ts",
+    "codegen": "ts-node scripts/codegen.ts",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix && yarn run prettier --write '*/**/*.{js,ts,tsx}'"
   },
   "devDependencies": {
     "@scaffoldly/openapi-generator": "^1.0.26",
-    "@tsoa/cli": "^5.1.1",
     "@types/aws-lambda": "^8.10.77",
     "@types/bcryptjs": "^2.4.2",
     "@types/cookies": "0.7.7",
@@ -54,6 +53,7 @@
     "@octokit/oauth-app": "^6.0.0",
     "@octokit/webhooks": "^12.0.3",
     "@scaffoldly/serverless-util": "^4.0.41",
+    "@tsoa/cli": "^5.1.1",
     "@tsoa/runtime": "^5.0.0",
     "@vendia/serverless-express": "^4.5.2",
     "aws-lambda": "^1.0.6",
