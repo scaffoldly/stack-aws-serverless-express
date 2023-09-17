@@ -1,10 +1,9 @@
 service: ${file(serverless.config.js):service-name}
 
-frameworkVersion: 3.27.0
-variablesResolutionMode: '20210326'
-configValidationMode: off
-disabledDeprecations:
-  - '*'
+# variablesResolutionMode: '20210326'
+# configValidationMode: off
+# disabledDeprecations:
+#   - '*'
 
 plugins:
   - serverless-bundle
@@ -112,7 +111,6 @@ custom:
   bundle:
     packager: yarn
     externals:
-      - aws-xray-sdk-core
       - tsoa
     copyFiles:
       - from: 'public/*'
