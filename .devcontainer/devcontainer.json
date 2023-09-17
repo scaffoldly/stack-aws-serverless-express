@@ -4,6 +4,10 @@
     "dockerfile": "Dockerfile"
   },
   "remoteUser": "root",
+  "hostRequirements": {
+    "cpus": 4,
+    "memory": "16gb"
+  },
   "mounts": [],
   "containerEnv": {
     "DEBUG": "1",
@@ -39,7 +43,8 @@
         "prettier.prettierPath": "./node_modules/prettier",
         "editor.formatOnSave": true,
         "git.autofetch": true,
-        "typescript.tsdk": "./node_modules/typescript/lib"
+        "typescript.tsdk": "./node_modules/typescript/lib",
+        "typescript.tsserver.log": "verbose"
       }
     }
   }
