@@ -51,7 +51,6 @@ functions:
           method: options
       - stream:
           type: dynamodb
-          batchSize: 1
           maximumRecordAgeInSeconds: 600
           arn:
             Fn::GetAtt: [Table, StreamArn]
@@ -100,6 +99,7 @@ resources:
 
 custom:
   serverless-offline:
+    reloadHandler: true
     useChildProcesses: false
     noPrependStageInUrl: true
     prefix: ${file(serverless.config.js):service-slug}

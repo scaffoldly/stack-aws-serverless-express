@@ -124,7 +124,50 @@
     tslib "^2.5.0"
     uuid "^8.3.2"
 
-"@aws-sdk/client-lambda@^3.241.0":
+"@aws-sdk/client-dynamodb-streams@^3.414.0":
+  version "3.414.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/client-dynamodb-streams/-/client-dynamodb-streams-3.414.0.tgz#7b19ecc4f3c8717e3daa723ed5f16f7313f8dc98"
+  integrity sha512-C/TY0PsplF4aG5Iu+Tv9GT6ma6oGz8M/sIhtLkn8r8Eq/dRG9EcdlsCewI6UBhJ5dUz+ICr0zL2rxslkJTn9Vw==
+  dependencies:
+    "@aws-crypto/sha256-browser" "3.0.0"
+    "@aws-crypto/sha256-js" "3.0.0"
+    "@aws-sdk/client-sts" "3.414.0"
+    "@aws-sdk/credential-provider-node" "3.414.0"
+    "@aws-sdk/middleware-host-header" "3.413.0"
+    "@aws-sdk/middleware-logger" "3.413.0"
+    "@aws-sdk/middleware-recursion-detection" "3.413.0"
+    "@aws-sdk/middleware-signing" "3.413.0"
+    "@aws-sdk/middleware-user-agent" "3.413.0"
+    "@aws-sdk/region-config-resolver" "3.413.0"
+    "@aws-sdk/types" "3.413.0"
+    "@aws-sdk/util-endpoints" "3.413.0"
+    "@aws-sdk/util-user-agent-browser" "3.413.0"
+    "@aws-sdk/util-user-agent-node" "3.413.0"
+    "@smithy/config-resolver" "^2.0.8"
+    "@smithy/fetch-http-handler" "^2.1.3"
+    "@smithy/hash-node" "^2.0.7"
+    "@smithy/invalid-dependency" "^2.0.7"
+    "@smithy/middleware-content-length" "^2.0.9"
+    "@smithy/middleware-endpoint" "^2.0.7"
+    "@smithy/middleware-retry" "^2.0.10"
+    "@smithy/middleware-serde" "^2.0.7"
+    "@smithy/middleware-stack" "^2.0.0"
+    "@smithy/node-config-provider" "^2.0.10"
+    "@smithy/node-http-handler" "^2.1.3"
+    "@smithy/protocol-http" "^3.0.3"
+    "@smithy/smithy-client" "^2.1.4"
+    "@smithy/types" "^2.3.1"
+    "@smithy/url-parser" "^2.0.7"
+    "@smithy/util-base64" "^2.0.0"
+    "@smithy/util-body-length-browser" "^2.0.0"
+    "@smithy/util-body-length-node" "^2.1.0"
+    "@smithy/util-defaults-mode-browser" "^2.0.8"
+    "@smithy/util-defaults-mode-node" "^2.0.10"
+    "@smithy/util-retry" "^2.0.0"
+    "@smithy/util-utf8" "^2.0.0"
+    tslib "^2.5.0"
+
+"@aws-sdk/client-lambda@^3.241.0", "@aws-sdk/client-lambda@^3.414.0":
   version "3.414.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-lambda/-/client-lambda-3.414.0.tgz#ec0dc2a1a89ca8ddb5dff14409c1cbf36371ee9d"
   integrity sha512-Nt2ktmFWKlL19NWcaG9fS2cxjiJvGDIp8Irt1NZngIOfmqm4XsY1AcUjUcdZRED/VjdfM0ziHa9Oj4VVVTdYZA==
@@ -2456,10 +2499,10 @@
     uri-js "^4.4.1"
     yargs "^17.2.1"
 
-"@scaffoldly/serverless-util@^4.0.41":
-  version "4.0.42"
-  resolved "https://registry.yarnpkg.com/@scaffoldly/serverless-util/-/serverless-util-4.0.42.tgz#2f2cf22fcac7d20094f0cef1348df1d6ff5d5c42"
-  integrity sha512-Gda9Xt3CLSE7Zw7D608V3Kd/SmFwxPbGo3+xSjKpmG57jVWCf+bqPHKqvuWUZihqOzefnkAcZ0JX5fEzav/2wg==
+"@scaffoldly/serverless-util@^4.0.43":
+  version "4.0.43"
+  resolved "https://registry.yarnpkg.com/@scaffoldly/serverless-util/-/serverless-util-4.0.43.tgz#d9d77df507e04b9bf5d6cc30f2cb67c143eecd28"
+  integrity sha512-otCWQUvb9boeLRkVbvXMnCT4u2rhVFnw6Goq/4jxJ0e4/AEoG62NqZBMcOn1GkCD6jOOidpni5Li6LhOH9IfOw==
   dependencies:
     "@scaffoldly/dynamodb" "^1.3.6"
     "@types/aws-sdk" "^2.7.0"
@@ -3384,6 +3427,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/notp@^2.0.0":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@types/notp/-/notp-2.0.2.tgz#7283f4918b2770555e0f2df72acc9f46ebd41ae9"
+  integrity sha512-JUcVYN9Tmw0AjoAfvjslS4hbv39fPBbZdftBK3b50g5z/DmhLsu6cd0UOEBiQuMwy2FirshF2Gk9gAvfWjshMw==
+  dependencies:
+    "@types/node" "*"
+
 "@types/parse-json@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
@@ -4232,7 +4282,7 @@ aws-lambda@^1.0.6:
     js-yaml "^3.14.1"
     watchpack "^2.0.0-beta.10"
 
-aws-sdk@*, aws-sdk@^2.1234.0, aws-sdk@^2.1260.0, aws-sdk@^2.1404.0, aws-sdk@^2.1459.0, aws-sdk@^2.756.0, aws-sdk@^2.814.0:
+aws-sdk@*, aws-sdk@^2.1260.0, aws-sdk@^2.1404.0, aws-sdk@^2.1459.0, aws-sdk@^2.756.0, aws-sdk@^2.814.0:
   version "2.1459.0"
   resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1459.0.tgz#9df2c684dc2da4882eb0f963d89fcfdc1eaa4793"
   integrity sha512-My45PgQYhRTh6fOeZ94ELUoXzza/6gTy0J22aK4iy0DEA+uE5gjr1VthnIwbLYNMeEqn8xwJZuNJqvi/WaUUcQ==
@@ -5581,11 +5631,6 @@ duration@^0.2.2:
   dependencies:
     d "1"
     es5-ext "~0.10.46"
-
-dynamodb-streams-readable@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/dynamodb-streams-readable/-/dynamodb-streams-readable-2.0.1.tgz#beb6d352557bf227ac5b4528725aff58a5f07831"
-  integrity sha512-H0TxPsYxA332cpceubVUXlFsSiKfjPmhu2cAo7u89ifFIJiJgd7lV7X5LO9suRIslpZtCU1lnB6fltnQbantdA==
 
 eastasianwidth@^0.2.0:
   version "0.2.0"
@@ -9125,11 +9170,12 @@ nice-try@^1.0.4:
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
-node-2fa@2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/node-2fa/-/node-2fa-2.0.2.tgz#d46fecc8fa45c23f74f6ddc087f4a117096fa022"
-  integrity sha512-fg0D8sM42/BEOztQUoaiV2ci775okITm7aGDAGd69a1Tfwkn07MK6h12kOQnA/Ay5viHhoi1xeu3LmXpPUTbbA==
+node-2fa@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/node-2fa/-/node-2fa-2.0.3.tgz#74a5f3c618e803c3b7a9b04c38d36cbf4a5e26d6"
+  integrity sha512-PQldrOhjuoZyoydMvMSctllPN1ZPZ1/NwkEcgYwY9faVqE/OymxR+3awPpbWZxm6acLKqvmNqQmdqTsqYyflFw==
   dependencies:
+    "@types/notp" "^2.0.0"
     notp "^2.0.3"
     thirty-two "1.0.2"
     tslib "^2.1.0"
@@ -10598,20 +10644,13 @@ serverless-dotenv-plugin@^6.0.0:
     dotenv "^16.0.3"
     dotenv-expand "^10.0.0"
 
-serverless-offline-dynamodb-streams@^6.2.3:
-  version "6.2.3"
-  resolved "https://registry.yarnpkg.com/serverless-offline-dynamodb-streams/-/serverless-offline-dynamodb-streams-6.2.3.tgz#bf564c67c5c061395a80d65801e00a36e4895874"
-  integrity sha512-PT+QO+R35TK2CrKZpnyrbHuERfB8DMVCYmLPpYl8BxJFYkBl0n3V/ntnn6f7DuEuEeWayf/asg6GIdV9JNWMRg==
+serverless-offline-resources@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/serverless-offline-resources/-/serverless-offline-resources-0.1.7.tgz#af1bf741bbd9b0fffb29fbc23a2960e3bd7f1d8e"
+  integrity sha512-GqQNbr4GbU+tzYBkDrFaNu1YkHm9x3iXEoXT6q4bdC9ThW11MejROlwtYesw1E9WCriS32/QQ18j14BtNqf3Bg==
   dependencies:
-    aws-sdk "^2.1234.0"
-    dynamodb-streams-readable "^2.0.1"
-    lodash "^4.17.21"
-
-serverless-offline-resources@^0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/serverless-offline-resources/-/serverless-offline-resources-0.1.6.tgz#de1ad5cde302df9d083d56e0d2f3ad002be8902c"
-  integrity sha512-SB7Eiv1++v2VeiSpkl1oN0FrLLY6mNrs9/XHJOxiOxXLunZ7YKDRh6jMbmYNNh0HteRhPSyf1bKM04QUe7yNLw==
-  dependencies:
+    "@aws-sdk/client-dynamodb-streams" "^3.414.0"
+    "@aws-sdk/client-lambda" "^3.414.0"
     aws-sdk "^2.1459.0"
     bluebird "^3.7.2"
     lodash "^4.17.21"
@@ -12108,7 +12147,7 @@ webpack-sources@^3.2.3:
   resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-3.2.3.tgz#2d4daab8451fd4b240cc27055ff6a0c2ccea0cde"
   integrity sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==
 
-webpack@^5.68.0:
+webpack@5, webpack@^5.68.0:
   version "5.88.2"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.88.2.tgz#f62b4b842f1c6ff580f3fcb2ed4f0b579f4c210e"
   integrity sha512-JmcgNZ1iKj+aiR0OvTYtWQqJwq37Pf683dY9bVORwVbUrDhLhdn/PlO2sHsFHPkj7sHNQF3JwaAkp49V+Sq1tQ==

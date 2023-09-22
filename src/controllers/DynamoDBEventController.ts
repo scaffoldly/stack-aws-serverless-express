@@ -43,23 +43,18 @@ export class DynamoDBEventController extends Controller {
       throw new HttpError(403, 'Forbidden');
     }
 
-    // batchSize in serverless.yml is 1, blindly get the first record
-    const [record] = (event as DynamoDBStreamEvent).Records;
+    const { Records: records } = event as DynamoDBStreamEvent;
 
-    let handled;
-
-    // eslint-disable-next-line prefer-const
-    handled = await handleDynamoDBStreamRecord(record, {
-      canHandle: GithubLoginModel.isGithubLogin,
-      onInsert: this.githubLoginService.handleAddOrModify.bind(this.githubLoginService),
-      onModify: this.githubLoginService.handleAddOrModify.bind(this.githubLoginService),
-      onRemove: this.githubLoginService.handleRemove.bind(this.githubLoginService),
-    });
-    if (handled) {
-      return handled;
-    }
-
-    console.warn('Unhandled stream record', record.dynamodb && record.dynamodb.Keys);
+    await Promise.all(
+      records.map(async (record) => {
+        await handleDynamoDBStreamRecord(record, {
+          canHandle: GithubLoginModel.isGithubLogin,
+          onInsert: this.githubLoginService.handleAddOrModify.bind(this.githubLoginService),
+          onModify: this.githubLoginService.handleAddOrModify.bind(this.githubLoginService),
+          onRemove: this.githubLoginService.handleRemove.bind(this.githubLoginService),
+        });
+      }),
+    );
 
     return null;
   }

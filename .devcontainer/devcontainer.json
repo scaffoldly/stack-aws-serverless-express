@@ -8,6 +8,18 @@
     "cpus": 4,
     "memory": "16gb"
   },
+  "forwardPorts": [3000, 4566],
+  "portsAttributes": {
+    "3000": {
+      "label": "serverless-offline"
+    },
+    "4566": {
+      "label": "localstack"
+    }
+  },
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  },
   "mounts": [],
   "containerEnv": {
     "DEBUG": "1",
