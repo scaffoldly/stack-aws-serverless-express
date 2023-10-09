@@ -51,9 +51,12 @@ functions:
           method: options
       - stream:
           type: dynamodb
-          maximumRecordAgeInSeconds: 600
           arn:
             Fn::GetAtt: [Table, StreamArn]
+      - sns:
+          arn: !Ref Topic
+      - sqs:
+          arn: !Ref Queue
 
 resources:
   Resources:
@@ -62,6 +65,16 @@ resources:
       Properties:
         Name: lambda/${opt:stage, "local"}/${self:service}
         SecretString: '${file(serverless.config.js):appSecrets}'
+
+    Topic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: ${opt:stage, "local"}-${self:service}
+
+    Queue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${opt:stage, "local"}-${self:service}
 
     Table:
       Type: AWS::DynamoDB::Table

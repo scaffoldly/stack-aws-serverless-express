@@ -10644,10 +10644,9 @@ serverless-dotenv-plugin@^6.0.0:
     dotenv "^16.0.3"
     dotenv-expand "^10.0.0"
 
-serverless-offline-resources@^0.1.7:
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/serverless-offline-resources/-/serverless-offline-resources-0.1.7.tgz#af1bf741bbd9b0fffb29fbc23a2960e3bd7f1d8e"
-  integrity sha512-GqQNbr4GbU+tzYBkDrFaNu1YkHm9x3iXEoXT6q4bdC9ThW11MejROlwtYesw1E9WCriS32/QQ18j14BtNqf3Bg==
+"serverless-offline-resources@https://github.com/scaffoldly/serverless-offline-resources#d5e135285a503224a0ed2785ff8a3835ca60adeb":
+  version "0.1.8-14"
+  resolved "https://github.com/scaffoldly/serverless-offline-resources#d5e135285a503224a0ed2785ff8a3835ca60adeb"
   dependencies:
     "@aws-sdk/client-dynamodb-streams" "^3.414.0"
     "@aws-sdk/client-lambda" "^3.414.0"
