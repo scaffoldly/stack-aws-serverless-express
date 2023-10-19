@@ -53,10 +53,11 @@ functions:
           type: dynamodb
           arn:
             Fn::GetAtt: [Table, StreamArn]
+      - sqs:
+          arn:
+            Fn::GetAtt: [Queue, Arn]
       - sns:
           arn: !Ref Topic
-      - sqs:
-          arn: !Ref Queue
 
 resources:
   Resources:

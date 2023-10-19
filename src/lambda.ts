@@ -8,5 +8,7 @@ exports.handler = configure({
   app,
   eventSourceRoutes: {
     AWS_DYNAMODB: '/events/dynamodb',
+    AWS_SQS: '/events/sqs',
+    AWS_SNS: '/events/sns',
   },
 });
