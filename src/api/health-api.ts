@@ -1,16 +1,10 @@
 import { Controller, Get, Route, Tags } from '@tsoa/runtime';
 import packageJson from '../../package.json';
+import { HealthResponse } from './responses/responses';
 
-export type HealthResponse = {
-  name: string;
-  healty: boolean;
-  now: Date;
-  version: string;
-};
-
-@Route('/api/health')
+@Route('/health')
 @Tags('Health')
-export class HealthController extends Controller {
+export class HealthApi extends Controller {
   @Get()
   public async get(): Promise<HealthResponse> {
     return {

@@ -30,7 +30,7 @@ export const envVars = NODE_ENV
       description: `To generate a JWT token, go to the <a href="${envVars['base-url']}/jwt.html" target="_blank">JWT Token Generator</a>`,
       entryFile: 'src/app.ts',
       noImplicitAdditionalProperties: 'throw-on-extras',
-      controllerPathGlobs: ['src/**/*Controller*.ts'],
+      controllerPathGlobs: ['src/api/*-api.ts'],
       outputDirectory: 'src',
       specVersion: 3,
       securityDefinitions: {
@@ -48,9 +48,9 @@ export const envVars = NODE_ENV
     await generateRoutes({
       entryFile: 'src/app.ts',
       noImplicitAdditionalProperties: 'throw-on-extras',
-      controllerPathGlobs: ['src/**/*Controller*.ts'],
+      controllerPathGlobs: ['src/api/*-api.ts'],
       routesDir: 'src',
-      authenticationModule: 'src/auth.ts',
+      // authenticationModule: 'src/auth.ts',
       noWriteIfUnchanged: true,
     });
   } catch (e: any) {
