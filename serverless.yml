@@ -23,6 +23,7 @@ provider:
   environment:
     DEFAULT_QUEUE_URL: { Ref: DefaultQueue }
     DEFAULT_TABLE_NAME: { Ref: DefaultTable }
+    DEFAULT_TOPIC_ARN: { Ref: DefaultTopic }
     API_GATEWAY_DOMAIN: ${file(serverless.config.js):api-gateway-domain}
     STAGE_DOMAIN: ${file(serverless.config.js):stage-domain}
     SERVICE_NAME: ${self:service}

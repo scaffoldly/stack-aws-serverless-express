@@ -1,55 +1,32 @@
-import {
-  corsHandler,
-  CorsOptions,
-  createApp,
-  errorHandler,
-  registerDocs,
-  registerVersion,
-} from '@scaffoldly/serverless-util';
 import express from 'express';
 import { readFileSync } from 'fs';
 import packageJson from '../package.json';
 import { RegisterRoutes } from './routes';
-
+import morganBody from 'morgan-body';
 import swaggerJson from './swagger.json';
+import { errorHandler } from './errors';
+import { corsHandler } from './cors';
 
-const app = createApp({ logHeaders: true });
+const app = express();
+app.disable('x-powered-by');
+app.use(express.json({ limit: 5242880 }));
 
-const corsOptions: CorsOptions = {};
+morganBody(app, {
+  noColors: true,
+  immediateReqLog: true,
+  prettify: true,
+  logAllReqHeader: true,
+  logRequestBody: false,
+});
 
-corsOptions.withCredentials = true;
-
-app.use(corsHandler(corsOptions));
+app.use(corsHandler({ withCredentials: true }));
+app.use(errorHandler(packageJson.version));
 
 RegisterRoutes(app);
 
-app.use(errorHandler(packageJson.version));
-
-registerDocs(app, swaggerJson);
-registerVersion(app, packageJson.version);
-
-app.get('/jwt.html', (_req: express.Request, res: express.Response) => {
-  const file = readFileSync('./public/jwt.html');
-  res.type('html');
-  res.send(file);
-});
-
-app.get('/github.html', (_req: express.Request, res: express.Response) => {
-  const file = readFileSync('./public/github.html');
-  res.type('html');
-  res.send(file);
-});
-
-app.get('/callback/github', (_req: express.Request, res: express.Response) => {
-  const file = readFileSync('./public/github-callback.html');
-  res.type('html');
-  res.send(file);
-});
-
-app.get('/setup/github', (_req: express.Request, res: express.Response) => {
-  const file = readFileSync('./public/github-setup.html');
-  res.type('html');
-  res.send(file);
+app.get('/openapi.json', (_req: express.Request, res: express.Response) => {
+  res.type('json');
+  res.send(JSON.stringify(swaggerJson));
 });
 
 app.get('/swagger.html', (_req: express.Request, res: express.Response) => {

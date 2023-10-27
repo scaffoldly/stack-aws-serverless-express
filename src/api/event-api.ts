@@ -2,20 +2,28 @@ import { HttpError } from '@scaffoldly/serverless-util';
 import { DynamoDBStreamEvent, SNSEvent, SQSEvent } from 'aws-lambda';
 import { Body, Controller, Header, Hidden, Post, Route, Tags } from '@tsoa/runtime';
 import { BaseMessage, FailedMessage, WebhookMessage } from './internal/messages';
-import { WebhookMessagesTable } from '../db/webhook-messages';
+import { BoardMessageTable } from '../db/board-message';
 import { DynamoDBExceptionName } from 'ddb-table';
 import { DynamoDBServiceException } from '@aws-sdk/client-dynamodb';
 import { preventOverwrite } from '../db/base';
+import { UserIdentityTable } from '../db/user-identity';
+import { SnsService } from '../services/aws/SnsService';
 
 @Route('/event')
 @Tags('Events')
 @Hidden()
 export class EventApi extends Controller {
-  webhookMessagesTable: WebhookMessagesTable;
+  boardMessageTable: BoardMessageTable;
+
+  userIdentityTable: UserIdentityTable;
+
+  snsService: SnsService;
 
   constructor() {
     super();
-    this.webhookMessagesTable = new WebhookMessagesTable();
+    this.boardMessageTable = new BoardMessageTable();
+    this.userIdentityTable = new UserIdentityTable();
+    this.snsService = new SnsService();
   }
 
   @Post('/dynamodb')
@@ -26,7 +34,30 @@ export class EventApi extends Controller {
 
     const event = body as DynamoDBStreamEvent;
 
-    console.log('DynamoDB Records: ', event.Records);
+    // There could be any types of updates from the stream
+    // Iterate over each record and handle it appropriately
+    event.Records.reduce(async (accP, record) => {
+      const acc = await accP;
+
+      const { eventName } = record!;
+      const { NewImage } = record.dynamodb!;
+
+      const userIdentity = this.userIdentityTable.isRecord(NewImage);
+      if (eventName === 'INSERT' && userIdentity && userIdentity.email) {
+        // A new user! Subscribe them to updates
+        await this.snsService.subscribe(process.env.DEFAULT_TOPIC_ARN!, userIdentity.email);
+      }
+
+      const boardMessage = this.boardMessageTable.isRecord(NewImage);
+      if (eventName === 'INSERT' && boardMessage) {
+        await this.snsService.notifyAll(process.env.DEFAULT_TOPIC_ARN!, {
+          subject: `[${process.env.SERVICE_NAME}] New message from ${boardMessage.sender}`,
+          message: boardMessage.message!,
+        });
+      }
+
+      return acc;
+    }, Promise.resolve());
   }
 
   @Post('/sqs')
@@ -51,12 +82,12 @@ export class EventApi extends Controller {
 
           // In this case, we're going to save it to the DynamoDB Table
           // And have it auto-delete from the table in ~5 minute to demonstrate DynamoDB expiry
-          const { Attributes } = await this.webhookMessagesTable
+          const { Attributes } = await this.boardMessageTable
             .update(
-              this.webhookMessagesTable.hashKey(message.queueUrl),
-              this.webhookMessagesTable.rangeKey(message.timestamp.toString()),
+              this.boardMessageTable.hashKey(message.queueUrl),
+              this.boardMessageTable.rangeKey(message.timestamp.toString()),
             )
-            .set('message', webhookMessage.event.message)
+            .set('message', webhookMessage.event.payload.message)
             .set('expires', webhookMessage.timestamp + 3000)
             .return('ALL_NEW')
             .exec(preventOverwrite());

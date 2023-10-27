@@ -5,8 +5,6 @@ export class SqsService {
   private client: SQSClient;
 
   constructor() {
-    // No need to specify region or credentials
-    // It's all provided by the execution role
     this.client = new SQSClient();
   }
 

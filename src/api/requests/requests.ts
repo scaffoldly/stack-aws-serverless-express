@@ -1,3 +1,12 @@
+export type LoginRequest = {
+  email: string;
+  remember?: boolean;
+};
+
+export type MessageRequest = {
+  message: string;
+};
+
 export interface BaseWebhook {
   type: string;
   version: number;
@@ -6,5 +15,5 @@ export interface BaseWebhook {
 export type ExampleWebhook = BaseWebhook & {
   type: 'ExampleWebhook';
   version: 1;
-  message?: string;
+  payload: MessageRequest;
 };

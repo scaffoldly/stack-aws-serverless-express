@@ -1,8 +1,9 @@
 import Table from 'ddb-table';
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { unmarshall } from '@aws-sdk/util-dynamodb';
 
-export const SEPARATOR = '_';
+export const KEY_SEPARATOR = '_';
 
 export interface BaseSchema {
   hashKey: string;
@@ -44,9 +45,27 @@ export abstract class BaseTable<
     };
   }
 
+  public isRecord(record?: Record<string, any> | { [key: string]: any }): T | undefined {
+    if (!record || !('hashKey' in record) || !('rangeKey' in record)) {
+      return undefined;
+    }
+
+    const unmarshalled = unmarshall(record);
+    if (
+      typeof unmarshalled.hashKey !== 'string' ||
+      typeof unmarshalled.rangeKey !== 'string' ||
+      !this.hashKey(unmarshalled.hashKey, true) ||
+      !this.rangeKey(unmarshalled.rangeKey, true)
+    ) {
+      return undefined;
+    }
+
+    return unmarshalled as T;
+  }
+
   public hashKey(value: string, check = false): string {
     if (!check) {
-      return `${this.hashKeyPrefix}${SEPARATOR}${value}`;
+      return `${this.hashKeyPrefix}${KEY_SEPARATOR}${value}`;
     }
     if (!value.startsWith(this.hashKeyPrefix)) {
       return ''; // Empty string for truthy check
@@ -56,7 +75,7 @@ export abstract class BaseTable<
 
   public rangeKey(value: string, check = false): string {
     if (!check) {
-      return `${this.rangeKeyPrefix}${SEPARATOR}${value}`;
+      return `${this.rangeKeyPrefix}${KEY_SEPARATOR}${value}`;
     }
     if (!value.startsWith(this.rangeKeyPrefix)) {
       return ''; // Empty string for truthy check
