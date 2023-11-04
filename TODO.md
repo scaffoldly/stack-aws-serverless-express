@@ -1,7 +1,9 @@
 # TODO List
 
-- test out JWKS creation
-- repositiory name as service slug
+- pull org name for aud
+- figure out paths and how to customize in prep for frontend
+- try out new devcontainer build
+- repositiory name as service slug?
 - metadata like the BASE_URL from Codespaces/Local/LambdaEnv
 - filters on topics and queues
 - can we get subscribe events and unsubscribe events?
@@ -19,6 +21,7 @@
 - Node 18
 - publish openapi
 - handle errors in offline resources when localstack is restarted
+- live reloading of spec and routes
 
 // const existing = await this.userIdentityTable
 // .query()

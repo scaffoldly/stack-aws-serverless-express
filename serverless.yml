@@ -24,10 +24,10 @@ provider:
     DEFAULT_QUEUE_URL: { Ref: DefaultQueue }
     DEFAULT_TABLE_NAME: { Ref: DefaultTable }
     DEFAULT_TOPIC_ARN: { Ref: DefaultTopic }
+    SERVICE_SLUG: ${file(serverless.config.js):service-slug}
     API_GATEWAY_DOMAIN: ${file(serverless.config.js):api-gateway-domain}
     STAGE_DOMAIN: ${file(serverless.config.js):stage-domain}
     SERVICE_NAME: ${self:service}
-    SERVICE_SLUG: ${file(serverless.config.js):service-slug}
     STAGE: ${opt:stage, "local"}
   stackTags:
     ServiceName: ${self:service}
@@ -94,6 +94,8 @@ resources:
             AttributeType: S
           - AttributeName: rangeKey
             AttributeType: S
+          - AttributeName: uuid
+            AttributeType: S
         GlobalSecondaryIndexes:
           - IndexName: rangeKey-hashKey-index
             KeySchema:
@@ -101,6 +103,12 @@ resources:
                 KeyType: HASH
               - AttributeName: hashKey
                 KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+          - IndexName: uuid-index
+            KeySchema:
+              - AttributeName: uuid
+                KeyType: HASH
             Projection:
               ProjectionType: ALL
         StreamSpecification:

@@ -2,16 +2,28 @@ import Table from 'ddb-table';
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { unmarshall } from '@aws-sdk/util-dynamodb';
+import bs58 from 'bs58';
 
-export const KEY_SEPARATOR = '_';
+export const KEY_SEPARATOR = '!';
 
 export interface BaseSchema {
   hashKey: string;
   rangeKey: string;
+  uuid?: string;
   expires?: number;
 }
 
 export type KeyPrefix = string;
+
+export const encodeKeys = (schema: BaseSchema): string => {
+  return bs58.encode(
+    Buffer.from(JSON.stringify({ hashKey: schema.hashKey, rangeKey: schema.rangeKey }), 'utf8'),
+  );
+};
+
+export const decodeKeys = (encoded: string): BaseSchema => {
+  return JSON.parse(Buffer.from(bs58.decode(encoded)).toString('utf8'));
+};
 
 export const preventOverwrite = () => {
   return {
@@ -23,7 +35,7 @@ export abstract class BaseTable<
   T extends BaseSchema,
   HashKeyPrefix extends KeyPrefix,
   RangeKeyPrefix extends KeyPrefix,
-> extends Table<T, 'hashKey', 'rangeKey'> {
+> extends Table<T, 'hashKey' | 'uuid', 'rangeKey'> {
   constructor(
     tableName: string,
     private hashKeyPrefix: HashKeyPrefix,

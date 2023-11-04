@@ -50,7 +50,7 @@ export const envVars = NODE_ENV
       noImplicitAdditionalProperties: 'throw-on-extras',
       controllerPathGlobs: ['src/api/api.ts', 'src/api/*-api.ts'],
       routesDir: 'src',
-      // authenticationModule: 'src/auth.ts',
+      authenticationModule: 'src/auth.ts',
       noWriteIfUnchanged: true,
     });
   } catch (e: any) {

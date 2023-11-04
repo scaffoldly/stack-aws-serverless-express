@@ -68,6 +68,7 @@
     "aws-lambda": "^1.0.6",
     "axios": "^0.21.1",
     "bluebird": "3",
+    "bs58": "^5.0.0",
     "cookies": "0.8.0",
     "cors": "^2.8.5",
     "ddb-table": "^2.1.1",

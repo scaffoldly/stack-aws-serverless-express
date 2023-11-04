@@ -1,7 +1,9 @@
 import {
+  CreateSecretCommand,
   GetSecretValueCommand,
   PutSecretValueCommand,
   SecretsManagerClient,
+  SecretsManagerServiceException,
 } from '@aws-sdk/client-secrets-manager';
 
 // Cache in the global scope to speed up subsequent invocations
@@ -53,22 +55,29 @@ export class SecretService {
   }
 
   public async setSecret(store: string, key: string, value: string): Promise<string | null> {
+    const entry = { [`${key}`]: value };
+
     try {
       const { SecretString = '{}' } = await this.client.send(
         new GetSecretValueCommand({ SecretId: store }),
       );
 
-      const secretObject = JSON.parse(SecretString) as { [key: string]: string };
-
-      secretObject[key] = value;
+      const secretObject = { ...(JSON.parse(SecretString) as { [key: string]: string }), ...entry };
 
       await this.client.send(
         new PutSecretValueCommand({ SecretId: store, SecretString: JSON.stringify(secretObject) }),
       );
     } catch (err) {
-      // If secret store does not exist, create?
-      return null;
+      if ((err as SecretsManagerServiceException)?.name !== 'ResourceNotFoundException') {
+        throw err;
+      }
+
+      await this.client.send(
+        new CreateSecretCommand({ Name: store, SecretString: JSON.stringify(entry) }),
+      );
     }
+
+    delete secretCache[store];
 
     return this.getSecret(store, key);
   }

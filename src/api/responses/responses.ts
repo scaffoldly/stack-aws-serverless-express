@@ -13,18 +13,14 @@ export type JwksResponse = {
   keys: Jwk[];
 };
 
-export type DefaultResponse = {
+export type HealthResponse = {
   name: string;
   version: string;
   now: Date;
-  openApi: {
-    swaggerUrl: string;
-    openapiUrl: string;
-  };
 };
 
 export type LoginResponse = {
-  id: string;
+  uuid: string;
   email: string;
   token?: string;
 };

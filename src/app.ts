@@ -6,10 +6,17 @@ import morganBody from 'morgan-body';
 import swaggerJson from './swagger.json';
 import { errorHandler } from './errors';
 import { corsHandler } from './cors';
+import { requestEnricher, refreshHandler, ACCESS_COOKIE, REFRESH_COOKIE } from './auth';
+import Cookies from 'cookies';
 
 const app = express();
 app.disable('x-powered-by');
 app.use(express.json({ limit: 5242880 }));
+
+app.use(corsHandler({ withCredentials: true }));
+app.use(Cookies.express([ACCESS_COOKIE, REFRESH_COOKIE]));
+app.use(requestEnricher());
+app.use(refreshHandler());
 
 morganBody(app, {
   noColors: true,
@@ -19,10 +26,9 @@ morganBody(app, {
   logRequestBody: false,
 });
 
-app.use(corsHandler({ withCredentials: true }));
-app.use(errorHandler(packageJson.version));
-
 RegisterRoutes(app);
+
+app.use(errorHandler(packageJson.version));
 
 app.get('/openapi.json', (_req: express.Request, res: express.Response) => {
   res.type('json');
