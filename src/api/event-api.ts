@@ -1,11 +1,7 @@
 import { HttpError } from '@scaffoldly/serverless-util';
 import { DynamoDBStreamEvent, SNSEvent, SQSEvent } from 'aws-lambda';
 import { Body, Controller, Header, Hidden, Post, Route, Tags } from '@tsoa/runtime';
-import { BaseMessage, FailedMessage, WebhookMessage } from './internal/messages';
 import { BoardMessageTable } from '../db/board-message';
-import { DynamoDBExceptionName } from 'ddb-table';
-import { DynamoDBServiceException } from '@aws-sdk/client-dynamodb';
-import { preventOverwrite } from '../db/base';
 import { UserIdentityTable } from '../db/user-identity';
 import { SnsService } from '../services/aws/SnsService';
 
@@ -44,7 +40,7 @@ export class EventApi extends Controller {
 
       const userIdentity = this.userIdentityTable.isRecord(NewImage);
       if (eventName === 'INSERT' && userIdentity && userIdentity.email) {
-        // A new user! Subscribe them to updates
+        // Woo! A new user! Subscribe them to updates
         await this.snsService.subscribe(process.env.DEFAULT_TOPIC_ARN!, userIdentity.email);
       }
 
@@ -68,45 +64,7 @@ export class EventApi extends Controller {
 
     const event = body as SQSEvent;
 
-    // There could be any types of messages in the queue
-    // Iterate over each message and handle it appropriately
-    event.Records.reduce(async (accP, record) => {
-      const acc = await accP;
-
-      try {
-        const message = JSON.parse(record.body) as BaseMessage;
-        if (message.type === 'WebhookMessage' && message.version === 1) {
-          const webhookMessage = message as WebhookMessage;
-
-          // Example handling a webhook message.
-
-          // In this case, we're going to save it to the DynamoDB Table
-          // And have it auto-delete from the table in ~5 minute to demonstrate DynamoDB expiry
-          const { Attributes } = await this.boardMessageTable
-            .update(
-              this.boardMessageTable.hashKey(message.queueUrl),
-              this.boardMessageTable.rangeKey(message.timestamp.toString()),
-            )
-            .set('message', webhookMessage.event.payload.message)
-            .set('expires', webhookMessage.timestamp + 3000)
-            .return('ALL_NEW')
-            .exec(preventOverwrite());
-
-          console.log('Inserted webhook message into DynamoDB', Attributes);
-        }
-      } catch (err) {
-        if (
-          (err as DynamoDBServiceException)?.name ===
-          DynamoDBExceptionName.ConditionalCheckFailedException
-        ) {
-          // There was an error so return that it failed so it can go to the DLQ and/or be retried.
-          console.warn('Duplicate message inserted', err);
-          acc.push({ something: 'something' });
-        }
-      }
-
-      return acc;
-    }, Promise.resolve([] as FailedMessage[]));
+    console.log('SQS Records: ', event.Records);
   }
 
   @Post('/sns')

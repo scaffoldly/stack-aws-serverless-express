@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Get,
   Route,
   Tags,
   Response,
@@ -12,7 +11,7 @@ import {
   NoSecurity,
   Security,
 } from '@tsoa/runtime';
-import { JwksResponse, LoginResponse } from './responses/responses';
+import { LoginResponse } from './responses/responses';
 import { LoginRequest } from './requests/requests';
 import { UserIdentityTable } from '../db/user-identity';
 import { DynamoDBServiceException } from '@aws-sdk/client-dynamodb';
@@ -34,16 +33,6 @@ export class AuthApi extends Controller {
     super();
     this.userIdentityTable = new UserIdentityTable();
     this.jwtService = new JwtService();
-  }
-
-  @Get('/login')
-  @NoSecurity()
-  public async jwks(): Promise<JwksResponse> {
-    const keys = await this.jwtService.getPublicKeys();
-
-    return {
-      keys,
-    };
   }
 
   @Post('/login')

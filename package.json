@@ -8,7 +8,7 @@
   "scripts": {
     "prepare": "yarn dotenv && yarn openapi && yarn codegen && yarn build",
     "build": "tsc",
-    "start": "serverless offline",
+    "start": "yarn codegen && serverless offline",
     "deploy": "serverless deploy",
     "serverless": "serverless",
     "dotenv": "dotenv-out -f typescript -e .env -e .scaffoldly/.env -c $NODE_ENV -o src",

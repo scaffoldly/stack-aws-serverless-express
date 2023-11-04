@@ -12,7 +12,6 @@ import Cookies from 'cookies';
 const app = express();
 app.disable('x-powered-by');
 app.use(express.json({ limit: 5242880 }));
-
 app.use(corsHandler({ withCredentials: true }));
 app.use(Cookies.express([ACCESS_COOKIE, REFRESH_COOKIE]));
 app.use(requestEnricher());
@@ -27,7 +26,6 @@ morganBody(app, {
 });
 
 RegisterRoutes(app);
-
 app.use(errorHandler(packageJson.version));
 
 app.get('/openapi.json', (_req: express.Request, res: express.Response) => {
@@ -39,6 +37,12 @@ app.get('/swagger.html', (_req: express.Request, res: express.Response) => {
   const file = readFileSync('./public/swagger.html');
   res.type('html');
   res.send(file);
+});
+
+app.get('*', (req: express.Request, res: express.Response) => {
+  res.type(req.headers['content-type'] || 'json');
+  res.status(404);
+  res.send('');
 });
 
 export default app;
