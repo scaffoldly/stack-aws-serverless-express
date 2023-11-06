@@ -6,12 +6,15 @@ import bs58 from 'bs58';
 
 export const KEY_SEPARATOR = '!';
 
-export interface BaseSchema {
+export type Keys = {
   hashKey: string;
   rangeKey: string;
+};
+
+export type BaseSchema = Keys & {
   uuid?: string;
   expires?: number;
-}
+};
 
 export type KeyPrefix = string;
 

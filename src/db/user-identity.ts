@@ -1,6 +1,7 @@
 import { BaseSchema, BaseTable } from './base';
 
 export type UserIdentitySchema = BaseSchema & {
+  fullName?: string;
   email?: string | null;
 };
 

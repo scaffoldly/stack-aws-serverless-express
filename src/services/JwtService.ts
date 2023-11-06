@@ -5,7 +5,6 @@ import { UserIdentitySchema } from '../db/user-identity';
 import { v1 as uuid } from 'uuid';
 import { SecretService } from './aws/SecretService';
 import { ACCESS_COOKIE, REFRESH_COOKIE } from '../auth';
-import { encodeKeys } from '../db/base';
 
 export type JwkStore = 'current' | 'next';
 
@@ -72,7 +71,7 @@ export class JwtService {
 
     const payload: JwtPayload = {
       aud: process.env.SERVICE_NAME!,
-      sub: encodeKeys(userIdentity),
+      sub: userIdentity.uuid!,
       iat,
       exp: iat + 3600,
       iss: issuer,

@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 import { JwtPayload, JwtService } from './services/JwtService';
 import { HttpError } from './api/internal/errors';
 import { UserIdentitySchema, UserIdentityTable } from './db/user-identity';
-import { decodeKeys } from './db/base';
 import Cookies from 'cookies';
 
 export type UserIdentity = UserIdentitySchema & {
@@ -99,15 +98,14 @@ export async function expressAuthentication(
   }
 
   if (!userIdentity) {
-    const { hashKey, rangeKey } = decodeKeys(sub);
+    const result = await userIdentityTable
+      .query()
+      .keyCondition((cn) => cn.eq('uuid', sub))
+      .exec({ IndexName: 'uuid-index' });
 
-    const existing = await userIdentityTable.get(hashKey, rangeKey).exec();
-
-    if (!existing || !existing.Item) {
-      throw new HttpError(401, 'Unauthorized');
+    if (result.Count && result.Items && result.Items.length === 1) {
+      userIdentity = result.Items[0];
     }
-
-    userIdentity = existing.Item;
   }
 
   if (!userIdentity) {
@@ -185,16 +183,17 @@ export function refreshHandler() {
       return;
     }
 
-    const { hashKey, rangeKey } = decodeKeys(sub);
+    const result = await userIdentityTable
+      .query()
+      .keyCondition((cn) => cn.eq('uuid', sub))
+      .exec({ IndexName: 'uuid-index' });
 
-    const existing = await userIdentityTable.get(hashKey, rangeKey).exec();
-
-    if (!existing || !existing.Item) {
+    if (!result.Count || !result.Items || result.Items.length !== 1) {
       next();
       return;
     }
 
-    const userIdentity = existing.Item;
+    const userIdentity = result.Items[0];
 
     const { newToken, newRefreshToken, newSetCookies } = await generateJwt(
       userIdentity,

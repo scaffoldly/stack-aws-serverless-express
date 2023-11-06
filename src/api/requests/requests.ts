@@ -3,6 +3,11 @@ export type LoginRequest = {
   remember?: boolean;
 };
 
+export type UpdateIdentityRequest = {
+  email?: string;
+  name?: string;
+};
+
 export type MessageRequest = {
   message: string;
 };
