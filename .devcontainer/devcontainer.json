@@ -30,10 +30,10 @@
   "remoteEnv": {},
   "waitFor": "onCreateCommand",
   "updateContentCommand": "yarn",
-  // "postAttachCommand": {
-  //   "setupPorts": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME && exit",
-  //   "startLocalstack": "/usr/bin/supervisord -c /etc/supervisor/supervisord.conf -s && exit"
-  // },
+  "postAttachCommand": {
+    "setupPorts": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME && exit",
+    "startLocalstack": "/usr/bin/supervisord -c /etc/supervisor/supervisord.conf -s && exit"
+  },
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
     "ghcr.io/devcontainers/features/docker-in-docker:2": {}

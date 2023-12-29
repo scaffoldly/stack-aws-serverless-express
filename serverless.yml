@@ -11,8 +11,7 @@ provider:
   runtime: nodejs18.x
   deploymentMethod: direct
   iam:
-    deploymentRole: arn:${env:AWS_PARTITION, ""}:iam::${env:AWS_ACCOUNT_ID,
-      ""}:role/${self:service}-cloudformation
+    deploymentRole: arn:${env:AWS_PARTITION, ""}:iam::${env:AWS_ACCOUNT_ID, ""}:role/${self:service}-cloudformation
   stage: ${opt:stage, "local"}
   logRetentionInDays: 1
   apiGateway:
@@ -36,8 +35,7 @@ provider:
 
 functions:
   lambda-handler:
-    role: arn:${env:AWS_PARTITION, ""}:iam::${env:AWS_ACCOUNT_ID,
-      ""}:role/${self:service}-${opt:stage, "local"}
+    role: arn:${env:AWS_PARTITION, ""}:iam::${env:AWS_ACCOUNT_ID, ""}:role/${self:service}-${opt:stage, "local"}
     handler: src/lambda.handler
     timeout: 30
     events:
@@ -130,13 +128,7 @@ custom:
     noPrependStageInUrl: true
     prefix: ${file(.serverless/config.js):service-slug}
 
-  offline-resources:
-    stages:
-      - local
-
   bundle:
-    # externals:
-    #   - tsoa
     copyFiles:
       - from: 'public/*'
         to: './'

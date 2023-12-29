@@ -1,25 +1,17 @@
 import { DynamoDBStreamEvent, SNSEvent, SQSEvent } from 'aws-lambda';
 import { Body, Controller, Header, Hidden, Post, Route, Tags } from 'tsoa';
-import { BoardMessageTable } from '../db/board-message';
 import { UserIdentityTable } from '../db/user-identity';
-import { SnsService } from '../services/aws/SnsService';
 import { HttpError } from './internal/errors';
 
 @Route('/event')
 @Tags('Events')
 @Hidden()
 export class EventApi extends Controller {
-  boardMessageTable: BoardMessageTable;
-
   userIdentityTable: UserIdentityTable;
-
-  snsService: SnsService;
 
   constructor() {
     super();
-    this.boardMessageTable = new BoardMessageTable();
     this.userIdentityTable = new UserIdentityTable();
-    this.snsService = new SnsService();
   }
 
   @Post('/dynamodb')
@@ -35,7 +27,7 @@ export class EventApi extends Controller {
 
     // There could be any types of updates from the stream
     // Iterate over each record and handle it appropriately
-    event.Records.reduce(async (accP, record) => {
+    await event.Records.reduce(async (accP, record) => {
       const acc = await accP;
 
       const { eventName } = record!;
@@ -43,19 +35,7 @@ export class EventApi extends Controller {
 
       const userIdentity = this.userIdentityTable.isRecord(NewImage);
       if (eventName === 'INSERT' && userIdentity && userIdentity.email) {
-        // Woo! A new user! Subscribe them to updates
-        await this.snsService.subscribe(
-          process.env.DEFAULT_TOPIC_ARN!,
-          userIdentity.email,
-        );
-      }
-
-      const boardMessage = this.boardMessageTable.isRecord(NewImage);
-      if (eventName === 'INSERT' && boardMessage) {
-        await this.snsService.notifyAll(process.env.DEFAULT_TOPIC_ARN!, {
-          subject: `[${process.env.SERVICE_NAME}] New message from ${boardMessage.sender}`,
-          message: boardMessage.message!,
-        });
+        console.log(`A new user signed up! ${userIdentity.email}`);
       }
 
       return acc;

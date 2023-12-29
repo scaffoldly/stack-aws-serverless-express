@@ -13201,10 +13201,10 @@ serverless-dotenv-plugin@^6.0.0:
     dotenv "^16.0.3"
     dotenv-expand "^10.0.0"
 
-serverless-offline-resources@^0.1.14:
-  version "0.1.14"
-  resolved "https://registry.yarnpkg.com/serverless-offline-resources/-/serverless-offline-resources-0.1.14.tgz#693c02952f7a706b2a9713d044967035050039fa"
-  integrity sha512-y1/EeAxPWcbSOvzpELWw9uWGD7z3KyeWiVZ/skWfuBOKCalwXdRYiAHmqE6rHRAWaStoZNvz9BlabX9KGFPkgA==
+serverless-offline-resources@^0.1.17:
+  version "0.1.17"
+  resolved "https://registry.yarnpkg.com/serverless-offline-resources/-/serverless-offline-resources-0.1.17.tgz#b6b434716d76b345bc1f67ddb8d940623c785505"
+  integrity sha512-1SUHx/LYf+1Wsjdzxu1yoQE6GoyTctX7z13Z7nvWoYmLZRpHwXZS3o8g6TyBQZQZYAjsmCUNZIUmB6UBgZVvRg==
   dependencies:
     "@aws-sdk/client-dynamodb-streams" ">=3"
     "@aws-sdk/client-lambda" ">=3"
