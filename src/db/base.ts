@@ -1,8 +1,12 @@
 import Table from 'ddb-table';
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb';
-import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import {
+  DynamoDBClient,
+  AttributeValue as DynamoDBAttributeValue,
+} from '@aws-sdk/client-dynamodb';
 import { unmarshall } from '@aws-sdk/util-dynamodb';
 import bs58 from 'bs58';
+import { AttributeValue } from 'aws-lambda';
 
 export const KEY_SEPARATOR = '!';
 
@@ -63,13 +67,15 @@ export abstract class BaseTable<
   }
 
   public isRecord(
-    record?: Record<string, unknown> | { [key: string]: unknown },
+    record?: AttributeValue | Record<string, AttributeValue>,
   ): T | undefined {
     if (!record || !('hashKey' in record) || !('rangeKey' in record)) {
       return undefined;
     }
 
-    const unmarshalled = unmarshall(record);
+    const unmarshalled = unmarshall(
+      record as DynamoDBAttributeValue | Record<string, DynamoDBAttributeValue>,
+    );
     if (
       typeof unmarshalled.hashKey !== 'string' ||
       typeof unmarshalled.rangeKey !== 'string' ||

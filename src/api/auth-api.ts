@@ -24,7 +24,7 @@ import { generateJwt, EnrichedRequest } from '../auth';
 
 @Route('/auth')
 @Tags('Auth Api')
-export default class AuthApi extends Controller {
+export class AuthApi extends Controller {
   userIdentityTable: UserIdentityTable;
 
   jwtService: JwtService;

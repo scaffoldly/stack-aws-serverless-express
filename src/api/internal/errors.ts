@@ -2,6 +2,7 @@ export class HttpError extends Error {
   constructor(
     public readonly statusCode: StatusCode,
     public readonly message: string,
+    public context = {} as { [key: string]: unknown },
   ) {
     super(message);
     this.name = `HTTP_${statusCode}`;

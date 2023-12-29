@@ -8,7 +8,7 @@ import { HttpError } from './internal/errors';
 @Route('/event')
 @Tags('Events')
 @Hidden()
-export default class EventApi extends Controller {
+export class EventApi extends Controller {
   boardMessageTable: BoardMessageTable;
 
   userIdentityTable: UserIdentityTable;
