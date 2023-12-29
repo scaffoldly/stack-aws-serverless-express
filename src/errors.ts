@@ -2,7 +2,7 @@ import { ValidateError } from 'tsoa';
 import { NextFunction, Request, Response } from 'express';
 import axios from 'axios';
 import { HttpError, StatusCode } from './api/internal/errors';
-import { ErrorResponse } from './api/responses/responses';
+import { ErrorResponse } from './api/responses';
 
 export default function errorHandler(version: string) {
   return (

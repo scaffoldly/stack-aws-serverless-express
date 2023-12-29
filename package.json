@@ -1,5 +1,6 @@
 {
   "name": "stack",
+  "description": "Serverless Stack",
   "version": "1.0.0",
   "license": "UNLICENSED",
   "private": "true",
@@ -7,13 +8,12 @@
     "node": "18"
   },
   "scripts": {
-    "build": "yarn codegen && serverless webpack",
-    "start": "yarn codegen && serverless offline",
+    "build": "serverless webpack",
+    "start": "yarn dotenv && yarn codegen && serverless offline",
     "deploy": "serverless deploy",
     "serverless": "serverless",
     "dotenv": "dotenv-out -f typescript -e .env -e .scaffoldly/.env -c $NODE_ENV -o src",
     "codegen": "ts-node .serverless/codegen.ts",
-    "eslint": "eslint '*/**/*.{js,ts,tsx}'",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix && yarn run prettier --write '*/**/*.{js,ts,tsx}'"
   },
   "devDependencies": {
@@ -69,6 +69,7 @@
     "cookies": "0.8.0",
     "cors": "^2.8.5",
     "ddb-table": "^2.1.1",
+    "dotenv": "^16.3.1",
     "express": "^4.17.1",
     "joi": "^17.4.0",
     "jose": "2.0.5",

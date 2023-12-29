@@ -28,10 +28,6 @@ provider:
     STAGE_DOMAIN: ${file(.serverless/config.js):stage-domain}
     SERVICE_NAME: ${self:service}
     STAGE: ${opt:stage, "local"}
-  stackTags:
-    ServiceName: ${self:service}
-    ServiceSlug: ${file(.serverless/config.js):service-slug}
-    ServiceStage: ${opt:stage, "local"}
 
 functions:
   lambda-handler:

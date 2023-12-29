@@ -14,8 +14,8 @@ import {
 import { DynamoDBServiceException } from '@aws-sdk/client-dynamodb';
 import { DynamoDBExceptionName } from 'ddb-table';
 import { v4 as uuid } from 'uuid';
-import { LoginResponse } from './responses/responses';
-import { LoginRequest } from './requests/requests';
+import { LoginResponse } from './responses';
+import { LoginRequest } from './requests';
 import { UserIdentityTable } from '../db/user-identity';
 import { HttpError } from './internal/errors';
 import { preventOverwrite } from '../db/base';

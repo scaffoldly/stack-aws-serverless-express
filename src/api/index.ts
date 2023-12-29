@@ -14,7 +14,7 @@ import { JwtService } from '../services/JwtService';
 import { EnrichedRequest } from '../auth';
 import { HttpError } from './internal/errors';
 import { Keys } from '../db/base';
-import { HealthResponse, JwksResponse } from './responses/responses';
+import { HealthResponse, JwksResponse } from './responses';
 
 @Route('')
 @Tags('Api')
