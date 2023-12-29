@@ -25,7 +25,6 @@
     "DEBUG": "1",
     "NODE_ENV": "local",
     "LOCALSTACK_VOLUME_DIR": "${containerWorkspaceFolder}/.cache",
-    "TF_PLUGIN_CACHE_DIR": "${containerWorkspaceFolder}/.cache",
     "LAMBDA_DOCKER_NETWORK": "bridge"
   },
   "remoteEnv": {},
@@ -37,29 +36,29 @@
   },
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
-    "ghcr.io/devcontainers/features/terraform:1": {
-      "version": "1.4.6",
-      "tflint": "0.46.1",
-      "terragrunt": "0.46.3"
-    }
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
   "customizations": {
     "vscode": {
-      "extensions": [
-        "esbenp.prettier-vscode",
-        "firsttris.vscode-jest-runner",
-        "dbaeumer.vscode-eslint",
-        "AmazonWebServices.aws-toolkit-vscode"
-      ],
+      "extensions": ["esbenp.prettier-vscode", "dbaeumer.vscode-eslint"],
       "settings": {
-        "aws.telemetry": false,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "prettier.prettierPath": "./node_modules/prettier",
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": true
+        },
+        "[html]": {
+          "editor.defaultFormatter": "vscode.html-language-features"
+        },
         "editor.formatOnSave": true,
+        "eslint.lintTask.enable": true,
+        "eslint.validate": ["javascript", "typescript"],
         "git.autofetch": true,
-        "typescript.tsdk": "./node_modules/typescript/lib"
-        // "typescript.tsserver.log": "verbose"
+        "task.allowAutomaticTasks": "on",
+        "prettier.prettierPath": "/node_modules/prettier",
+        "typescript.tsdk": "/node_modules/typescript/lib",
+        "typescript.tsserver.maxTsServerMemory": 1024,
+        "typescript.preferences.importModuleSpecifier": "shortest",
+        "extensions.experimental.deferredStartupFinishedActivation": true
       }
     }
   }

@@ -1,5 +1,14 @@
 const fs = require('fs');
 const os = require('os');
+const dotenv = require('dotenv');
+
+const packageJson = require('../package.json');
+module.exports['service-name'] = packageJson.name;
+module.exports['service-slug'] = packageJson.name;
+module.exports['stage-domain'] =
+  process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN;
+module.exports['api-gateway-domain'] =
+  `${process.env.CODESPACE_NAME}-3000.${module.exports['stage-domain']}`;
 
 const { NODE_ENV } = process.env;
 
@@ -8,9 +17,11 @@ const APP_SECRETS_REGEX = / {2}(?<key>.*?): (?<value>.*?)(,\n|\n)/gm;
 const APP_SECRETS_FILE = `${os.tmpdir()}/.ci-secrets`;
 const APP_SECRET_PREFIX = `${NODE_ENV || ''}_APP_`.toUpperCase();
 
-const envVars = NODE_ENV
-  ? JSON.parse(fs.readFileSync(fs.openSync(`.scaffoldly/${NODE_ENV}/env-vars.json`)))
-  : JSON.parse(fs.readFileSync(fs.openSync(`.scaffoldly/env-vars.json`)));
+const envFile = NODE_ENV
+  ? fs.readFileSync(fs.openSync(`.scaffoldly/${NODE_ENV}/.env`))
+  : fs.readFileSync(fs.openSync(`.scaffoldly/.env`));
+
+const envVars = dotenv.parse(envFile);
 
 Object.entries(envVars).forEach(([key, value]) => {
   module.exports[key] = value;

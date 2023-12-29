@@ -1,11 +1,20 @@
-import { Controller, Get, Route, Tags, Security, NoSecurity, Request, Path } from '@tsoa/runtime';
+import {
+  Controller,
+  Get,
+  Route,
+  Tags,
+  Security,
+  NoSecurity,
+  Request,
+  Path,
+} from 'tsoa';
 import packageJson from '../../package.json';
-import { HealthResponse, JwksResponse } from './responses/responses';
 import { UserIdentitySchema, UserIdentityTable } from '../db/user-identity';
 import { JwtService } from '../services/JwtService';
 import { EnrichedRequest } from '../auth';
 import { HttpError } from './internal/errors';
 import { Keys } from '../db/base';
+import { HealthResponse, JwksResponse } from './responses';
 
 @Route('')
 @Tags('Api')
@@ -40,7 +49,9 @@ export class Api extends Controller {
 
   @Get('/users/me')
   @Security('jwt')
-  public async getIdentity(@Request() httpRequest: EnrichedRequest): Promise<UserIdentitySchema> {
+  public async getIdentity(
+    @Request() httpRequest: EnrichedRequest,
+  ): Promise<UserIdentitySchema> {
     const item = await this.userIdentityTable
       .get(httpRequest.user!.hashKey, httpRequest.user!.rangeKey)
       .exec();
@@ -78,7 +89,9 @@ export class Api extends Controller {
   @Get('/users')
   @Security('jwt')
   public async getUsers(): Promise<UserIdentitySchema[]> {
-    const listAllUsers = async (startKey?: Keys): Promise<UserIdentitySchema[]> => {
+    const listAllUsers = async (
+      startKey?: Keys,
+    ): Promise<UserIdentitySchema[]> => {
       const result = await this.userIdentityTable
         .query()
         .keyCondition((cn) =>
@@ -93,7 +106,10 @@ export class Api extends Controller {
       // To find all records that begin with 'identity' and 'user' in the table
 
       if (result.LastEvaluatedKey) {
-        return [...(result.Items || []), ...(await listAllUsers(result.LastEvaluatedKey))];
+        return [
+          ...(result.Items || []),
+          ...(await listAllUsers(result.LastEvaluatedKey)),
+        ];
       }
 
       return result.Items || [];

@@ -1,8 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
-import { JwtPayload, JwtService } from './services/JwtService';
+import Cookies from 'cookies';
+import {
+  ACCESS_COOKIE,
+  JwtPayload,
+  JwtService,
+  REFRESH_COOKIE,
+} from './services/JwtService';
 import { HttpError } from './api/internal/errors';
 import { UserIdentitySchema, UserIdentityTable } from './db/user-identity';
-import Cookies from 'cookies';
 
 export type UserIdentity = UserIdentitySchema & {
   token: string;
@@ -14,11 +19,10 @@ export type EnrichedRequest = Request & {
   setCookies?: string[];
 };
 
-export const ACCESS_COOKIE = `__Secure-access`;
-export const REFRESH_COOKIE = `__Secure-refresh`;
-
 // Cache in the global scope to speed up subsequent invocations
-const userIdentityCache: { [sub: string]: { value: UserIdentitySchema; expires: number } } = {};
+const userIdentityCache: {
+  [sub: string]: { value: UserIdentitySchema; expires: number };
+} = {};
 
 export const generateJwt = async (
   userIdentity: UserIdentitySchema,
@@ -46,7 +50,7 @@ export const generateJwt = async (
 export async function expressAuthentication(
   req: Request,
   securityName: string,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
   _scopes?: string[],
 ): Promise<UserIdentity> {
   const jwtService = new JwtService();
@@ -56,7 +60,7 @@ export async function expressAuthentication(
     throw new HttpError(403, 'Forbidden');
   }
 
-  let token: string | undefined = undefined;
+  let token: string | undefined;
 
   if (req.headers.authorization) {
     const [scheme, auth] = req.headers.authorization.split(' ');
@@ -89,9 +93,13 @@ export async function expressAuthentication(
     throw new HttpError(401, 'Unauthorized');
   }
 
-  let userIdentity: UserIdentitySchema | undefined = undefined;
+  let userIdentity: UserIdentitySchema | undefined;
 
-  if (tokenPayload && userIdentityCache[sub] && userIdentityCache[sub].expires < tokenPayload.exp) {
+  if (
+    tokenPayload &&
+    userIdentityCache[sub] &&
+    userIdentityCache[sub].expires < tokenPayload.exp
+  ) {
     userIdentity = userIdentityCache[sub].value;
   } else {
     delete userIdentityCache[sub];
@@ -104,7 +112,7 @@ export async function expressAuthentication(
       .exec({ IndexName: 'uuid-index' });
 
     if (result.Count && result.Items && result.Items.length === 1) {
-      userIdentity = result.Items[0];
+      [userIdentity] = result.Items;
     }
   }
 
@@ -124,9 +132,15 @@ export async function expressAuthentication(
 }
 
 export function requestEnricher() {
-  return (req: Request, _res: Response, next: NextFunction): Response | void => {
-    const scheme = req.headers['x-forwarded-proto'] || req.headers['x-scheme'] || 'http';
-    const host = req.headers['x-forwarded-host'] || req.headers.host || 'localhost:3000';
+  return (
+    req: Request,
+    _res: Response,
+    next: NextFunction,
+  ): Response | void => {
+    const scheme =
+      req.headers['x-forwarded-proto'] || req.headers['x-scheme'] || 'http';
+    const host =
+      req.headers['x-forwarded-host'] || req.headers.host || 'localhost:3000';
     // const path = req.headers['x-original-uri'] || `${process.env.SERVICE_SLUG}${req.originalUrl}`;
 
     // TODO: Figure these out for different contexts
@@ -134,19 +148,24 @@ export function requestEnricher() {
     // - Lambda w/o Custom Domain
     // - Lambda w/Custom Domain
     // - Local
-    (req as EnrichedRequest).certsUrl = `${scheme}://${host}/${process.env.SERVICE_SLUG}/certs`;
+    (req as EnrichedRequest).certsUrl =
+      `${scheme}://${host}/${process.env.SERVICE_SLUG}/certs`;
 
     next();
   };
 }
 
 export function refreshHandler() {
-  return async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+  return async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response | void> => {
     const jwtService = new JwtService();
     const userIdentityTable = new UserIdentityTable();
 
-    let token: string | undefined = undefined;
-    let refreshToken: string | undefined = undefined;
+    let token: string | undefined;
+    let refreshToken: string | undefined;
 
     const cookies = req.cookies as Cookies;
 
@@ -209,6 +228,6 @@ export function refreshHandler() {
       res.setHeader('set-cookie', newSetCookies);
     }
 
-    return Cookies.express([ACCESS_COOKIE, REFRESH_COOKIE])(req, res, next);
+    Cookies.express([ACCESS_COOKIE, REFRESH_COOKIE])(req, res, next);
   };
 }

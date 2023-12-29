@@ -1,14 +1,14 @@
 import { JWK, JWKS, JWKECKey, JWT } from 'jose';
 import Cookies from 'cookies';
-import { JwtModel } from '../models/JwtModel';
-import { UserIdentitySchema } from '../db/user-identity';
 import { v1 as uuid } from 'uuid';
-import { SecretService } from './aws/SecretService';
-import { ACCESS_COOKIE, REFRESH_COOKIE } from '../auth';
+import { UserIdentitySchema } from '../db/user-identity';
+import SecretService from './aws/SecretService';
 
 export type JwkStore = 'current' | 'next';
 
-export const JWKS_STORE_NAME = `jwks`;
+export const ACCESS_COOKIE = '__Secure-access';
+export const REFRESH_COOKIE = '__Secure-refresh';
+export const JWKS_STORE_NAME = 'jwks';
 export const JWKS_CURRENT: JwkStore = 'current';
 export const JWKS_NEXT: JwkStore = 'next';
 
@@ -48,12 +48,9 @@ export type Jwt = {
 };
 
 export class JwtService {
-  jwtModel: JwtModel;
-
   secretService: SecretService;
 
   constructor() {
-    this.jwtModel = new JwtModel();
     this.secretService = new SecretService();
   }
 
@@ -86,12 +83,13 @@ export class JwtService {
     );
 
     // Same payload with a longer expiration and different scope
-    const { token: refreshToken, cookie: refreshCookie } = await this.createToken(
-      { ...payload, exp: payload.iat + 31536000 },
-      REFRESH_COOKIE,
-      JWKS_NEXT,
-      remember,
-    );
+    const { token: refreshToken, cookie: refreshCookie } =
+      await this.createToken(
+        { ...payload, exp: payload.iat + 31536000 },
+        REFRESH_COOKIE,
+        JWKS_NEXT,
+        remember,
+      );
 
     return {
       token,
@@ -111,7 +109,9 @@ export class JwtService {
     const keys = await this.getOrCreateKeys();
 
     // Use the second key to sign in case the keys to be rotated
-    const key = JWK.asKey(keys[jwkStore == 'next' ? 1 : 0].privateKey.jwk as JWKECKey);
+    const key = JWK.asKey(
+      keys[jwkStore === 'next' ? 1 : 0].privateKey.jwk as JWKECKey,
+    );
 
     const token = JWT.sign(payload, key, {
       header: {
@@ -134,7 +134,9 @@ export class JwtService {
     return { token, cookie: cookie.toHeader() };
   };
 
-  public verifyJwt = async (token?: string): Promise<JwtPayload | undefined> => {
+  public verifyJwt = async (
+    token?: string,
+  ): Promise<JwtPayload | undefined> => {
     if (!token) {
       return undefined;
     }
@@ -146,11 +148,15 @@ export class JwtService {
     }
 
     const keys = await this.getOrCreateKeys();
-    const jwks = new JWKS.KeyStore(keys.map((key) => JWK.asKey(key.privateKey.jwk as JWKECKey)));
+    const jwks = new JWKS.KeyStore(
+      keys.map((key) => JWK.asKey(key.privateKey.jwk as JWKECKey)),
+    );
 
     let verified: JwtPayload | undefined;
     try {
-      verified = JWT.verify(token, jwks, { audience: process.env.SERVICE_NAME! }) as JwtPayload;
+      verified = JWT.verify(token, jwks, {
+        audience: process.env.SERVICE_NAME!,
+      }) as JwtPayload;
     } catch (e) {
       return undefined;
     }
@@ -159,7 +165,10 @@ export class JwtService {
   };
 
   private getOrCreateKeys = async (): Promise<GeneratedKeys[]> => {
-    let current = await this.secretService.getSecret(JWKS_STORE_NAME, JWKS_CURRENT);
+    let current = await this.secretService.getSecret(
+      JWKS_STORE_NAME,
+      JWKS_CURRENT,
+    );
     let next = await this.secretService.getSecret(JWKS_STORE_NAME, JWKS_NEXT);
 
     if (!current) {
@@ -172,7 +181,7 @@ export class JwtService {
       );
 
       if (!current) {
-        throw new Error(`Unable to create current JWKS`);
+        throw new Error('Unable to create current JWKS');
       }
     }
 
@@ -190,7 +199,9 @@ export class JwtService {
       }
     }
 
-    const currentKey = JSON.parse(Buffer.from(current, 'base64').toString('utf8'));
+    const currentKey = JSON.parse(
+      Buffer.from(current, 'base64').toString('utf8'),
+    );
     const nextKey = JSON.parse(Buffer.from(next, 'base64').toString('utf8'));
 
     return [currentKey, nextKey];

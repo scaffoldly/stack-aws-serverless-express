@@ -7,16 +7,21 @@ import {
 } from '@aws-sdk/client-secrets-manager';
 
 // Cache in the global scope to speed up subsequent invocations
-const secretCache: { [secretId: string]: { value: string; expires: number } } = {};
+const secretCache: { [secretId: string]: { value: string; expires: number } } =
+  {};
 
-export class SecretService {
+export default class SecretService {
   client: SecretsManagerClient;
 
   constructor() {
     this.client = new SecretsManagerClient();
   }
 
-  public async getSecret(store: string, key: string, useCache = true): Promise<string | null> {
+  public async getSecret(
+    store: string,
+    key: string,
+    useCache = true,
+  ): Promise<string | null> {
     const now = new Date().getTime();
 
     if (!useCache) {
@@ -54,7 +59,11 @@ export class SecretService {
     return secretObject[key];
   }
 
-  public async setSecret(store: string, key: string, value: string): Promise<string | null> {
+  public async setSecret(
+    store: string,
+    key: string,
+    value: string,
+  ): Promise<string | null> {
     const entry = { [`${key}`]: value };
 
     try {
@@ -62,18 +71,30 @@ export class SecretService {
         new GetSecretValueCommand({ SecretId: store }),
       );
 
-      const secretObject = { ...(JSON.parse(SecretString) as { [key: string]: string }), ...entry };
+      const secretObject = {
+        ...(JSON.parse(SecretString) as { [key: string]: string }),
+        ...entry,
+      };
 
       await this.client.send(
-        new PutSecretValueCommand({ SecretId: store, SecretString: JSON.stringify(secretObject) }),
+        new PutSecretValueCommand({
+          SecretId: store,
+          SecretString: JSON.stringify(secretObject),
+        }),
       );
     } catch (err) {
-      if ((err as SecretsManagerServiceException)?.name !== 'ResourceNotFoundException') {
+      if (
+        (err as SecretsManagerServiceException)?.name !==
+        'ResourceNotFoundException'
+      ) {
         throw err;
       }
 
       await this.client.send(
-        new CreateSecretCommand({ Name: store, SecretString: JSON.stringify(entry) }),
+        new CreateSecretCommand({
+          Name: store,
+          SecretString: JSON.stringify(entry),
+        }),
       );
     }
 

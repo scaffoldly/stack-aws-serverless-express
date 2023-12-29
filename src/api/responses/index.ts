@@ -6,7 +6,7 @@ export interface ErrorResponse {
   message: string;
   version: string;
   traceId: string;
-  context?: { [key: string]: any };
+  context?: { [key: string]: unknown };
 }
 
 export type JwksResponse = {

@@ -1,13 +1,14 @@
 import express from 'express';
 import { readFileSync } from 'fs';
+import morganBody from 'morgan-body';
+import Cookies from 'cookies';
 import packageJson from '../package.json';
 import { RegisterRoutes } from './routes';
-import morganBody from 'morgan-body';
 import swaggerJson from './swagger.json';
-import { errorHandler } from './errors';
+import errorHandler from './errors';
 import { corsHandler } from './cors';
-import { requestEnricher, refreshHandler, ACCESS_COOKIE, REFRESH_COOKIE } from './auth';
-import Cookies from 'cookies';
+import { requestEnricher, refreshHandler } from './auth';
+import { ACCESS_COOKIE, REFRESH_COOKIE } from './services/JwtService';
 
 const app = express();
 app.disable('x-powered-by');

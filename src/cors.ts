@@ -17,10 +17,10 @@ export function corsHandler(options: CorsOptions = {}): (
   req: cors.CorsRequest,
   res: {
     statusCode?: number;
-    setHeader(key: string, value: string): any;
-    end(): any;
+    setHeader(key: string, value: string): unknown;
+    end(): unknown;
   },
-  next: (err?: any) => any,
+  next: (err?: unknown) => unknown,
 ) => void {
   return cors({
     origin: options.origin ? options.origin : true,

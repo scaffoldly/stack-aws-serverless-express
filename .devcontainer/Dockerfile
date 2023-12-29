@@ -1,3 +1,3 @@
-FROM scaffoldly/aws-localstack:latest-20231001
+FROM scaffoldly/aws-localstack:latest
 
 # Add any custom tooling for the Stack
