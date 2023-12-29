@@ -1,9 +1,9 @@
-import { HttpError } from '@scaffoldly/serverless-util';
 import { DynamoDBStreamEvent, SNSEvent, SQSEvent } from 'aws-lambda';
 import { Body, Controller, Header, Hidden, Post, Route, Tags } from '@tsoa/runtime';
 import { BoardMessageTable } from '../db/board-message';
 import { UserIdentityTable } from '../db/user-identity';
 import { SnsService } from '../services/aws/SnsService';
+import { HttpError } from './internal/errors';
 
 @Route('/event')
 @Tags('Events')

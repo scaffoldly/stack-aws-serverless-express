@@ -3,13 +3,12 @@ service: ${file(serverless.config.js):service-name}
 plugins:
   - serverless-bundle
   - serverless-dotenv-plugin
-  - serverless-plugin-resource-tagging
   - serverless-offline-resources
   - serverless-offline
 
 provider:
   name: aws
-  runtime: nodejs16.x
+  runtime: nodejs18.x
   deploymentMethod: direct
   iam:
     deploymentRole: arn:${env:AWS_PARTITION, ""}:iam::${env:AWS_ACCOUNT_ID, ""}:role/${self:service}-cloudformation

@@ -2,18 +2,17 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "parserOptions": {
-    "ecmaVersion": 2020,
+    "ecmaVersion": "latest",
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
   "extends": [
     "eslint:recommended",
-    "airbnb-typescript/base",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
-    "plugin:prettier/recommended",
-    "plugin:import/recommended"
+    "plugin:prettier/recommended"
+    // "plugin:import/recommended"
   ],
   "rules": {
     "no-console": "off",
@@ -25,10 +24,8 @@
     // Auto-generated files
     "src/env.ts",
     "src/routes.ts",
-    "src/models/interfaces/**/*.ts",
-    "src/services/openapi/**/*.ts",
     ".build/**/*",
     ".webpack/**/*",
-    "scripts/**/*"
+    ".serverless/**/*"
   ]
 }

@@ -1,11 +1,11 @@
 import { Controller, Get, Route, Tags, Security, NoSecurity, Request, Path } from '@tsoa/runtime';
 import packageJson from '../../package.json';
-import { HealthResponse, JwksResponse } from './responses/responses';
 import { UserIdentitySchema, UserIdentityTable } from '../db/user-identity';
 import { JwtService } from '../services/JwtService';
 import { EnrichedRequest } from '../auth';
 import { HttpError } from './internal/errors';
 import { Keys } from '../db/base';
+import { HealthResponse, JwksResponse } from './responses/responses';
 
 @Route('')
 @Tags('Api')

@@ -1,4 +1,3 @@
-import { convertFromDirectory } from 'joi-to-typescript';
 import { generateSpec, generateRoutes } from '@tsoa/cli';
 import fs from 'fs';
 import packageJson from '../package.json';
@@ -12,16 +11,6 @@ export const envVars = NODE_ENV
 
 (async () => {
   try {
-    console.log('Generating types...');
-    if (
-      !(await convertFromDirectory({
-        schemaDirectory: './src/models/schemas',
-        typeOutputDirectory: './src/models/interfaces',
-      }))
-    ) {
-      throw new Error('Unable to generate types');
-    }
-
     console.log('Generating spec...');
     await generateSpec({
       basePath: `/${envVars['service-slug']}`,

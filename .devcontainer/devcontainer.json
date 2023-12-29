@@ -25,41 +25,45 @@
     "DEBUG": "1",
     "NODE_ENV": "local",
     "LOCALSTACK_VOLUME_DIR": "${containerWorkspaceFolder}/.cache",
-    "TF_PLUGIN_CACHE_DIR": "${containerWorkspaceFolder}/.cache",
     "LAMBDA_DOCKER_NETWORK": "bridge"
   },
   "remoteEnv": {},
   "waitFor": "onCreateCommand",
-  "updateContentCommand": "yarn",
-  "postAttachCommand": {
-    "setupPorts": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME && exit",
-    "startLocalstack": "/usr/bin/supervisord -c /etc/supervisor/supervisord.conf -s && exit"
-  },
+  // "updateContentCommand": "yarn",
+  // "postAttachCommand": {
+  //   "setupPorts": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME && exit",
+  //   "startLocalstack": "/usr/bin/supervisord -c /etc/supervisor/supervisord.conf -s && exit"
+  // },
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
-    "ghcr.io/devcontainers/features/terraform:1": {
-      "version": "1.4.6",
-      "tflint": "0.46.1",
-      "terragrunt": "0.46.3"
-    }
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
   "customizations": {
     "vscode": {
-      "extensions": [
-        "esbenp.prettier-vscode",
-        "firsttris.vscode-jest-runner",
-        "dbaeumer.vscode-eslint",
-        "AmazonWebServices.aws-toolkit-vscode"
-      ],
+      "extensions": ["esbenp.prettier-vscode", "dbaeumer.vscode-eslint"],
       "settings": {
-        "aws.telemetry": false,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "prettier.prettierPath": "./node_modules/prettier",
+        "[html]": {
+          "editor.defaultFormatter": "vscode.html-language-features"
+        },
         "editor.formatOnSave": true,
+        "eslint.lintTask.enable": true,
         "git.autofetch": true,
-        "typescript.tsdk": "./node_modules/typescript/lib"
-        // "typescript.tsserver.log": "verbose"
+        // "javascript.format.enable": false,
+        "prettier.prettierPath": "./node_modules/prettier",
+        "task.allowAutomaticTasks": "on",
+        "typescript.tsdk": "./node_modules/typescript/lib",
+        // "typescript.tsserver.maxTsServerMemory": 512,
+        "typescript.preferences.importModuleSpecifier": "relative",
+        "extensions.experimental.deferredStartupFinishedActivation": true
+        // "typescript.format.enable": false,
+        // "eslint.format.enable": true,
+        // "eslint.workingDirectories": [
+        //   {
+        //     "mode": "auto"
+        //   }
+        // ],
+        // "eslint.validate": ["javascript", "typescript"]
       }
     }
   }

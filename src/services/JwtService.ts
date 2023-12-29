@@ -1,6 +1,5 @@
 import { JWK, JWKS, JWKECKey, JWT } from 'jose';
 import Cookies from 'cookies';
-import { JwtModel } from '../models/JwtModel';
 import { UserIdentitySchema } from '../db/user-identity';
 import { v1 as uuid } from 'uuid';
 import { SecretService } from './aws/SecretService';
