@@ -29,11 +29,7 @@
   },
   "remoteEnv": {},
   "waitFor": "onCreateCommand",
-  "postCreateCommand": "yarn",
-  "updateContentCommand": {
-    "dotenv": "yarn dotenv && exit",
-    "codegen": "yarn codegen && exit"
-  },
+  "updateContentCommand": "yarn",
   "postAttachCommand": {
     "setupPorts": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME && exit",
     "startLocalstack": "/usr/bin/supervisord -c /etc/supervisor/supervisord.conf -s && exit"
