@@ -3,4 +3,3 @@ src/env.ts
 src/routes.ts
 .build/**/*
 .webpack/**/*
-.serverless/**/*

@@ -1,16 +1,24 @@
-import { generateSpec, generateRoutes } from '@tsoa/cli';
-import fs from 'fs';
-import packageJson from '../package.json';
-
-export const { NODE_ENV } = process.env;
-export const envVars = NODE_ENV
-  ? JSON.parse(
-      fs.readFileSync(fs.openSync(`.scaffoldly/${NODE_ENV}/env-vars.json`, 'r')).toString(),
-    )
-  : JSON.parse(fs.readFileSync(fs.openSync(`.scaffoldly/env-vars.json`, 'r')).toString());
-
 (async () => {
   try {
+    const fs = require('fs');
+    const packageJson = require('../package.json');
+    const { generateSpec, generateRoutes } = require('@tsoa/cli');
+
+    const { NODE_ENV } = process.env;
+    const envVars = NODE_ENV
+      ? JSON.parse(
+          fs
+            .readFileSync(
+              fs.openSync(`.scaffoldly/${NODE_ENV}/env-vars.json`, 'r'),
+            )
+            .toString(),
+        )
+      : JSON.parse(
+          fs
+            .readFileSync(fs.openSync(`.scaffoldly/env-vars.json`, 'r'))
+            .toString(),
+        );
+
     console.log('Generating spec...');
     await generateSpec({
       basePath: `/${envVars['service-slug']}`,
