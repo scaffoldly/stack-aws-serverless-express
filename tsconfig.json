@@ -1,9 +1,12 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
+    "baseUrl": "./",
+
     /* Basic Options */
     "incremental": true,
     "target": "ESNext",
+    "module": "CommonJS",
     "outDir": ".build/",
     "sourceMap": true,
 
@@ -26,7 +29,6 @@
 
     /* Module Resolution Options */
     "moduleResolution": "node",
-    "baseUrl": ".",
     "esModuleInterop": true,
     "resolveJsonModule": true,
 
@@ -36,6 +38,5 @@
 
     /* Advanced Options */
     "forceConsistentCasingInFileNames": true
-  },
-  "include": ["src/**/*"]
+  }
 }

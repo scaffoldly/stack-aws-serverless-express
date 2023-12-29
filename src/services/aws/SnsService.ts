@@ -1,4 +1,8 @@
-import { SubscribeCommand, PublishCommand, SNSClient } from '@aws-sdk/client-sns';
+import {
+  SubscribeCommand,
+  PublishCommand,
+  SNSClient,
+} from '@aws-sdk/client-sns';
 
 export class SnsService {
   private client: SNSClient;

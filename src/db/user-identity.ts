@@ -5,7 +5,11 @@ export type UserIdentitySchema = BaseSchema & {
   email?: string | null;
 };
 
-export class UserIdentityTable extends BaseTable<UserIdentitySchema, 'user', 'identity'> {
+export class UserIdentityTable extends BaseTable<
+  UserIdentitySchema,
+  'user',
+  'identity'
+> {
   constructor() {
     super(process.env.DEFAULT_TABLE_NAME!, 'user', 'identity');
   }

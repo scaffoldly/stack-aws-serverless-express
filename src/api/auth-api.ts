@@ -10,21 +10,21 @@ import {
   Request,
   NoSecurity,
   Security,
-} from '@tsoa/runtime';
+} from 'tsoa';
+import { DynamoDBServiceException } from '@aws-sdk/client-dynamodb';
+import { DynamoDBExceptionName } from 'ddb-table';
+import { v4 as uuid } from 'uuid';
 import { LoginResponse } from './responses/responses';
 import { LoginRequest } from './requests/requests';
 import { UserIdentityTable } from '../db/user-identity';
-import { DynamoDBServiceException } from '@aws-sdk/client-dynamodb';
-import { DynamoDBExceptionName } from 'ddb-table';
 import { HttpError } from './internal/errors';
 import { preventOverwrite } from '../db/base';
-import { v4 as uuid } from 'uuid';
 import { JwtService } from '../services/JwtService';
 import { generateJwt, EnrichedRequest } from '../auth';
 
 @Route('/auth')
 @Tags('Auth Api')
-export class AuthApi extends Controller {
+export default class AuthApi extends Controller {
   userIdentityTable: UserIdentityTable;
 
   jwtService: JwtService;
@@ -106,7 +106,11 @@ export class AuthApi extends Controller {
     res: TsoaResponse<204, void>,
   ): Promise<void> {
     // setting remember to false will create cookies which will expire immediately
-    const { newSetCookies } = await generateJwt(httpRequest.user!, httpRequest.certsUrl, false);
+    const { newSetCookies } = await generateJwt(
+      httpRequest.user!,
+      httpRequest.certsUrl,
+      false,
+    );
     return res(204, undefined, { 'set-cookie': newSetCookies });
   }
 }

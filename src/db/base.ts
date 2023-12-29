@@ -18,21 +18,23 @@ export type BaseSchema = Keys & {
 
 export type KeyPrefix = string;
 
-export const encodeKeys = (schema: BaseSchema): string => {
-  return bs58.encode(
-    Buffer.from(JSON.stringify({ hashKey: schema.hashKey, rangeKey: schema.rangeKey }), 'utf8'),
+export const encodeKeys = (schema: BaseSchema): string =>
+  bs58.encode(
+    Buffer.from(
+      JSON.stringify({ hashKey: schema.hashKey, rangeKey: schema.rangeKey }),
+      'utf8',
+    ),
   );
-};
 
-export const decodeKeys = (encoded: string): BaseSchema => {
-  return JSON.parse(Buffer.from(bs58.decode(encoded)).toString('utf8'));
-};
+export const decodeKeys = (encoded: string): BaseSchema =>
+  JSON.parse(Buffer.from(bs58.decode(encoded)).toString('utf8'));
 
-export const preventOverwrite = () => {
-  return {
-    ConditionExpression: `attribute_not_exists(hashKey) AND attribute_not_exists(rangeKey)`,
-  };
-};
+export type ConditionExpression = { ConditionExpression: string };
+
+export const preventOverwrite = (): ConditionExpression => ({
+  ConditionExpression:
+    'attribute_not_exists(hashKey) AND attribute_not_exists(rangeKey)',
+});
 
 export abstract class BaseTable<
   T extends BaseSchema,
@@ -48,19 +50,21 @@ export abstract class BaseTable<
       // No need to specify region or credentials
       // It's all provided by the execution role
       documentClient: DynamoDBDocument.from(new DynamoDBClient()),
-      tableName: tableName,
+      tableName,
       primaryKey: 'hashKey',
       sortKey: 'rangeKey',
     });
   }
 
-  public preventOverwrite() {
+  public preventOverwrite(): ConditionExpression {
     return {
       ConditionExpression: `attribute_not_exists(${this.primaryKey}) AND attribute_not_exists(${this.sortKey})`,
     };
   }
 
-  public isRecord(record?: Record<string, any> | { [key: string]: any }): T | undefined {
+  public isRecord(
+    record?: Record<string, unknown> | { [key: string]: unknown },
+  ): T | undefined {
     if (!record || !('hashKey' in record) || !('rangeKey' in record)) {
       return undefined;
     }

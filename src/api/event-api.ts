@@ -1,5 +1,5 @@
 import { DynamoDBStreamEvent, SNSEvent, SQSEvent } from 'aws-lambda';
-import { Body, Controller, Header, Hidden, Post, Route, Tags } from '@tsoa/runtime';
+import { Body, Controller, Header, Hidden, Post, Route, Tags } from 'tsoa';
 import { BoardMessageTable } from '../db/board-message';
 import { UserIdentityTable } from '../db/user-identity';
 import { SnsService } from '../services/aws/SnsService';
@@ -8,7 +8,7 @@ import { HttpError } from './internal/errors';
 @Route('/event')
 @Tags('Events')
 @Hidden()
-export class EventApi extends Controller {
+export default class EventApi extends Controller {
   boardMessageTable: BoardMessageTable;
 
   userIdentityTable: UserIdentityTable;
@@ -23,7 +23,10 @@ export class EventApi extends Controller {
   }
 
   @Post('/dynamodb')
-  public async dynamoDbEvent(@Header('Host') host: string, @Body() body: unknown): Promise<void> {
+  public async dynamoDbEvent(
+    @Header('Host') host: string,
+    @Body() body: unknown,
+  ): Promise<void> {
     if (host !== 'dynamodb.amazonaws.com') {
       throw new HttpError(403, 'Forbidden');
     }
@@ -41,7 +44,10 @@ export class EventApi extends Controller {
       const userIdentity = this.userIdentityTable.isRecord(NewImage);
       if (eventName === 'INSERT' && userIdentity && userIdentity.email) {
         // Woo! A new user! Subscribe them to updates
-        await this.snsService.subscribe(process.env.DEFAULT_TOPIC_ARN!, userIdentity.email);
+        await this.snsService.subscribe(
+          process.env.DEFAULT_TOPIC_ARN!,
+          userIdentity.email,
+        );
       }
 
       const boardMessage = this.boardMessageTable.isRecord(NewImage);
@@ -57,7 +63,10 @@ export class EventApi extends Controller {
   }
 
   @Post('/sqs')
-  public async sqsEvent(@Header('Host') host: string, @Body() body: unknown): Promise<void> {
+  public async sqsEvent(
+    @Header('Host') host: string,
+    @Body() body: unknown,
+  ): Promise<void> {
     if (host !== 'sqs.amazonaws.com') {
       throw new HttpError(403, 'Forbidden');
     }
@@ -68,7 +77,10 @@ export class EventApi extends Controller {
   }
 
   @Post('/sns')
-  public async snsEvent(@Header('Host') host: string, @Body() body: unknown): Promise<void> {
+  public async snsEvent(
+    @Header('Host') host: string,
+    @Body() body: unknown,
+  ): Promise<void> {
     if (host !== 'sns.amazonaws.com') {
       throw new HttpError(403, 'Forbidden');
     }

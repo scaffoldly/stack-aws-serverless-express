@@ -6,7 +6,11 @@ export type BoardMessageSchema = BaseSchema & {
   sender: string;
 };
 
-export class BoardMessageTable extends BaseTable<BoardMessageSchema, 'board', 'message'> {
+export class BoardMessageTable extends BaseTable<
+  BoardMessageSchema,
+  'board',
+  'message'
+> {
   constructor() {
     super(process.env.DEFAULT_TABLE_NAME!, 'board', 'message');
   }

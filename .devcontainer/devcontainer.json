@@ -29,7 +29,7 @@
   },
   "remoteEnv": {},
   "waitFor": "onCreateCommand",
-  // "updateContentCommand": "yarn",
+  "updateContentCommand": "yarn",
   // "postAttachCommand": {
   //   "setupPorts": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME && exit",
   //   "startLocalstack": "/usr/bin/supervisord -c /etc/supervisor/supervisord.conf -s && exit"
@@ -43,27 +43,22 @@
       "extensions": ["esbenp.prettier-vscode", "dbaeumer.vscode-eslint"],
       "settings": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": true
+        },
         "[html]": {
           "editor.defaultFormatter": "vscode.html-language-features"
         },
         "editor.formatOnSave": true,
         "eslint.lintTask.enable": true,
+        "eslint.validate": ["javascript", "typescript"],
         "git.autofetch": true,
-        // "javascript.format.enable": false,
-        "prettier.prettierPath": "./node_modules/prettier",
         "task.allowAutomaticTasks": "on",
-        "typescript.tsdk": "./node_modules/typescript/lib",
-        // "typescript.tsserver.maxTsServerMemory": 512,
-        "typescript.preferences.importModuleSpecifier": "relative",
+        "prettier.prettierPath": "/node_modules/prettier",
+        "typescript.tsdk": "/node_modules/typescript/lib",
+        "typescript.tsserver.maxTsServerMemory": 1024,
+        "typescript.preferences.importModuleSpecifier": "shortest",
         "extensions.experimental.deferredStartupFinishedActivation": true
-        // "typescript.format.enable": false,
-        // "eslint.format.enable": true,
-        // "eslint.workingDirectories": [
-        //   {
-        //     "mode": "auto"
-        //   }
-        // ],
-        // "eslint.validate": ["javascript", "typescript"]
       }
     }
   }

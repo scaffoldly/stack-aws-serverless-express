@@ -1,4 +1,4 @@
-service: ${file(serverless.config.js):service-name}
+service: ${file(.serverless/config.js):service-name}
 
 plugins:
   - serverless-bundle
@@ -11,7 +11,9 @@ provider:
   runtime: nodejs18.x
   deploymentMethod: direct
   iam:
-    deploymentRole: arn:${env:AWS_PARTITION, ""}:iam::${env:AWS_ACCOUNT_ID, ""}:role/${self:service}-cloudformation
+    deploymentRole:
+      arn:${env:AWS_PARTITION, ""}:iam::${env:AWS_ACCOUNT_ID,
+      ""}:role/${self:service}-cloudformation
   stage: ${opt:stage, "local"}
   logRetentionInDays: 1
   apiGateway:
@@ -23,19 +25,21 @@ provider:
     DEFAULT_QUEUE_URL: { Ref: DefaultQueue }
     DEFAULT_TABLE_NAME: { Ref: DefaultTable }
     DEFAULT_TOPIC_ARN: { Ref: DefaultTopic }
-    SERVICE_SLUG: ${file(serverless.config.js):service-slug}
-    API_GATEWAY_DOMAIN: ${file(serverless.config.js):api-gateway-domain}
-    STAGE_DOMAIN: ${file(serverless.config.js):stage-domain}
+    SERVICE_SLUG: ${file(.serverless/config.js):service-slug}
+    API_GATEWAY_DOMAIN: ${file(.serverless/config.js):api-gateway-domain}
+    STAGE_DOMAIN: ${file(.serverless/config.js):stage-domain}
     SERVICE_NAME: ${self:service}
     STAGE: ${opt:stage, "local"}
   stackTags:
     ServiceName: ${self:service}
-    ServiceSlug: ${file(serverless.config.js):service-slug}
+    ServiceSlug: ${file(.serverless/config.js):service-slug}
     ServiceStage: ${opt:stage, "local"}
 
 functions:
   lambda-handler:
-    role: arn:${env:AWS_PARTITION, ""}:iam::${env:AWS_ACCOUNT_ID, ""}:role/${self:service}-${opt:stage, "local"}
+    role:
+      arn:${env:AWS_PARTITION, ""}:iam::${env:AWS_ACCOUNT_ID,
+      ""}:role/${self:service}-${opt:stage, "local"}
     handler: src/lambda.handler
     timeout: 30
     events:
@@ -67,7 +71,7 @@ resources:
       Type: AWS::SecretsManager::Secret
       Properties:
         Name: lambda/${opt:stage, "local"}/${self:service}
-        SecretString: '${file(serverless.config.js):appSecrets}'
+        SecretString: '${file(.serverless/config.js):appSecrets}'
 
     DefaultTopic:
       Type: AWS::SNS::Topic
@@ -126,7 +130,7 @@ custom:
     reloadHandler: true
     useChildProcesses: false
     noPrependStageInUrl: true
-    prefix: ${file(serverless.config.js):service-slug}
+    prefix: ${file(.serverless/config.js):service-slug}
 
   offline-resources:
     stages:
