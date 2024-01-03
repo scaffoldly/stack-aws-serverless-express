@@ -25,6 +25,8 @@ jobs:
       - uses: scaffoldly/stack-deploy@v1
         with:
           todo: hello world!
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # - run: echo "${{ toJSON(secrets) }}" > .ci-secrets
       #   working-directory: /tmp
