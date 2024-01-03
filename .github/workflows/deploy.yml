@@ -22,7 +22,7 @@ jobs:
 
       - run: yarn
 
-      - uses: scaffoldly/stack-deploy@v1
+      - uses: scaffoldly/stack-deploy@main
         with:
           todo: hello world!
         env:
