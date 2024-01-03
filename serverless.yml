@@ -1,4 +1,4 @@
-service: ${file(.serverless/config.js):service-name}
+service: ${file(.serverless/config.js):SERVICE_NAME}
 
 plugins:
   - serverless-bundle
@@ -11,27 +11,27 @@ provider:
   runtime: nodejs18.x
   deploymentMethod: direct
   iam:
-    deploymentRole: arn:${env:AWS_PARTITION, ""}:iam::${env:AWS_ACCOUNT_ID, ""}:role/${self:service}-cloudformation
-  stage: ${opt:stage, "local"}
+    deploymentRole: ${file(.serverless/config.js):DEPLOY_ROLE}
+  stage: ${opt:stage, env:NODE_ENV}
   logRetentionInDays: 1
   apiGateway:
-    restApiId: ${env:AWS_REST_API_ID, "0000000000"}
-    restApiRootResourceId: ${env:AWS_REST_API_ROOT_RESOURCE_ID, "0000000000"}
+    restApiId: ${file(.serverless/config.js):API_GATEWAY_ID}
+    restApiRootResourceId: ${file(.serverless/config.js):API_GATEWAY_ROOT_ID}
   tracing:
     lambda: true
   environment:
     DEFAULT_QUEUE_URL: { Ref: DefaultQueue }
     DEFAULT_TABLE_NAME: { Ref: DefaultTable }
     DEFAULT_TOPIC_ARN: { Ref: DefaultTopic }
-    SERVICE_SLUG: ${file(.serverless/config.js):service-slug}
-    API_GATEWAY_DOMAIN: ${file(.serverless/config.js):api-gateway-domain}
-    STAGE_DOMAIN: ${file(.serverless/config.js):stage-domain}
+    SERVICE_SLUG: ${file(.serverless/config.js):SERVICE_SLUG}
+    API_GATEWAY_DOMAIN: ${file(.serverless/config.js):API_GATEWAY_DOMAIN}
+    STAGE_DOMAIN: ${file(.serverless/config.js):STAGE_DOMAIN}
     SERVICE_NAME: ${self:service}
-    STAGE: ${opt:stage, "local"}
+    STAGE: ${self:provider.stage}
 
 functions:
   lambda-handler:
-    role: arn:${env:AWS_PARTITION, ""}:iam::${env:AWS_ACCOUNT_ID, ""}:role/${self:service}-${opt:stage, "local"}
+    role: ${file(.serverless/config.js):EXECUTE_ROLE}
     handler: src/lambda.handler
     timeout: 30
     events:
@@ -62,23 +62,23 @@ resources:
     DefaultSecret:
       Type: AWS::SecretsManager::Secret
       Properties:
-        Name: lambda/${opt:stage, "local"}/${self:service}
+        Name: lambda/${self:provider.stage}/${self:service}
         SecretString: '${file(.serverless/config.js):appSecrets}'
 
     DefaultTopic:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: ${opt:stage, "local"}-${self:service}
+        TopicName: ${self:provider.stage}-${self:service}
 
     DefaultQueue:
       Type: AWS::SQS::Queue
       Properties:
-        QueueName: ${opt:stage, "local"}-${self:service}
+        QueueName: ${self:provider.stage}-${self:service}
 
     DefaultTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ${opt:stage, "local"}-${self:service}
+        TableName: ${self:provider.stage}-${self:service}
         KeySchema:
           - AttributeName: hashKey
             KeyType: HASH
@@ -122,7 +122,7 @@ custom:
     reloadHandler: true
     useChildProcesses: false
     noPrependStageInUrl: true
-    prefix: ${file(.serverless/config.js):service-slug}
+    prefix: ${file(.serverless/config.js):SERVICE_SLUG}
 
   bundle:
     copyFiles:

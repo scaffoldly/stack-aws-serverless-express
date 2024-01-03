@@ -14,7 +14,7 @@ import { JwtService } from '../services/JwtService';
 import { EnrichedRequest } from '../auth';
 import { HttpError } from './internal/errors';
 import { Keys } from '../db/base';
-import { HealthResponse, JwksResponse } from './responses';
+import { HealthResponse } from './responses';
 
 @Route('')
 @Tags('Api')
@@ -27,14 +27,6 @@ export class Api extends Controller {
     super();
     this.userIdentityTable = new UserIdentityTable();
     this.jwtService = new JwtService();
-  }
-
-  @Get('/certs')
-  @NoSecurity()
-  public async certs(): Promise<JwksResponse> {
-    return {
-      keys: await this.jwtService.getPublicKeys(),
-    };
   }
 
   @Get('/health')

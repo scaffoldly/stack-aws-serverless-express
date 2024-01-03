@@ -1,0 +1,29 @@
+name: 'Deploy'
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: >-
+      !startsWith(github.event.head_commit.message, 'Initial commit') && 
+      !startsWith(github.event.head_commit.message, '🤖')
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'yarn'
+
+      - run: yarn
+
+      - uses: scaffoldly/stack-deploy@v1
+        with:
+          todo: hello world!
+
+      # - run: echo "${{ toJSON(secrets) }}" > .ci-secrets
+      #   working-directory: /tmp
+
+      # - run: yarn deploy --stage $NODE_ENV

@@ -3,12 +3,17 @@ const os = require('os');
 const dotenv = require('dotenv');
 
 const packageJson = require('../package.json');
-module.exports['service-name'] = packageJson.name;
-module.exports['service-slug'] = packageJson.name;
-module.exports['stage-domain'] =
+
+module.exports['SERVICE_NAME'] = packageJson.name;
+module.exports['SERVICE_SLUG'] = packageJson.name;
+module.exports['STAGE_DOMAIN'] =
   process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN;
-module.exports['api-gateway-domain'] =
-  `${process.env.CODESPACE_NAME}-3000.${module.exports['stage-domain']}`;
+module.exports['API_GATEWAY_DOMAIN'] =
+  `${process.env.CODESPACE_NAME}-3000.${module.exports['STAGE_DOMAIN']}`;
+module.exports['DEPLOY_ROLE'] = 'arn:aws:iam::000000000000:root';
+module.exports['EXECUTE_ROLE'] = 'arn:aws:iam::000000000000:root';
+module.exports['API_GATEWAY_ID'] = '0000000000';
+module.exports['API_GATEWAY_ROOT_ID'] = '0000000000';
 
 const { NODE_ENV } = process.env;
 
@@ -17,11 +22,16 @@ const APP_SECRETS_REGEX = / {2}(?<key>.*?): (?<value>.*?)(,\n|\n)/gm;
 const APP_SECRETS_FILE = `${os.tmpdir()}/.ci-secrets`;
 const APP_SECRET_PREFIX = `${NODE_ENV || ''}_APP_`.toUpperCase();
 
-const envFile = NODE_ENV
-  ? fs.readFileSync(fs.openSync(`.scaffoldly/${NODE_ENV}/.env`))
-  : fs.readFileSync(fs.openSync(`.scaffoldly/.env`));
+let envVars = {};
 
-const envVars = dotenv.parse(envFile);
+try {
+  const envFile = NODE_ENV
+    ? fs.readFileSync(fs.openSync(`.scaffoldly/${NODE_ENV}/.env`))
+    : fs.readFileSync(fs.openSync(`.scaffoldly/.env`));
+  envVars = dotenv.parse(envFile);
+} catch (e) {
+  envVars = {};
+}
 
 Object.entries(envVars).forEach(([key, value]) => {
   module.exports[key] = value;

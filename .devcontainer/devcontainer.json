@@ -23,7 +23,7 @@
   "mounts": [],
   "containerEnv": {
     "DEBUG": "1",
-    "NODE_ENV": "local",
+    "NODE_ENV": "development",
     "LOCALSTACK_VOLUME_DIR": "${containerWorkspaceFolder}/.cache",
     "LAMBDA_DOCKER_NETWORK": "bridge"
   },

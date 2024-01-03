@@ -14,7 +14,7 @@ export type UserIdentity = UserIdentitySchema & {
 };
 
 export type EnrichedRequest = Request & {
-  certsUrl: string;
+  authUrl: string;
   user?: UserIdentity;
   setCookies?: string[];
 };
@@ -148,8 +148,10 @@ export function requestEnricher() {
     // - Lambda w/o Custom Domain
     // - Lambda w/Custom Domain
     // - Local
-    (req as EnrichedRequest).certsUrl =
-      `${scheme}://${host}/${process.env.SERVICE_SLUG}/certs`;
+
+    const authUrl = `${scheme}://${host}/${process.env.SERVICE_SLUG}/auth`;
+
+    (req as EnrichedRequest).authUrl = authUrl;
 
     next();
   };

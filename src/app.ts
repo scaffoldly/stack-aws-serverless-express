@@ -1,7 +1,7 @@
 import express from 'express';
-import { readFileSync } from 'fs';
 import morganBody from 'morgan-body';
 import Cookies from 'cookies';
+import { readFileSync } from 'fs';
 import packageJson from '../package.json';
 import { RegisterRoutes } from './routes';
 import swaggerJson from './swagger.json';
@@ -34,7 +34,7 @@ app.get('/openapi.json', (_req: express.Request, res: express.Response) => {
   res.send(JSON.stringify(swaggerJson));
 });
 
-app.get('/swagger.html', (_req: express.Request, res: express.Response) => {
+app.get(['/swagger.html'], (_req: express.Request, res: express.Response) => {
   const file = readFileSync('./public/swagger.html');
   res.type('html');
   res.send(file);

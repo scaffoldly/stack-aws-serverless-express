@@ -10,11 +10,12 @@ import {
   Request,
   NoSecurity,
   Security,
+  Get,
 } from 'tsoa';
 import { DynamoDBServiceException } from '@aws-sdk/client-dynamodb';
 import { DynamoDBExceptionName } from 'ddb-table';
 import { v4 as uuid } from 'uuid';
-import { LoginResponse } from './responses';
+import { JwksResponse, LoginResponse } from './responses';
 import { LoginRequest } from './requests';
 import { UserIdentityTable } from '../db/user-identity';
 import { HttpError } from './internal/errors';
@@ -33,6 +34,14 @@ export class AuthApi extends Controller {
     super();
     this.userIdentityTable = new UserIdentityTable();
     this.jwtService = new JwtService();
+  }
+
+  @Get('')
+  @NoSecurity()
+  public async certs(): Promise<JwksResponse> {
+    return {
+      keys: await this.jwtService.getPublicKeys(),
+    };
   }
 
   @Post('/login')
@@ -80,7 +89,7 @@ export class AuthApi extends Controller {
 
     const { newToken, newSetCookies } = await generateJwt(
       Item,
-      httpRequest.certsUrl,
+      httpRequest.authUrl,
       request.remember,
     );
 
@@ -108,7 +117,7 @@ export class AuthApi extends Controller {
     // setting remember to false will create cookies which will expire immediately
     const { newSetCookies } = await generateJwt(
       httpRequest.user!,
-      httpRequest.certsUrl,
+      httpRequest.authUrl,
       false,
     );
     return res(204, undefined, { 'set-cookie': newSetCookies });

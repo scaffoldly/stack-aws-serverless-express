@@ -16,4 +16,5 @@
 - publish openapi
 - handle errors in offline resources when localstack is restarted
 - live reloading of spec and routes
+- massage in env from .serverless/config.js and serverless.yml
 - WHATIF... github pages is the frontend??
