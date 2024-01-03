@@ -18,3 +18,4 @@
 - live reloading of spec and routes
 - massage in env from .serverless/config.js and serverless.yml
 - WHATIF... github pages is the frontend??
+- pull request deploy
