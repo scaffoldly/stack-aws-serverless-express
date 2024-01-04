@@ -2,6 +2,7 @@ import express from 'express';
 import morganBody from 'morgan-body';
 import Cookies from 'cookies';
 import { readFileSync } from 'fs';
+import { configure } from '@vendia/serverless-express';
 import packageJson from '../package.json';
 import { RegisterRoutes } from './routes';
 import swaggerJson from './swagger.json';
@@ -35,7 +36,7 @@ app.get('/openapi.json', (_req: express.Request, res: express.Response) => {
 });
 
 app.get(['/swagger.html'], (_req: express.Request, res: express.Response) => {
-  const file = readFileSync('./public/swagger.html');
+  const file = readFileSync('./src/swagger.html');
   res.type('html');
   res.send(file);
 });
@@ -46,4 +47,11 @@ app.get('*', (req: express.Request, res: express.Response) => {
   res.send('');
 });
 
-export default app;
+export const lambda = configure({
+  app,
+  eventSourceRoutes: {
+    AWS_DYNAMODB: '/event/dynamodb',
+    AWS_SQS: '/event/sqs',
+    AWS_SNS: '/event/sns',
+  },
+});

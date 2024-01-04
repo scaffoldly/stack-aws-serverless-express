@@ -30,9 +30,9 @@ provider:
     STAGE: ${self:provider.stage}
 
 functions:
-  lambda-handler:
+  app:
     role: ${file(.serverless/config.js):EXECUTE_ROLE}
-    handler: src/lambda.handler
+    handler: src/app.lambda
     timeout: 30
     events:
       - http:
@@ -126,5 +126,5 @@ custom:
 
   bundle:
     copyFiles:
-      - from: 'public/*'
-        to: './'
+      - from: './src/swagger.html'
+        to: './src/swagger.html'
