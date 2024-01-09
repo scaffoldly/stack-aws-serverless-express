@@ -122,8 +122,8 @@ custom:
   serverless-offline:
     reloadHandler: true
     useChildProcesses: false
-    noPrependStageInUrl: true
-    prefix: ${file(.serverless/config.js):SERVICE_SLUG}
+    # noPrependStageInUrl: true
+    # prefix: ${file(.serverless/config.js):SERVICE_SLUG}
 
   bundle:
     copyFiles:
