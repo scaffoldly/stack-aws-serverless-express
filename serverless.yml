@@ -55,9 +55,8 @@ functions:
       - sqs:
           arn:
             Fn::GetAtt: [DefaultQueue, Arn]
-      - sns:
-          topicName:
-            Fn::GetAtt: [DefaultTopic, TopicName]
+      # - sns:
+      #     arn: !Ref DefaultTopic
 
 resources:
   Resources:
