@@ -9,15 +9,16 @@ plugins:
 provider:
   name: aws
   runtime: nodejs18.x
-  deploymentMethod: direct
-  iam:
-    deploymentRole: ${file(.serverless/config.js):DEPLOY_ROLE}
-  stage: ${opt:stage, env:NODE_ENV}
+  # deploymentMethod: direct
+  # iam:
+  #   deploymentRole: ${file(.serverless/config.js):DEPLOY_ROLE}
+  stage: ${opt:stage, 'development'}
   logRetentionInDays: 1
-  apiGateway:
-    restApiId: ${file(.serverless/config.js):API_GATEWAY_ID}
-    restApiRootResourceId: ${file(.serverless/config.js):API_GATEWAY_ROOT_ID}
+  # apiGateway:
+  # restApiId: ${file(.serverless/config.js):API_GATEWAY_ID}
+  # restApiRootResourceId: ${file(.serverless/config.js):API_GATEWAY_ROOT_ID}
   tracing:
+    apiGateway: true
     lambda: true
   environment:
     DEFAULT_QUEUE_URL: { Ref: DefaultQueue }
@@ -31,7 +32,7 @@ provider:
 
 functions:
   app:
-    role: ${file(.serverless/config.js):EXECUTE_ROLE}
+    # role: ${file(.serverless/config.js):EXECUTE_ROLE}
     handler: src/app.lambda
     timeout: 30
     events:

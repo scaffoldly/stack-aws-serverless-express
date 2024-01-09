@@ -4,7 +4,7 @@ on:
   workflow_dispatch: {}
   push:
     branches:
-      - main
+      - development
 
 jobs:
   deploy:
@@ -15,6 +15,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - id: branch-names
+        uses: tj-actions/branch-names@v8
+
+      - uses: saml-to/assume-aws-role-action@v1
+        with:
+          role: arn:aws:iam::471112697609:role/OrganizationAccountAccessRole
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
@@ -22,13 +31,8 @@ jobs:
 
       - run: yarn
 
-      - uses: scaffoldly/stack-deploy@main
-        with:
-          todo: hello world!
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       # - run: echo "${{ toJSON(secrets) }}" > .ci-secrets
       #   working-directory: /tmp
 
-      # - run: yarn deploy --stage $NODE_ENV
+      - run: echo ${{ steps.branch-names.outputs.current_branch }}
+      # - run: yarn deploy --stage ${{ steps.branch-names.outputs.current_branch }}
