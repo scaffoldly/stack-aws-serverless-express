@@ -2,10 +2,11 @@
   try {
     const packageJson = require('../package.json');
     const { generateSpec, generateRoutes } = require('@tsoa/cli');
+    const { NODE_ENV } = process.env;
 
     console.log('Generating spec...');
     await generateSpec({
-      basePath: `/${packageJson.name}`,
+      basePath: `/${NODE_ENV}`,
       name: packageJson.name,
       description: packageJson.description,
       version: packageJson.version,
@@ -36,5 +37,6 @@
     });
   } catch (e: any) {
     console.warn('Error generating code', e.message);
+    throw e;
   }
 })();

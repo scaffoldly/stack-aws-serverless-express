@@ -30,6 +30,8 @@ jobs:
           cache: 'yarn'
 
       - run: yarn
+        env:
+          NODE_ENV: ${{ steps.branch-names.outputs.current_branch }}
 
       # - run: echo "${{ toJSON(secrets) }}" > .ci-secrets
       #   working-directory: /tmp
