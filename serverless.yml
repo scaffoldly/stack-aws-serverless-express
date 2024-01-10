@@ -39,15 +39,63 @@ functions:
       - http:
           path: /
           method: any
+          request:
+            headers:
+              x-domain-name:
+                mappedValue: $context.domainName
+              x-path:
+                mappedValue: $context.path
+              x-domain-prefix:
+                mappedValue: $context.domainPrefix
+              x-resource-path:
+                mappedValue: $context.resourcePath
+              x-stage:
+                mappedValue: $context.stage
       - http:
           path: /
           method: options
+          request:
+            headers:
+              x-domain-name:
+                mappedValue: $context.domainName
+              x-path:
+                mappedValue: $context.path
+              x-domain-prefix:
+                mappedValue: $context.domainPrefix
+              x-resource-path:
+                mappedValue: $context.resourcePath
+              x-stage:
+                mappedValue: $context.stage
       - http:
           path: /{proxy+}
           method: any
+          request:
+            headers:
+              x-domain-name:
+                mappedValue: $context.domainName
+              x-path:
+                mappedValue: $context.path
+              x-domain-prefix:
+                mappedValue: $context.domainPrefix
+              x-resource-path:
+                mappedValue: $context.resourcePath
+              x-stage:
+                mappedValue: $context.stage
       - http:
           path: /{proxy+}
           method: options
+          request:
+            headers:
+              x-domain-name:
+                mappedValue: $context.domainName
+              x-path:
+                mappedValue: $context.path
+              x-domain-prefix:
+                mappedValue: $context.domainPrefix
+              x-resource-path:
+                mappedValue: $context.resourcePath
+              x-stage:
+                mappedValue: $context.stage
       - stream:
           type: dynamodb
           arn:
