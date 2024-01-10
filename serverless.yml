@@ -39,67 +39,15 @@ functions:
       - http:
           path: /
           method: any
-          request:
-            parameters:
-              headers:
-                x-domain-name:
-                  mappedValue: context.domainName
-                x-path:
-                  mappedValue: context.path
-                x-domain-prefix:
-                  mappedValue: context.domainPrefix
-                x-resource-path:
-                  mappedValue: context.resourcePath
-                x-stage:
-                  mappedValue: context.stage
       - http:
           path: /
           method: options
-          request:
-            parameters:
-              headers:
-                x-domain-name:
-                  mappedValue: context.domainName
-                x-path:
-                  mappedValue: context.path
-                x-domain-prefix:
-                  mappedValue: context.domainPrefix
-                x-resource-path:
-                  mappedValue: context.resourcePath
-                x-stage:
-                  mappedValue: context.stage
       - http:
           path: /{proxy+}
           method: any
-          request:
-            parameters:
-              headers:
-                x-domain-name:
-                  mappedValue: context.domainName
-                x-path:
-                  mappedValue: context.path
-                x-domain-prefix:
-                  mappedValue: context.domainPrefix
-                x-resource-path:
-                  mappedValue: context.resourcePath
-                x-stage:
-                  mappedValue: context.stage
       - http:
           path: /{proxy+}
           method: options
-          request:
-            parameters:
-              headers:
-                x-domain-name:
-                  mappedValue: context.domainName
-                x-path:
-                  mappedValue: context.path
-                x-domain-prefix:
-                  mappedValue: context.domainPrefix
-                x-resource-path:
-                  mappedValue: context.resourcePath
-                x-stage:
-                  mappedValue: context.stage
       - stream:
           type: dynamodb
           arn:
@@ -107,8 +55,9 @@ functions:
       - sqs:
           arn:
             Fn::GetAtt: [DefaultQueue, Arn]
-      # - sns:
-      #     arn: !Ref DefaultTopic
+      - sns:
+          arn: !Ref DefaultTopic
+          topicName: ${self:provider.stage}-${self:service}
 
 resources:
   Resources:
