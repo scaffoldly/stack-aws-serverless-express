@@ -16,6 +16,7 @@ provider:
       statements:
         - Effect: Allow
           Action:
+            - 'dynamodb:*'
             - 'secretsmanager:*'
             - 'sns:*'
             - 'sqs:*'
