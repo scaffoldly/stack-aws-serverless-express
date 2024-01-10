@@ -20,11 +20,7 @@ provider:
             - 'secretsmanager:*'
             - 'sns:*'
             - 'sqs:*'
-          Resource:
-            - { Ref: DefaultTable }
-            - { Ref: DefaultSecret }
-            - { Ref: DefaultTopic }
-            - { Ref: DefaultQueue }
+          Resource: '*'
   stage: ${env:NODE_ENV, 'development'}
   logRetentionInDays: 1
   # apiGateway:
