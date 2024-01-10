@@ -13,6 +13,7 @@ import { ACCESS_COOKIE, REFRESH_COOKIE } from './services/JwtService';
 
 const app = express();
 app.disable('x-powered-by');
+app.set('json spaces', 2);
 app.use(express.json({ limit: 5242880 }));
 app.use(corsHandler({ withCredentials: true }));
 app.use(Cookies.express([ACCESS_COOKIE, REFRESH_COOKIE]));

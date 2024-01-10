@@ -15,6 +15,8 @@ export type UserIdentity = UserIdentitySchema & {
 
 export type EnrichedRequest = Request & {
   authUrl: string;
+  openApiUrl: string;
+  apiDocsUrl: string;
   user?: UserIdentity;
   setCookies?: string[];
 };
@@ -141,6 +143,8 @@ export function requestEnricher() {
       req.headers['x-forwarded-proto'] || req.headers['x-scheme'] || 'http';
     const host =
       req.headers['x-forwarded-host'] || req.headers.host || 'localhost:3000';
+    const path = process.env.STAGE;
+
     // const path = req.headers['x-original-uri'] || `${process.env.SERVICE_SLUG}${req.originalUrl}`;
 
     // TODO: Figure these out for different contexts
@@ -149,9 +153,11 @@ export function requestEnricher() {
     // - Lambda w/Custom Domain
     // - Local
 
-    const authUrl = `${scheme}://${host}/${process.env.SERVICE_SLUG}/auth`;
-
-    (req as EnrichedRequest).authUrl = authUrl;
+    (req as EnrichedRequest).authUrl = `${scheme}://${host}/${path}/auth`;
+    (req as EnrichedRequest).openApiUrl =
+      `${scheme}://${host}/${path}/openapi.json`;
+    (req as EnrichedRequest).apiDocsUrl =
+      `${scheme}://${host}/${path}/swagger.html`;
 
     next();
   };

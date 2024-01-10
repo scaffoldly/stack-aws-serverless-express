@@ -41,6 +41,11 @@ export class Api extends Controller {
       name: packageJson.name,
       version: packageJson.version,
       now: new Date(),
+      hrefs: {
+        jwks: httpRequest.authUrl,
+        openApi: httpRequest.openApiUrl,
+        apiDocs: httpRequest.apiDocsUrl,
+      },
     };
   }
 

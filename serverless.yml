@@ -10,8 +10,16 @@ provider:
   name: aws
   runtime: nodejs18.x
   # deploymentMethod: direct
-  # iam:
-  #   deploymentRole: ${file(.serverless/config.js):DEPLOY_ROLE}
+  iam:
+    # deploymentRole: ${file(.serverless/config.js):DEPLOY_ROLE}
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - 'secretsmanager:*'
+            - 'sns:*'
+            - 'sqs:*'
+          Resource: '*'
   stage: ${env:NODE_ENV, 'development'}
   logRetentionInDays: 1
   # apiGateway:
