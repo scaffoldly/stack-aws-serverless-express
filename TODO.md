@@ -1,7 +1,16 @@
 # TODO List
 
 - deploys to AWS
+- find out why "/" doesn't work
+- see if ARNs can be added to IAM in serverless.yaml
+- see if API Gateway Domain can be injected somehow
+  - https://stackoverflow.com/a/73713990
 - update README
+- export Layers
+- API Gateway V2
+- figure out something sensible for "aud"
+- unit/integration tests
+- see if serverless dotenv is needed anymore and/or use it more
 - pull swagger.html from library
 - pull org name for aud
 - get rid of stage domain stuff, make / redirect to swagger.html

@@ -9,9 +9,7 @@ plugins:
 provider:
   name: aws
   runtime: nodejs18.x
-  # deploymentMethod: direct
   iam:
-    # deploymentRole: ${file(.serverless/config.js):DEPLOY_ROLE}
     role:
       statements:
         - Effect: Allow
@@ -23,9 +21,6 @@ provider:
           Resource: '*'
   stage: ${env:NODE_ENV, 'development'}
   logRetentionInDays: 1
-  # apiGateway:
-  # restApiId: ${file(.serverless/config.js):API_GATEWAY_ID}
-  # restApiRootResourceId: ${file(.serverless/config.js):API_GATEWAY_ROOT_ID}
   tracing:
     apiGateway: true
     lambda: true
@@ -33,15 +28,11 @@ provider:
     DEFAULT_QUEUE_URL: { Ref: DefaultQueue }
     DEFAULT_TABLE_NAME: { Ref: DefaultTable }
     DEFAULT_TOPIC_ARN: { Ref: DefaultTopic }
-    SERVICE_SLUG: ${file(.serverless/config.js):SERVICE_SLUG}
-    API_GATEWAY_DOMAIN: ${file(.serverless/config.js):API_GATEWAY_DOMAIN}
-    STAGE_DOMAIN: ${file(.serverless/config.js):STAGE_DOMAIN}
     SERVICE_NAME: ${self:service}
     STAGE: ${self:provider.stage}
 
 functions:
   app:
-    # role: ${file(.serverless/config.js):EXECUTE_ROLE}
     handler: src/app.lambda
     timeout: 30
     events:
@@ -132,8 +123,6 @@ custom:
   serverless-offline:
     reloadHandler: true
     useChildProcesses: false
-    # noPrependStageInUrl: true
-    # prefix: ${file(.serverless/config.js):SERVICE_SLUG}
 
   bundle:
     copyFiles:

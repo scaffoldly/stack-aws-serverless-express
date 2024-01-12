@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, Response, Handler } from 'express';
 import Cookies from 'cookies';
 import {
   ACCESS_COOKIE,
@@ -145,8 +145,6 @@ export function requestEnricher() {
       req.headers['x-forwarded-host'] || req.headers.host || 'localhost:3000';
     const path = process.env.STAGE;
 
-    // const path = req.headers['x-original-uri'] || `${process.env.SERVICE_SLUG}${req.originalUrl}`;
-
     // TODO: Figure these out for different contexts
     // - Codespaces
     // - Lambda w/o Custom Domain
@@ -161,6 +159,10 @@ export function requestEnricher() {
 
     next();
   };
+}
+
+export function cookieHandler(): Handler {
+  return Cookies.express([ACCESS_COOKIE, REFRESH_COOKIE]);
 }
 
 export function refreshHandler() {

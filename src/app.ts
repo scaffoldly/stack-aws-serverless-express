@@ -1,6 +1,5 @@
 import express from 'express';
 import morganBody from 'morgan-body';
-import Cookies from 'cookies';
 import { readFileSync } from 'fs';
 import { configure } from '@vendia/serverless-express';
 import packageJson from '../package.json';
@@ -8,15 +7,15 @@ import { RegisterRoutes } from './routes';
 import swaggerJson from './swagger.json';
 import errorHandler from './errors';
 import { corsHandler } from './cors';
-import { requestEnricher, refreshHandler } from './auth';
-import { ACCESS_COOKIE, REFRESH_COOKIE } from './services/JwtService';
+import { requestEnricher, refreshHandler, cookieHandler } from './auth';
 
 const app = express();
+
 app.disable('x-powered-by');
 app.set('json spaces', 2);
 app.use(express.json({ limit: 5242880 }));
 app.use(corsHandler({ withCredentials: true }));
-app.use(Cookies.express([ACCESS_COOKIE, REFRESH_COOKIE]));
+app.use(cookieHandler());
 app.use(requestEnricher());
 app.use(refreshHandler());
 

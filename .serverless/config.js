@@ -3,17 +3,13 @@ const os = require('os');
 const dotenv = require('dotenv');
 
 const packageJson = require('../package.json');
-
 module.exports['SERVICE_NAME'] = packageJson.name;
-module.exports['SERVICE_SLUG'] = packageJson.name;
+
+// TODO Remove or inject
 module.exports['STAGE_DOMAIN'] =
   `${process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}`;
 module.exports['API_GATEWAY_DOMAIN'] =
   `${process.env.CODESPACE_NAME}-3000.${module.exports['STAGE_DOMAIN']}`;
-module.exports['DEPLOY_ROLE'] = 'arn:aws:iam::000000000000:root';
-module.exports['EXECUTE_ROLE'] = 'arn:aws:iam::000000000000:root';
-module.exports['API_GATEWAY_ID'] = '0000000000';
-module.exports['API_GATEWAY_ROOT_ID'] = '0000000000';
 
 const { NODE_ENV } = process.env;
 
