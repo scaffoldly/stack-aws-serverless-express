@@ -36,18 +36,19 @@ functions:
     handler: src/app.lambda
     timeout: 30
     events:
-      - http:
-          path: /
-          method: any
-      - http:
-          path: /
-          method: options
-      - http:
-          path: /{proxy+}
-          method: any
-      - http:
-          path: /{proxy+}
-          method: options
+      - httpApi: '*'
+      # - http:
+      #     path: /
+      #     method: any
+      # - http:
+      #     path: /
+      #     method: options
+      # - http:
+      #     path: /{proxy+}
+      #     method: any
+      # - http:
+      #     path: /{proxy+}
+      #     method: options
       - stream:
           type: dynamodb
           arn:

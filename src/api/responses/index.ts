@@ -18,9 +18,8 @@ export type HealthResponse = {
   version: string;
   now: Date;
   hrefs: {
-    jwks: string;
     openApi: string;
-    apiDocs: string;
+    openApiDocs: string;
   };
 };
 

@@ -10,13 +10,15 @@ import { HttpError } from './api/internal/errors';
 import { UserIdentitySchema, UserIdentityTable } from './db/user-identity';
 
 export type UserIdentity = UserIdentitySchema & {
-  token: string;
+  token?: string;
 };
 
 export type EnrichedRequest = Request & {
+  serviceName: string;
+  baseUrl: string;
   authUrl: string;
   openApiUrl: string;
-  apiDocsUrl: string;
+  openApiDocsUrl: string;
   user?: UserIdentity;
   setCookies?: string[];
 };
@@ -27,8 +29,8 @@ const userIdentityCache: {
 } = {};
 
 export const generateJwt = async (
-  userIdentity: UserIdentitySchema,
-  issuer: string,
+  request: EnrichedRequest,
+  user: UserIdentitySchema,
   remember: boolean = false,
 ): Promise<{
   newToken: string;
@@ -39,7 +41,7 @@ export const generateJwt = async (
   const jwtService = new JwtService();
 
   const { token, tokenPayload, tokenCookie, refreshToken, refreshCookie } =
-    await jwtService.createJwt(userIdentity, issuer, remember);
+    await jwtService.createJwt(request, user, remember);
 
   return {
     newToken: token,
@@ -55,6 +57,8 @@ export async function expressAuthentication(
   // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
   _scopes?: string[],
 ): Promise<UserIdentity> {
+  const request = req as EnrichedRequest;
+
   const jwtService = new JwtService();
   const userIdentityTable = new UserIdentityTable();
 
@@ -83,7 +87,7 @@ export async function expressAuthentication(
     throw new HttpError(401, 'Unauthorized');
   }
 
-  const tokenPayload = await jwtService.verifyJwt(token);
+  const tokenPayload = await jwtService.verifyJwt(request, token);
 
   if (!tokenPayload) {
     throw new HttpError(401, 'Unauthorized');
@@ -139,23 +143,18 @@ export function requestEnricher() {
     _res: Response,
     next: NextFunction,
   ): Response | void => {
+    const serviceName = process.env.SERVICE_NAME!;
     const scheme =
       req.headers['x-forwarded-proto'] || req.headers['x-scheme'] || 'http';
     const host =
       req.headers['x-forwarded-host'] || req.headers.host || 'localhost:3000';
-    const path = process.env.STAGE;
+    const baseUrl = `${scheme}://${host}`;
 
-    // TODO: Figure these out for different contexts
-    // - Codespaces
-    // - Lambda w/o Custom Domain
-    // - Lambda w/Custom Domain
-    // - Local
-
-    (req as EnrichedRequest).authUrl = `${scheme}://${host}/${path}/auth`;
-    (req as EnrichedRequest).openApiUrl =
-      `${scheme}://${host}/${path}/openapi.json`;
-    (req as EnrichedRequest).apiDocsUrl =
-      `${scheme}://${host}/${path}/swagger.html`;
+    (req as EnrichedRequest).serviceName = serviceName;
+    (req as EnrichedRequest).baseUrl = baseUrl;
+    (req as EnrichedRequest).authUrl = `${baseUrl}/auth`;
+    (req as EnrichedRequest).openApiUrl = `${baseUrl}/openapi.json`;
+    (req as EnrichedRequest).openApiDocsUrl = `${baseUrl}/swagger.html`;
 
     next();
   };
@@ -171,6 +170,8 @@ export function refreshHandler() {
     res: Response,
     next: NextFunction,
   ): Promise<Response | void> => {
+    const request = req as EnrichedRequest;
+
     const jwtService = new JwtService();
     const userIdentityTable = new UserIdentityTable();
 
@@ -192,13 +193,13 @@ export function refreshHandler() {
       return;
     }
 
-    if (await jwtService.verifyJwt(token)) {
+    if (await jwtService.verifyJwt(request, token)) {
       // Valid access token, no need to refresh
       next();
       return;
     }
 
-    const refreshPayload = await jwtService.verifyJwt(refreshToken);
+    const refreshPayload = await jwtService.verifyJwt(request, refreshToken);
 
     if (!refreshPayload) {
       next();
@@ -222,11 +223,11 @@ export function refreshHandler() {
       return;
     }
 
-    const userIdentity = result.Items[0];
+    const [user] = result.Items;
 
     const { newToken, newRefreshToken, newSetCookies } = await generateJwt(
-      userIdentity,
-      refreshPayload.iss,
+      request,
+      user,
       true,
     );
 

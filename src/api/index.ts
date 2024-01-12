@@ -29,7 +29,7 @@ export class Api extends Controller {
     this.jwtService = new JwtService();
   }
 
-  @Get('/health')
+  @Get('')
   @NoSecurity()
   public async health(
     @Request() httpRequest: EnrichedRequest,
@@ -42,9 +42,8 @@ export class Api extends Controller {
       version: packageJson.version,
       now: new Date(),
       hrefs: {
-        jwks: httpRequest.authUrl,
         openApi: httpRequest.openApiUrl,
-        apiDocs: httpRequest.apiDocsUrl,
+        openApiDocs: httpRequest.openApiDocsUrl,
       },
     };
   }

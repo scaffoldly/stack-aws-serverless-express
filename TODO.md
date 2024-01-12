@@ -28,3 +28,10 @@
 - massage in env from .serverless/config.js and serverless.yml
 - WHATIF... github pages is the frontend??
 - pull request deploy
+- s3 handler
+- kinesis handler
+- source maps
+- annotations for apidocs
+- reduce memory footprint
+- start and open swagger.html at startup
+- generate spec and routes filewatcher thingy

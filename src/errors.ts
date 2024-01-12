@@ -13,6 +13,8 @@ export default function errorHandler(version: string) {
   ): Response | void => {
     const traceId = process.env.XRAY_ENV_TRACE_ID || 'Unknown-Trace-Id';
 
+    console.error(err);
+
     let httpError: HttpError;
 
     if (!err) {

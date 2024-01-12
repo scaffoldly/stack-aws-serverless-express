@@ -88,8 +88,8 @@ export class AuthApi extends Controller {
     }
 
     const { newToken, newSetCookies } = await generateJwt(
+      httpRequest,
       Item,
-      httpRequest.authUrl,
       request.remember,
     );
 
@@ -116,8 +116,8 @@ export class AuthApi extends Controller {
   ): Promise<void> {
     // setting remember to false will create cookies which will expire immediately
     const { newSetCookies } = await generateJwt(
+      httpRequest,
       httpRequest.user!,
-      httpRequest.authUrl,
       false,
     );
     return res(204, undefined, { 'set-cookie': newSetCookies });

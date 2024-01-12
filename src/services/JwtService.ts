@@ -1,7 +1,8 @@
 import { JWK, JWKS, JWKECKey, JWT } from 'jose';
 import Cookies from 'cookies';
 import { v1 as uuid } from 'uuid';
-import { UserIdentitySchema } from '../db/user-identity';
+import { EnrichedRequest } from 'src/auth';
+import { UserIdentitySchema } from 'src/db/user-identity';
 import SecretService from './aws/SecretService';
 
 export type JwkStore = 'current' | 'next';
@@ -60,18 +61,18 @@ export class JwtService {
   };
 
   public createJwt = async (
-    userIdentity: UserIdentitySchema,
-    issuer: string,
+    request: EnrichedRequest,
+    user: UserIdentitySchema,
     remember = false,
   ): Promise<Jwt> => {
     const iat = Math.floor(new Date().getTime() / 1000);
 
     const payload: JwtPayload = {
-      aud: process.env.SERVICE_NAME!,
-      sub: userIdentity.uuid!,
+      aud: request.baseUrl,
+      sub: user.uuid!,
       iat,
       exp: iat + 3600,
-      iss: issuer,
+      iss: request.authUrl,
       jti: uuid(),
     };
 
@@ -135,6 +136,7 @@ export class JwtService {
   };
 
   public verifyJwt = async (
+    request: EnrichedRequest,
     token?: string,
   ): Promise<JwtPayload | undefined> => {
     if (!token) {
@@ -155,7 +157,8 @@ export class JwtService {
     let verified: JwtPayload | undefined;
     try {
       verified = JWT.verify(token, jwks, {
-        audience: process.env.SERVICE_NAME!,
+        audience: request.baseUrl,
+        issuer: request.authUrl,
       }) as JwtPayload;
     } catch (e) {
       return undefined;

@@ -2,11 +2,10 @@
   try {
     const packageJson = require('../package.json');
     const { generateSpec, generateRoutes } = require('@tsoa/cli');
-    const { NODE_ENV } = process.env;
 
     console.log('Generating spec...');
     await generateSpec({
-      basePath: `/${NODE_ENV}`,
+      basePath: `/`,
       name: packageJson.name,
       description: packageJson.description,
       version: packageJson.version,
