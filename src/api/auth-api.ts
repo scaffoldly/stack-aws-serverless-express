@@ -93,17 +93,13 @@ export class AuthApi extends Controller {
       request.remember,
     );
 
-    let response: LoginResponse = {
+    const response: LoginResponse = {
       uuid: Item.uuid!,
       email: Item.email!,
       token: request.remember ? undefined : newToken,
     };
 
-    if (request.remember) {
-      response = res(200, response, { 'set-cookie': newSetCookies });
-    }
-
-    return response;
+    return res(200, response, { 'set-cookie': newSetCookies });
   }
 
   @Post('/logout')

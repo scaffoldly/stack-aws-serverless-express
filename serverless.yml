@@ -25,63 +25,52 @@ provider:
     apiGateway: true
     lambda: true
   environment:
-    DEFAULT_QUEUE_URL: { Ref: DefaultQueue }
-    DEFAULT_TABLE_NAME: { Ref: DefaultTable }
-    DEFAULT_TOPIC_ARN: { Ref: DefaultTopic }
+    QUEUE_URL: { Ref: Queue }
+    TABLE_NAME: { Ref: Table }
+    TOPIC_ARN: { Ref: Topic }
+    SECRET_ID: { Ref: Secret }
     SERVICE_NAME: ${self:service}
     STAGE: ${self:provider.stage}
 
 functions:
-  app:
+  lambda:
     handler: src/app.lambda
-    timeout: 30
+    timeout: 29
     events:
       - httpApi: '*'
-      # - http:
-      #     path: /
-      #     method: any
-      # - http:
-      #     path: /
-      #     method: options
-      # - http:
-      #     path: /{proxy+}
-      #     method: any
-      # - http:
-      #     path: /{proxy+}
-      #     method: options
       - stream:
           type: dynamodb
           arn:
-            Fn::GetAtt: [DefaultTable, StreamArn]
+            Fn::GetAtt: [Table, StreamArn]
       - sqs:
           arn:
-            Fn::GetAtt: [DefaultQueue, Arn]
+            Fn::GetAtt: [Queue, Arn]
       - sns:
-          arn: !Ref DefaultTopic
-          topicName: ${self:provider.stage}-${self:service}
+          arn: !Ref Topic
+          topicName: ${self:service}-${self:provider.stage}
 
 resources:
   Resources:
-    DefaultSecret:
+    Secret:
       Type: AWS::SecretsManager::Secret
       Properties:
-        Name: lambda/${self:provider.stage}/${self:service}
+        Name: lambda/${self:service}/${self:provider.stage}
         SecretString: '${file(.serverless/config.js):appSecrets}'
 
-    DefaultTopic:
+    Topic:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: ${self:provider.stage}-${self:service}
+        TopicName: ${self:service}-${self:provider.stage}
 
-    DefaultQueue:
+    Queue:
       Type: AWS::SQS::Queue
       Properties:
-        QueueName: ${self:provider.stage}-${self:service}
+        QueueName: ${self:service}-${self:provider.stage}
 
-    DefaultTable:
+    Table:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ${self:provider.stage}-${self:service}
+        TableName: ${self:service}-${self:provider.stage}
         KeySchema:
           - AttributeName: hashKey
             KeyType: HASH

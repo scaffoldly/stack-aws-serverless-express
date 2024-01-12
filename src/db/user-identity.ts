@@ -11,6 +11,6 @@ export class UserIdentityTable extends BaseTable<
   'identity'
 > {
   constructor() {
-    super(process.env.DEFAULT_TABLE_NAME!, 'user', 'identity');
+    super(process.env.TABLE_NAME!, 'user', 'identity');
   }
 }

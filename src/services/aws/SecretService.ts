@@ -18,7 +18,7 @@ export default class SecretService {
   }
 
   public async getSecret(
-    store: string,
+    secretId: string,
     key: string,
     useCache = true,
   ): Promise<string | null> {
@@ -27,27 +27,27 @@ export default class SecretService {
     if (!useCache) {
       try {
         const { SecretString } = await this.client.send(
-          new GetSecretValueCommand({ SecretId: store }),
+          new GetSecretValueCommand({ SecretId: secretId }),
         );
 
         if (!SecretString) {
           return null;
         }
 
-        secretCache[store] = { value: SecretString, expires: now + 3600 };
+        secretCache[secretId] = { value: SecretString, expires: now + 3600 };
       } catch (err) {
         return null;
       }
     }
 
-    if (!secretCache[store]) {
-      return this.getSecret(store, key, false);
+    if (!secretCache[secretId]) {
+      return this.getSecret(secretId, key, false);
     }
 
-    const { value, expires } = secretCache[store];
+    const { value, expires } = secretCache[secretId];
 
     if (now >= expires) {
-      return this.getSecret(store, key, false);
+      return this.getSecret(secretId, key, false);
     }
 
     const secretObject = JSON.parse(value) as { [key: string]: string };
@@ -60,7 +60,7 @@ export default class SecretService {
   }
 
   public async setSecret(
-    store: string,
+    secretId: string,
     key: string,
     value: string,
   ): Promise<string | null> {
@@ -68,7 +68,7 @@ export default class SecretService {
 
     try {
       const { SecretString = '{}' } = await this.client.send(
-        new GetSecretValueCommand({ SecretId: store }),
+        new GetSecretValueCommand({ SecretId: secretId }),
       );
 
       const secretObject = {
@@ -78,7 +78,7 @@ export default class SecretService {
 
       await this.client.send(
         new PutSecretValueCommand({
-          SecretId: store,
+          SecretId: secretId,
           SecretString: JSON.stringify(secretObject),
         }),
       );
@@ -92,14 +92,14 @@ export default class SecretService {
 
       await this.client.send(
         new CreateSecretCommand({
-          Name: store,
+          Name: secretId,
           SecretString: JSON.stringify(entry),
         }),
       );
     }
 
-    delete secretCache[store];
+    delete secretCache[secretId];
 
-    return this.getSecret(store, key);
+    return this.getSecret(secretId, key);
   }
 }

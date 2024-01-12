@@ -35,3 +35,4 @@
 - reduce memory footprint
 - start and open swagger.html at startup
 - generate spec and routes filewatcher thingy
+- research if express has a "host react in express" handler
