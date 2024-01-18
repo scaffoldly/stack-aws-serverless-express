@@ -116,5 +116,7 @@ custom:
 
   bundle:
     copyFiles:
+      - from: './src/api/docs/openapi.json'
+        to: './src/api/docs/openapi.json'
       - from: './src/api/docs/swagger.html'
         to: './src/api/docs/swagger.html'

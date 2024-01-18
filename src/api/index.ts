@@ -34,9 +34,6 @@ export class Api extends Controller {
   public async health(
     @Request() httpRequest: EnrichedRequest,
   ): Promise<HealthResponse> {
-    console.log('ENV:', JSON.stringify(process.env, null, 2));
-    console.log('HEADERS:', JSON.stringify(httpRequest.headers, null, 2));
-
     return {
       name: packageJson.name,
       version: packageJson.version,
