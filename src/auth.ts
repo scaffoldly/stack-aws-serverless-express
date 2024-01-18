@@ -84,8 +84,6 @@ export async function expressAuthentication(
     token = cookies.get(ACCESS_COOKIE);
   }
 
-  token = 'foo';
-
   if (!token) {
     throw new HttpError(401);
   }

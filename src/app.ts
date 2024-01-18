@@ -1,22 +1,13 @@
 import express from 'express';
 import morganBody from 'morgan-body';
-import { readFileSync } from 'fs';
 import { configure } from '@vendia/serverless-express';
 import { RegisterRoutes } from './routes';
-import swaggerJson from './swagger.json';
 import errorHandler from './errors';
 import { corsHandler } from './cors';
 import { requestEnricher, refreshHandler, cookieHandler } from './auth';
+import { docsHandler } from './docs';
 
 const app = express();
-
-app.disable('x-powered-by');
-app.set('json spaces', 2);
-app.use(express.json({ limit: 5242880 }));
-app.use(corsHandler({ withCredentials: true }));
-app.use(cookieHandler());
-app.use(requestEnricher());
-app.use(refreshHandler());
 
 morganBody(app, {
   noColors: true,
@@ -26,18 +17,16 @@ morganBody(app, {
   logRequestBody: false,
 });
 
+app.disable('x-powered-by');
+app.set('json spaces', 2);
+app.use(express.json({ limit: 5242880 }));
+app.use(corsHandler({ withCredentials: true }));
+app.use(cookieHandler());
+app.use(requestEnricher());
+app.use(refreshHandler());
+app.use(docsHandler());
+
 RegisterRoutes(app);
-
-app.get('/openapi.json', (_req: express.Request, res: express.Response) => {
-  res.type('json');
-  res.send(JSON.stringify(swaggerJson));
-});
-
-app.get(['/swagger.html'], (_req: express.Request, res: express.Response) => {
-  const file = readFileSync('./src/swagger.html');
-  res.type('html');
-  res.send(file);
-});
 
 app.get('*', (req: express.Request, res: express.Response) => {
   res.type(req.headers['content-type'] || 'json');
