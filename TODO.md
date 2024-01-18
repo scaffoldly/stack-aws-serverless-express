@@ -3,18 +3,14 @@
 - see if API Gateway Domain can be injected somehow
   - https://stackoverflow.com/a/73713990
 - update README
-- export Layers
+- support for Layers
 - unit/integration tests
 - see if serverless dotenv is needed anymore and/or use it more
-- pull swagger.html from library
 - figure out paths and how to customize in prep for frontend
 - metadata like the BASE_URL from Codespaces/Local/LambdaEnv
 - filters on topics and queues
-- error handling
 - Websockets
 - Handle message failures
-- 404 API return no html
-- Integrate Public URL for GHA for CORS
 - publish client libraries
 - handle errors in offline resources when localstack is restarted
 - live reloading of spec and routes
