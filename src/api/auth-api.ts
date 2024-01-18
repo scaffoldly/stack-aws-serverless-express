@@ -15,13 +15,13 @@ import {
 import { DynamoDBServiceException } from '@aws-sdk/client-dynamodb';
 import { DynamoDBExceptionName } from 'ddb-table';
 import { v4 as uuid } from 'uuid';
-import { JwksResponse, LoginResponse } from './responses';
-import { LoginRequest } from './requests';
-import { UserIdentityTable } from '../db/user-identity';
+import { JwksResponse, LoginResponse } from '../responses';
+import { LoginRequest } from '../requests';
+import { UserIdentityTable } from './db/user-identity';
 import { HttpError } from './internal/errors';
-import { preventOverwrite } from '../db/base';
-import { JwtService } from '../services/JwtService';
-import { generateJwt, EnrichedRequest } from '../auth';
+import { preventOverwrite } from './db/base';
+import { JwtService } from './services/JwtService';
+import { generateJwt, EnrichedRequest } from './express/auth';
 
 @Route('/auth')
 @Tags('Auth Api')

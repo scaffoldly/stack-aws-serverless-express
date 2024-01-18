@@ -1,5 +1,5 @@
 import { SendMessageCommand, SQSClient } from '@aws-sdk/client-sqs';
-import { BaseMessage } from '../../api/internal/messages';
+import { BaseMessage } from './messages';
 
 export default class SqsService {
   private client: SQSClient;

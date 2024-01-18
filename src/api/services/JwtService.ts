@@ -1,8 +1,8 @@
 import { JWK, JWKS, JWKECKey, JWT } from 'jose';
 import Cookies from 'cookies';
 import { v1 as uuid } from 'uuid';
-import { EnrichedRequest } from 'src/auth';
-import { UserIdentitySchema } from 'src/db/user-identity';
+import { UserIdentitySchema } from '../db/user-identity';
+import { EnrichedRequest } from '../express/auth';
 import SecretService from './aws/SecretService';
 
 export type JwkStore = 'current' | 'next';

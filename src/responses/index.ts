@@ -1,4 +1,4 @@
-import { Jwk } from '../../services/JwtService';
+import { Jwk } from '../api/services/JwtService';
 
 export type EmptyResponse = void;
 

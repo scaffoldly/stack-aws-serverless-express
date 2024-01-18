@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { Path } from 'path-parser';
 import { readFileSync } from 'fs';
-import swaggerJson from './swagger.json';
 
 export function docsHandler() {
   return (req: Request, res: Response, next: NextFunction): void => {
@@ -11,12 +10,14 @@ export function docsHandler() {
     }
 
     if (new Path('/openapi.json').test(req.path)) {
-      res.json(swaggerJson);
+      const file = readFileSync('./src/api/docs/openapi.json');
+      res.type('html');
+      res.send(file);
       return;
     }
 
     if (new Path('/swagger.html').test(req.path)) {
-      const file = readFileSync('./src/swagger.html');
+      const file = readFileSync('./src/api/docs/swagger.html');
       res.type('html');
       res.send(file);
       return;

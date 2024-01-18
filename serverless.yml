@@ -116,5 +116,5 @@ custom:
 
   bundle:
     copyFiles:
-      - from: './src/swagger.html'
-        to: './src/swagger.html'
+      - from: './src/api/docs/swagger.html'
+        to: './src/api/docs/swagger.html'

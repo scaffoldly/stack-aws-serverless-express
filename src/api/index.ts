@@ -9,12 +9,12 @@ import {
   Path,
 } from 'tsoa';
 import packageJson from '../../package.json';
-import { UserIdentitySchema, UserIdentityTable } from '../db/user-identity';
-import { JwtService } from '../services/JwtService';
-import { EnrichedRequest } from '../auth';
+import { UserIdentitySchema, UserIdentityTable } from './db/user-identity';
+import { JwtService } from './services/JwtService';
+import { EnrichedRequest } from './express/auth';
 import { HttpError } from './internal/errors';
-import { Keys } from '../db/base';
-import { HealthResponse } from './responses';
+import { Keys } from './db/base';
+import { HealthResponse } from '../responses';
 
 @Route('')
 @Tags('Api')

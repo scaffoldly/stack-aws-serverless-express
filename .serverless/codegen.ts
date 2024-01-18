@@ -12,7 +12,8 @@
       entryFile: 'src/app.ts',
       noImplicitAdditionalProperties: 'throw-on-extras',
       controllerPathGlobs: ['src/api/index.ts', 'src/api/*-api.ts'],
-      outputDirectory: 'src',
+      outputDirectory: './src/api/docs',
+      specFileBaseName: 'openapi',
       specVersion: 3,
       securityDefinitions: {
         jwt: JSON.parse(
@@ -30,8 +31,8 @@
       entryFile: 'src/app.ts',
       noImplicitAdditionalProperties: 'throw-on-extras',
       controllerPathGlobs: ['src/api/index.ts', 'src/api/*-api.ts'],
-      routesDir: 'src',
-      authenticationModule: 'src/auth.ts',
+      routesDir: './src/api/express',
+      authenticationModule: 'src/api/express/auth.ts',
       noWriteIfUnchanged: true,
     });
   } catch (e: any) {

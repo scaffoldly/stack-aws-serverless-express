@@ -1,11 +1,15 @@
 import express from 'express';
 import morganBody from 'morgan-body';
 import { configure } from '@vendia/serverless-express';
-import { RegisterRoutes } from './routes';
-import errorHandler from './errors';
-import { corsHandler } from './cors';
-import { requestEnricher, refreshHandler, cookieHandler } from './auth';
-import { docsHandler } from './docs';
+import { RegisterRoutes } from './api/express/routes';
+import errorHandler from './api/express/errors';
+import { corsHandler } from './api/express/cors';
+import {
+  requestEnricher,
+  refreshHandler,
+  cookieHandler,
+} from './api/express/auth';
+import { docsHandler } from './api/express/docs';
 
 const app = express();
 

@@ -5,9 +5,9 @@ import {
   JwtPayload,
   JwtService,
   REFRESH_COOKIE,
-} from './services/JwtService';
-import { HttpError } from './api/internal/errors';
-import { UserIdentitySchema, UserIdentityTable } from './db/user-identity';
+} from '../services/JwtService';
+import { HttpError } from '../internal/errors';
+import { UserIdentitySchema, UserIdentityTable } from '../db/user-identity';
 
 export type UserIdentity = UserIdentitySchema & {
   token?: string;
