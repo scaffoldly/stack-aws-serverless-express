@@ -84,7 +84,7 @@ export class AuthApi extends Controller {
 
     if (!Item) {
       // An example on how to throw an error
-      throw new HttpError(404, 'Not Found');
+      throw new HttpError(404);
     }
 
     const { newToken, newSetCookies } = await generateJwt(

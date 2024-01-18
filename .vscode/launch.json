@@ -11,8 +11,11 @@
       "name": "Local Debug",
       "program": "${workspaceRoot}/node_modules/serverless/bin/serverless",
       "args": ["offline", "start", "--noTimeout"],
-      "outFiles": ["${workspaceFolder}/.webpack/**/*.js"],
       "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "webpack:///./~/*": "${workspaceFolder}/node_modules/*",
+        "webpack://?:*/*": "${workspaceFolder}/.webpack/*"
+      },
       "internalConsoleOptions": "openOnSessionStart",
       "presentation": {
         "hidden": false,

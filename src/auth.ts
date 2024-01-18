@@ -63,15 +63,16 @@ export async function expressAuthentication(
   const userIdentityTable = new UserIdentityTable();
 
   if (securityName !== 'jwt') {
-    throw new HttpError(403, 'Forbidden');
+    throw new HttpError(403);
   }
 
   let token: string | undefined;
 
   if (req.headers.authorization) {
     const [scheme, auth] = req.headers.authorization.split(' ');
-    if (scheme !== 'Bearer' || !token) {
-      throw new HttpError(403, 'Forbidden');
+
+    if (scheme !== 'Bearer' || !auth) {
+      throw new HttpError(403);
     }
 
     token = auth;
@@ -83,20 +84,22 @@ export async function expressAuthentication(
     token = cookies.get(ACCESS_COOKIE);
   }
 
+  token = 'foo';
+
   if (!token) {
-    throw new HttpError(401, 'Unauthorized');
+    throw new HttpError(401);
   }
 
   const tokenPayload = await jwtService.verifyJwt(request, token);
 
   if (!tokenPayload) {
-    throw new HttpError(401, 'Unauthorized');
+    throw new HttpError(401);
   }
 
   const sub = tokenPayload && tokenPayload.sub;
 
   if (!sub) {
-    throw new HttpError(401, 'Unauthorized');
+    throw new HttpError(401);
   }
 
   let userIdentity: UserIdentitySchema | undefined;
@@ -123,7 +126,7 @@ export async function expressAuthentication(
   }
 
   if (!userIdentity) {
-    throw new HttpError(401, 'Unauthorized');
+    throw new HttpError(401);
   }
 
   userIdentityCache[sub] = {

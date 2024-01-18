@@ -2,7 +2,6 @@ import express from 'express';
 import morganBody from 'morgan-body';
 import { readFileSync } from 'fs';
 import { configure } from '@vendia/serverless-express';
-import packageJson from '../package.json';
 import { RegisterRoutes } from './routes';
 import swaggerJson from './swagger.json';
 import errorHandler from './errors';
@@ -28,7 +27,6 @@ morganBody(app, {
 });
 
 RegisterRoutes(app);
-app.use(errorHandler(packageJson.version));
 
 app.get('/openapi.json', (_req: express.Request, res: express.Response) => {
   res.type('json');
@@ -46,6 +44,8 @@ app.get('*', (req: express.Request, res: express.Response) => {
   res.status(404);
   res.send('');
 });
+
+app.use(errorHandler());
 
 export const lambda = configure({
   app,

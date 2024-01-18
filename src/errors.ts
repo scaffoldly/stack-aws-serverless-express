@@ -1,68 +1,68 @@
 import { ValidateError } from 'tsoa';
 import { NextFunction, Request, Response } from 'express';
 import axios from 'axios';
-import { HttpError, StatusCode } from './api/internal/errors';
-import { ErrorResponse } from './api/responses';
+import { HttpError } from './api/internal/errors';
 
-export default function errorHandler(version: string) {
+export default function errorHandler() {
   return (
     err: unknown,
-    _req: Request,
+    req: Request,
     res: Response,
     next: NextFunction,
   ): Response | void => {
-    const traceId = process.env.XRAY_ENV_TRACE_ID || 'Unknown-Trace-Id';
-
     console.error(err);
 
     let httpError: HttpError;
 
-    if (!err) {
-      httpError = new HttpError(500, 'Internal Server Error');
-    } else if (err instanceof HttpError) {
-      httpError = err;
-    } else if (err instanceof ValidateError) {
-      httpError = new HttpError(400, 'Bad Request', {
-        fields: err.fields,
+    if (err instanceof Error && err.name === 'HttpError') {
+      httpError = err as HttpError;
+    } else if (err instanceof Error && err.name === 'ValidateError') {
+      const error = err as ValidateError;
+      httpError = new HttpError(error.status, {
+        message: error.message,
+        error,
       });
-    } else if (typeof err === 'object' && 'fields' in err) {
-      httpError = new HttpError(400, 'Bad Request', {
-        fields: err.fields,
+    } else if (
+      err &&
+      typeof err === 'object' &&
+      'statusCode' in err &&
+      typeof err.statusCode === 'number' &&
+      'message' in err &&
+      typeof err.message === 'string'
+    ) {
+      httpError = new HttpError(err.statusCode, {
+        error: new Error(err.message),
       });
-    } else if (typeof err === 'object' && 'statusCode' in err) {
-      let message = 'Internal Server Error';
-      if ('message' in err && typeof err.message === 'string') {
-        message = err.message;
-      }
-      httpError = new HttpError(err.statusCode as StatusCode, message, {
-        error: err,
+    } else if (
+      err &&
+      typeof err === 'object' &&
+      'message' in err &&
+      typeof err.message === 'string'
+    ) {
+      httpError = new HttpError(500, {
+        error: new Error(err.message),
       });
     } else if (axios.isAxiosError(err)) {
-      const status = (err.response && err.response.status) || 500;
-      httpError = new HttpError(status as StatusCode, err.message, {
+      const status = (err.response && err.response.status) || 503;
+      const message =
+        err.response &&
+        err.response.data &&
+        (err.response.data.message || err.response.data.errorMessage);
+      httpError = new HttpError(status, {
         error: err,
+        message: typeof message === 'string' ? message : undefined,
       });
     } else {
-      let message = 'Internal Server Error';
-      if (
-        typeof err === 'object' &&
-        'message' in err &&
-        typeof err.message === 'string'
-      ) {
-        message = err.message;
-      }
-
-      httpError = new HttpError(500, message, { error: err });
+      httpError = new HttpError(500, {
+        message: 'Unknown Error',
+      });
     }
 
-    const errorResponse: ErrorResponse = {
-      message: httpError.message,
-      traceId,
-      version,
-      context: httpError.context,
-    };
-
-    res.status(httpError.statusCode).json(errorResponse);
-    next();
+    res.status(httpError.status);
+    if (req.accepts('html')) {
+      next(httpError);
+    } else {
+      res.json(httpError.toResponse());
+    }
   };
 }

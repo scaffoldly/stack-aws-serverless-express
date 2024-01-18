@@ -20,7 +20,7 @@ export class EventApi extends Controller {
     @Body() body: unknown,
   ): Promise<void> {
     if (host !== 'dynamodb.amazonaws.com') {
-      throw new HttpError(403, 'Forbidden');
+      throw new HttpError(403);
     }
 
     const event = body as DynamoDBStreamEvent;
@@ -48,7 +48,7 @@ export class EventApi extends Controller {
     @Body() body: unknown,
   ): Promise<void> {
     if (host !== 'sqs.amazonaws.com') {
-      throw new HttpError(403, 'Forbidden');
+      throw new HttpError(403);
     }
 
     const event = body as SQSEvent;
@@ -62,7 +62,7 @@ export class EventApi extends Controller {
     @Body() body: unknown,
   ): Promise<void> {
     if (host !== 'sns.amazonaws.com') {
-      throw new HttpError(403, 'Forbidden');
+      throw new HttpError(403);
     }
 
     const event = body as SNSEvent;

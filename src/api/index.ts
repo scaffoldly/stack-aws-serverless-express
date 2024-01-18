@@ -58,7 +58,7 @@ export class Api extends Controller {
       .exec();
 
     if (!item || !item.Item) {
-      throw new HttpError(404, 'Not Found');
+      throw new HttpError(404);
     }
 
     return item.Item;
@@ -81,7 +81,7 @@ export class Api extends Controller {
     // We add a filter on hashKey and rangeKey to make sure it's actually a User Identity
 
     if (!result.Count || !result.Items || result.Items.length !== 1) {
-      throw new HttpError(404, 'Not Found');
+      throw new HttpError(404);
     }
 
     return result.Items[0];
