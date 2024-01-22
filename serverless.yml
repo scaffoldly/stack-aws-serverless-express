@@ -50,6 +50,8 @@ functions:
           topicName: ${self:service}-${self:provider.stage}
 
 resources:
+  Transform: AWS::LanguageExtensions
+
   Resources:
     Secret:
       Type: AWS::SecretsManager::Secret
