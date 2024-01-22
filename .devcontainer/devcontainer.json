@@ -36,10 +36,7 @@
   },
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
-    "ghcr.io/saml-to/devcontainer-features/assume-aws-role:2": {
-      "role": "arn:aws:iam::557208059266:role/aws@scaffold.ly"
-    }
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
   "customizations": {
     "vscode": {
@@ -47,7 +44,7 @@
       "settings": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.codeActionsOnSave": {
-          "source.fixAll.eslint": true
+          "source.fixAll.eslint": "always"
         },
         "[html]": {
           "editor.defaultFormatter": "vscode.html-language-features"

@@ -1,5 +1,17 @@
 # TODO List
 
+IMMEDIATE NEXT:
+ - custom domains
+ - autogen spec/routes w/filewatcher?
+ - frontend stuff again, maybe next?
+ - webpack alternative?
+
+ASSISTED BACKEND:
+ - AWS Role Assume for Deploy
+ - Custom Domains
+
+OTHER:
+- env vars into src/env.ts from serverless.yaml
 - see if API Gateway Domain can be injected somehow
   - https://stackoverflow.com/a/73713990
 - update README
