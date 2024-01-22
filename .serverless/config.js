@@ -37,4 +37,4 @@ while ((result = APP_SECRETS_REGEX.exec(SECRETS)) !== null) {
   appSecrets[key] = value;
 }
 
-module.exports.appSecrets = JSON.stringify(appSecrets);
+module.exports.appSecrets = appSecrets;
