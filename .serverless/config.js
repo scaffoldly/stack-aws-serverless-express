@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 const packageJson = require('../package.json');
 module.exports['SERVICE_NAME'] = packageJson.name;
 
-const { NODE_ENV, SECRETS = '', CI_SECRETS = '' } = process.env;
+const { NODE_ENV, SECRETS = '' } = process.env;
 
 let envVars = {};
 
@@ -21,14 +21,14 @@ Object.entries(envVars).forEach(([key, value]) => {
   module.exports[key] = value;
 });
 
-const ciSecrets = CI_SECRETS.split(',');
+const includeSecrets = envVars['INCLUDE_SECRETS'].split(',');
 // TODO Codespaces Secrets
 const secrets = JSON.parse(SECRETS);
 
 // Copy from secrets anything that's listed in ciSecrets
 module.exports.SECRETS = JSON.stringify(
   Object.entries(secrets).reduce((acc, { key, value }) => {
-    if (ciSecrets.includes(key)) {
+    if (includeSecrets.includes(key)) {
       acc[key] = value;
     }
     return acc;
