@@ -10,10 +10,7 @@ module.exports['STAGE_DOMAIN'] =
 module.exports['API_GATEWAY_DOMAIN'] =
   `${process.env.CODESPACE_NAME}-3000.${module.exports['STAGE_DOMAIN']}`;
 
-const { NODE_ENV, SECRETS = '' } = process.env;
-
-// Regex for GitHub toJSON() JSON-ish output
-// const APP_SECRETS_REGEX = / {2}(?<key>.*?): (?<value>.*?)(,\n|\n)/gm;
+const { NODE_ENV } = process.env;
 
 let envVars = {};
 
@@ -29,12 +26,3 @@ try {
 Object.entries(envVars).forEach(([key, value]) => {
   module.exports[key] = value;
 });
-
-// const secrets = {};
-
-// while ((result = APP_SECRETS_REGEX.exec(SECRETS)) !== null) {
-//   const { key, value } = result.groups;
-//   secrets[key] = value;
-// }
-
-module.exports.secrets = SECRETS;
