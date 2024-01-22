@@ -50,15 +50,12 @@ functions:
           topicName: ${self:service}-${self:provider.stage}
 
 resources:
-  Transform: AWS::LanguageExtensions
-
   Resources:
     Secret:
       Type: AWS::SecretsManager::Secret
       Properties:
         Name: lambda/${self:service}/${self:provider.stage}
-        SecretString:
-          Fn::ToJsonString: ${file(.serverless/config.js):secrets}
+        SecretString: ${file(.serverless/config.js):secrets}
 
     Topic:
       Type: AWS::SNS::Topic

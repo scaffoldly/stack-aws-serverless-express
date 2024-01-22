@@ -13,7 +13,7 @@ module.exports['API_GATEWAY_DOMAIN'] =
 const { NODE_ENV, SECRETS = '' } = process.env;
 
 // Regex for GitHub toJSON() JSON-ish output
-const APP_SECRETS_REGEX = / {2}(?<key>.*?): (?<value>.*?)(,\n|\n)/gm;
+// const APP_SECRETS_REGEX = / {2}(?<key>.*?): (?<value>.*?)(,\n|\n)/gm;
 
 let envVars = {};
 
@@ -30,11 +30,11 @@ Object.entries(envVars).forEach(([key, value]) => {
   module.exports[key] = value;
 });
 
-const secrets = {};
+// const secrets = {};
 
-while ((result = APP_SECRETS_REGEX.exec(SECRETS)) !== null) {
-  const { key, value } = result.groups;
-  secrets[key] = value;
-}
+// while ((result = APP_SECRETS_REGEX.exec(SECRETS)) !== null) {
+//   const { key, value } = result.groups;
+//   secrets[key] = value;
+// }
 
-module.exports.secrets = secrets;
+module.exports.secrets = SECRETS;
