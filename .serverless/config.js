@@ -21,7 +21,7 @@ Object.entries(envVars).forEach(([key, value]) => {
   module.exports[key] = value;
 });
 
-const includeSecrets = envVars['INCLUDE_SECRETS'].split(',');
+const includeSecrets = (envVars['INCLUDE_SECRETS'] || '').split(',');
 // TODO Codespaces Secrets
 const secrets = JSON.parse(SECRETS);
 
