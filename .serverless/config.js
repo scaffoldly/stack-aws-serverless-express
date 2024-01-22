@@ -4,13 +4,7 @@ const dotenv = require('dotenv');
 const packageJson = require('../package.json');
 module.exports['SERVICE_NAME'] = packageJson.name;
 
-// TODO Remove or inject
-module.exports['STAGE_DOMAIN'] =
-  `${process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}`;
-module.exports['API_GATEWAY_DOMAIN'] =
-  `${process.env.CODESPACE_NAME}-3000.${module.exports['STAGE_DOMAIN']}`;
-
-const { NODE_ENV } = process.env;
+const { NODE_ENV, SECRETS = '', CI_SECRETS = '' } = process.env;
 
 let envVars = {};
 
@@ -26,3 +20,17 @@ try {
 Object.entries(envVars).forEach(([key, value]) => {
   module.exports[key] = value;
 });
+
+const ciSecrets = CI_SECRETS.split(',');
+// TODO Codespaces Secrets
+const secrets = JSON.parse(secrets);
+
+// Copy from secrets anything that's listed in ciSecrets
+module.exports.SECRETS = JSON.stringify(
+  Object.entries(secrets).reduce((acc, [key, value]) => {
+    if (ciSecrets.includes(key)) {
+      acc[key] = value;
+    }
+    return acc;
+  }, {}),
+);
