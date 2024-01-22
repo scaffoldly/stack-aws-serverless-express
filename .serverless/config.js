@@ -27,7 +27,7 @@ const secrets = JSON.parse(SECRETS);
 
 // Copy from secrets anything that's listed in ciSecrets
 module.exports.SECRETS = JSON.stringify(
-  Object.entries(secrets).reduce((acc, [key, value]) => {
+  Object.entries(secrets).reduce((acc, { key, value }) => {
     if (ciSecrets.includes(key)) {
       acc[key] = value;
     }
