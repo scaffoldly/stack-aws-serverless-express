@@ -115,6 +115,7 @@ custom:
     useChildProcesses: false
 
   bundle:
+    esbuild: true
     copyFiles:
       - from: './src/api/docs/openapi.json'
         to: './src/api/docs/openapi.json'
