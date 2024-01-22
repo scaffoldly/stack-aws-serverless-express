@@ -23,7 +23,7 @@ Object.entries(envVars).forEach(([key, value]) => {
 
 const ciSecrets = CI_SECRETS.split(',');
 // TODO Codespaces Secrets
-const secrets = JSON.parse(secrets);
+const secrets = JSON.parse(SECRETS);
 
 // Copy from secrets anything that's listed in ciSecrets
 module.exports.SECRETS = JSON.stringify(
