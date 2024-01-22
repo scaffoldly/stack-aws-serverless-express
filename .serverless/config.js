@@ -30,11 +30,11 @@ Object.entries(envVars).forEach(([key, value]) => {
   module.exports[key] = value;
 });
 
-const appSecrets = {};
+const secrets = {};
 
 while ((result = APP_SECRETS_REGEX.exec(SECRETS)) !== null) {
   const { key, value } = result.groups;
-  appSecrets[key] = value;
+  secrets[key] = value;
 }
 
-module.exports.appSecrets = appSecrets;
+module.exports.secrets = secrets;
