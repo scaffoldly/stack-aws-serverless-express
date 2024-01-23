@@ -33,8 +33,8 @@ provider:
     STAGE: ${self:provider.stage}
 
 functions:
-  lambda:
-    handler: src/app.lambda
+  webapp:
+    handler: src/webapp.lambda
     timeout: 29
     events:
       - httpApi: '*'

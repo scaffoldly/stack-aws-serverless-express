@@ -2,7 +2,6 @@
 
 IMMEDIATE NEXT:
 
-- custom domains
 - autogen spec/routes w/filewatcher?
 - frontend stuff again, maybe next?
 - webpack alternative?
@@ -25,7 +24,6 @@ OTHER:
 - publish client libraries
 - handle errors in offline resources when localstack is restarted
 - live reloading of spec and routes
-- massage in env from .serverless/config.js and serverless.yml
 - WHATIF... github pages is the frontend??
 - pull request deploy
 - s3 handler
@@ -38,3 +36,4 @@ OTHER:
 - research if express has a "host react in express" handler
 - add xray
 - seed data into ddb
+- add localstack pods back
