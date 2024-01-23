@@ -1,36 +1,27 @@
-const fs = require('fs');
 const dotenv = require('dotenv');
-
 const packageJson = require('../package.json');
-module.exports['SERVICE_NAME'] = packageJson.name;
 
-const { NODE_ENV, SECRETS = '' } = process.env;
+const { SECRETS = '{}' } = process.env;
 
-let envVars = {};
+dotenv.config();
 
-try {
-  const envFile = NODE_ENV
-    ? fs.readFileSync(fs.openSync(`.scaffoldly/${NODE_ENV}/.env`))
-    : fs.readFileSync(fs.openSync(`.scaffoldly/.env`));
-  envVars = dotenv.parse(envFile);
-} catch (e) {
-  envVars = {};
-}
+const secrets = {
+  // Gather process.env so Codespaces secrets are included
+  ...process.env,
+  // Parse SECRETS so Github Actions Secrets are included
+  ...JSON.parse(SECRETS),
+};
 
-Object.entries(envVars).forEach(([key, value]) => {
-  module.exports[key] = value;
-});
+// Copy anything that is in INCLUDE_SECRETS into module.exports.SECRETS
+const includeSecrets = (process.env.INCLUDE_SECRETS || '').split(',');
 
-const includeSecrets = (envVars['INCLUDE_SECRETS'] || '').split(',');
-// TODO Codespaces Secrets
-const secrets = JSON.parse(SECRETS);
-
-// Copy from secrets anything that's listed in ciSecrets
 module.exports.SECRETS = JSON.stringify(
-  Object.entries(secrets).reduce((acc, { key, value }) => {
+  Object.entries(secrets).reduce((acc, [key, value]) => {
     if (includeSecrets.includes(key)) {
       acc[key] = value;
     }
     return acc;
   }, {}),
 );
+
+module.exports.SERVICE_NAME = packageJson.name;
