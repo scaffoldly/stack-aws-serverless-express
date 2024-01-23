@@ -118,3 +118,4 @@ custom:
     bundle: true
     minify: true
     sourcemap: external
+    plugins: scripts/plugins.js

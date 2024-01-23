@@ -3,8 +3,9 @@
   "compilerOptions": {
     /* Basic Options */
     "incremental": true,
-    "target": "ESNext",
+    "target": "ES2016",
     "module": "CommonJS",
+    "sourceMap": true,
 
     /* Strict Type-Checking Options */
     "strict": true,
