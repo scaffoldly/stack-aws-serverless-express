@@ -6,6 +6,9 @@ on:
     branches:
       - development
 
+env:
+  NODE_OPTIONS: '--enable-source-maps'
+
 jobs:
   deploy:
     runs-on: ubuntu-latest

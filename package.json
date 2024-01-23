@@ -14,7 +14,7 @@
     "deploy": "serverless deploy",
     "serverless": "serverless",
     "dotenv": "dotenv-out -f typescript -e .env -e .scaffoldly/.env -c $NODE_ENV -o src",
-    "codegen": "ts-node .serverless/codegen.ts",
+    "codegen": "ts-node scripts/codegen.ts",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix && yarn run prettier --write '*/**/*.{js,ts,tsx}'"
   },
   "devDependencies": {
@@ -29,6 +29,7 @@
     "@typescript-eslint/parser": "^6.7.0",
     "dotenv": "^16.3.1",
     "dotenv-out": "^1.0.6",
+    "esbuild": "^0.19.11",
     "eslint": "^8.56.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.1.0",
@@ -38,8 +39,8 @@
     "eslint-plugin-prettier": "^5.1.2",
     "prettier": "^3.1.1",
     "serverless": "3",
-    "serverless-bundle": "^6.0.0",
     "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-esbuild": "^1.50.1",
     "serverless-offline": "^12.0.4",
     "serverless-offline-resources": "^0.1.17",
     "ts-node": "^10.9.1",

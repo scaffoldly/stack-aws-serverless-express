@@ -24,6 +24,7 @@
   "containerEnv": {
     "DEBUG": "1",
     "NODE_ENV": "development",
+    "NODE_OPTIONS": "--enable-source-maps",
     "LOCALSTACK_VOLUME_DIR": "${containerWorkspaceFolder}/.cache",
     "LAMBDA_DOCKER_NETWORK": "bridge"
   },

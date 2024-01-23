@@ -1,7 +1,7 @@
-service: ${file(.serverless/config.js):SERVICE_NAME}
+service: ${file(scripts/config.js):SERVICE_NAME}
 
 plugins:
-  - serverless-bundle
+  - serverless-esbuild
   - serverless-dotenv-plugin
   - serverless-offline-resources
   - serverless-offline
@@ -55,7 +55,7 @@ resources:
       Type: AWS::SecretsManager::Secret
       Properties:
         Name: ${self:service}-${self:provider.stage}
-        SecretString: ${file(.serverless/config.js):SECRETS}
+        SecretString: ${file(scripts/config.js):SECRETS}
 
     Topic:
       Type: AWS::SNS::Topic
@@ -114,10 +114,7 @@ custom:
     reloadHandler: true
     useChildProcesses: false
 
-  bundle:
-    esbuild: true
-    copyFiles:
-      - from: './src/api/docs/openapi.json'
-        to: './src/api/docs/openapi.json'
-      - from: './src/api/docs/swagger.html'
-        to: './src/api/docs/swagger.html'
+  esbuild:
+    bundle: true
+    minify: true
+    sourcemap: external
