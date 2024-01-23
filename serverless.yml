@@ -54,7 +54,7 @@ resources:
     Secret:
       Type: AWS::SecretsManager::Secret
       Properties:
-        Name: lambda/${self:service}/${self:provider.stage}
+        Name: ${self:service}-${self:provider.stage}
         SecretString: ${file(.serverless/config.js):SECRETS}
 
     Topic:
