@@ -1,17 +1,10 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "baseUrl": "./",
-
     /* Basic Options */
     "incremental": true,
     "target": "ESNext",
-    "module": "ESNext",
-    "outDir": ".build/",
-    "inlineSources": true,
-    "inlineSourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
+    "module": "CommonJS",
 
     /* Strict Type-Checking Options */
     "strict": true,
@@ -40,6 +33,6 @@
     "emitDecoratorMetadata": true,
 
     /* Advanced Options */
-    "forceConsistentCasingInFileNames": true
-  }
+    "forceConsistentCasingInFileNames": true,
+  },
 }
