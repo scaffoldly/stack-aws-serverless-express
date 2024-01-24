@@ -4,7 +4,7 @@ import * as React from 'react';
 import { renderToString } from 'react-dom/server';
 
 import App from './App';
-import css from './App.css';
+import css from './index.css';
 import { ConfigContext } from './components/ConfigContext';
 import config from './config';
 
