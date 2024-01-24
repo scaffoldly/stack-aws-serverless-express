@@ -29,21 +29,21 @@ export class Api extends Controller {
     this.jwtService = new JwtService();
   }
 
-  @Get('')
-  @NoSecurity()
-  public async health(
-    @Request() httpRequest: EnrichedRequest,
-  ): Promise<HealthResponse> {
-    return {
-      name: packageJson.name,
-      version: packageJson.version,
-      now: new Date(),
-      hrefs: {
-        openApi: httpRequest.openApiUrl,
-        openApiDocs: httpRequest.openApiDocsUrl,
-      },
-    };
-  }
+  // @Get('')
+  // @NoSecurity()
+  // public async health(
+  //   @Request() httpRequest: EnrichedRequest,
+  // ): Promise<HealthResponse> {
+  //   return {
+  //     name: packageJson.name,
+  //     version: packageJson.version,
+  //     now: new Date(),
+  //     hrefs: {
+  //       openApi: httpRequest.openApiUrl,
+  //       openApiDocs: httpRequest.openApiDocsUrl,
+  //     },
+  //   };
+  // }
 
   @Get('/users/me')
   @Security('jwt')

@@ -37,3 +37,4 @@ OTHER:
 - add xray
 - seed data into ddb
 - add localstack pods back
+- reverse engineer cra-template-typescript to make this repo

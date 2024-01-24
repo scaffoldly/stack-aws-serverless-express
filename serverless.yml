@@ -120,3 +120,6 @@ custom:
     sourcemap: external
     loader:
       .html: text
+      .svg: dataurl
+      .css: text
+      .ico: dataurl

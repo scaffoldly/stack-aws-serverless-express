@@ -10,6 +10,7 @@ import {
   cookieHandler,
 } from './api/express/auth';
 import { docsHandler } from './api/express/docs';
+import { webHandler } from './web';
 
 const app = express();
 
@@ -32,11 +33,12 @@ app.use(docsHandler());
 
 RegisterRoutes(app);
 
-app.get('*', (req: express.Request, res: express.Response) => {
-  res.type(req.headers['content-type'] || 'json');
-  res.status(404);
-  res.send('');
-});
+app.use(webHandler());
+// app.get('*', (req: express.Request, res: express.Response) => {
+//   res.type(req.headers['content-type'] || 'json');
+//   res.status(404);
+//   res.send('');
+// });
 
 app.use(errorHandler());
 

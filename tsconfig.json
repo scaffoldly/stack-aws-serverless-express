@@ -6,6 +6,7 @@
     "target": "ES2016",
     "module": "CommonJS",
     "sourceMap": true,
+    "jsx": "react",
 
     /* Strict Type-Checking Options */
     "strict": true,
