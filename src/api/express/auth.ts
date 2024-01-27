@@ -153,7 +153,7 @@ export function requestEnricher() {
 
     (req as EnrichedRequest).serviceName = serviceName;
     (req as EnrichedRequest).baseUrl = baseUrl;
-    (req as EnrichedRequest).authUrl = `${baseUrl}/auth`;
+    (req as EnrichedRequest).authUrl = `${baseUrl}/api/auth`;
     (req as EnrichedRequest).openApiUrl = `${baseUrl}/openapi.json`;
     (req as EnrichedRequest).openApiDocsUrl = `${baseUrl}/swagger.html`;
 

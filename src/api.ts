@@ -10,7 +10,7 @@ import {
   cookieHandler,
 } from './api/express/auth';
 import { docsHandler } from './api/express/docs';
-import { webHandler } from './web';
+// import { webHandler } from './web';
 
 const app = express();
 
@@ -33,7 +33,7 @@ app.use(docsHandler());
 
 RegisterRoutes(app);
 
-app.use(webHandler());
+// app.use(webHandler());
 // app.get('*', (req: express.Request, res: express.Response) => {
 //   res.type(req.headers['content-type'] || 'json');
 //   res.status(404);
@@ -45,8 +45,8 @@ app.use(errorHandler());
 export const lambda = configure({
   app,
   eventSourceRoutes: {
-    AWS_DYNAMODB: '/event/dynamodb',
-    AWS_SQS: '/event/sqs',
-    AWS_SNS: '/event/sns',
+    AWS_DYNAMODB: '/api/event/dynamodb',
+    AWS_SQS: '/api/event/sqs',
+    AWS_SNS: '/api/event/sns',
   },
 });

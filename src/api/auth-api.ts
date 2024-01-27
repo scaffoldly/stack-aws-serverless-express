@@ -23,7 +23,7 @@ import { preventOverwrite } from './db/base';
 import { JwtService } from './services/JwtService';
 import { generateJwt, EnrichedRequest } from './express/auth';
 
-@Route('/auth')
+@Route('/api/auth')
 @Tags('Auth Api')
 export class AuthApi extends Controller {
   userIdentityTable: UserIdentityTable;

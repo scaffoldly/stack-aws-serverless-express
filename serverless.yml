@@ -2,6 +2,7 @@ service: ${file(scripts/config.js):SERVICE_NAME}
 
 plugins:
   - serverless-esbuild
+  - serverless-react
   - serverless-dotenv-plugin
   - serverless-offline-resources
   - serverless-offline
@@ -33,11 +34,13 @@ provider:
     STAGE: ${self:provider.stage}
 
 functions:
-  webapp:
-    handler: src/webapp.lambda
+  api:
+    handler: src/api.lambda
     timeout: 29
     events:
-      - httpApi: '*'
+      - httpApi:
+          method: '*'
+          path: /api/{proxy+}
       - stream:
           type: dynamodb
           arn:
@@ -120,7 +123,3 @@ custom:
     sourcemap: external
     loader:
       .html: text
-      .css: text
-      .png: dataurl
-      .svg: dataurl
-      .ico: dataurl
