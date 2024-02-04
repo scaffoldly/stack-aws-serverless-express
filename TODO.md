@@ -2,8 +2,9 @@
 
 IMMEDIATE NEXT:
 
+- copied stuff to .esbuild/.build
+- express static serve public dir
 - autogen spec/routes w/filewatcher?
-- frontend stuff again, maybe next?
 - webpack alternative?
 
 ASSISTED BACKEND:
