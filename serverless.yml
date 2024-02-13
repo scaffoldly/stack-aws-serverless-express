@@ -33,13 +33,15 @@ provider:
     SERVICE_NAME: ${self:service}
     STAGE: ${self:provider.stage}
 
+# TODO: package individually?
+package:
+  patterns:
+    - '.react/**'
+
 functions:
   webapp:
     handler: src/webapp.handler
     timeout: 29
-    package:
-      patterns:
-        - '.react/**'
     events:
       - httpApi:
           method: '*'
