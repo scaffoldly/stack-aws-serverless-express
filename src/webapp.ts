@@ -32,17 +32,10 @@ app.use(refreshHandler());
 app.use(docsHandler());
 
 RegisterRoutes(app);
-
-// app.use(webHandler());
-// app.get('*', (req: express.Request, res: express.Response) => {
-//   res.type(req.headers['content-type'] || 'json');
-//   res.status(404);
-//   res.send('');
-// });
-
+app.use(express.static('.react'));
 app.use(errorHandler());
 
-export const lambda = configure({
+export const handler = configure({
   app,
   eventSourceRoutes: {
     AWS_DYNAMODB: '/api/event/dynamodb',

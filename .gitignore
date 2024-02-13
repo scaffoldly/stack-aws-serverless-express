@@ -2,6 +2,7 @@ node_modules
 yarn-error.log
 .serverless/
 .esbuild/
+.react/
 .dynamodb/
 .DS_Store
 dynamodb-local-metadata.json

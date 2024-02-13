@@ -34,13 +34,13 @@ provider:
     STAGE: ${self:provider.stage}
 
 functions:
-  api:
-    handler: src/api.lambda
+  webapp:
+    handler: src/webapp.handler
     timeout: 29
     events:
       - httpApi:
           method: '*'
-          path: /api/{proxy+}
+          path: /{proxy+}
       - stream:
           type: dynamodb
           arn:
@@ -121,5 +121,9 @@ custom:
     bundle: true
     minify: true
     sourcemap: external
+    keepOutputDirectory: true
     loader:
       .html: text
+
+  # react:
+  #   entryPoint: ./src/web/index.tsx
