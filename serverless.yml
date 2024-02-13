@@ -1,9 +1,9 @@
 service: ${file(scripts/config.js):SERVICE_NAME}
 
 plugins:
-  - serverless-esbuild
-  - serverless-react
   - serverless-dotenv-plugin
+  - serverless-react
+  - serverless-esbuild
   - serverless-offline-resources
   - serverless-offline
 
@@ -32,11 +32,6 @@ provider:
     SECRET_ID: { Ref: Secret }
     SERVICE_NAME: ${self:service}
     STAGE: ${self:provider.stage}
-
-# TODO: package individually?
-package:
-  patterns:
-    - '.react/**'
 
 functions:
   webapp:
