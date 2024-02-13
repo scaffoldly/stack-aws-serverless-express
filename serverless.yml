@@ -2,6 +2,7 @@ service: ${file(scripts/config.js):SERVICE_NAME}
 
 plugins:
   - serverless-esbuild
+  - serverless-react
   - serverless-dotenv-plugin
   - serverless-offline-resources
   - serverless-offline
@@ -34,10 +35,12 @@ provider:
 
 functions:
   webapp:
-    handler: src/webapp.lambda
+    handler: src/webapp.handler
     timeout: 29
     events:
-      - httpApi: '*'
+      - httpApi:
+          method: '*'
+          path: /{proxy+}
       - stream:
           type: dynamodb
           arn:
@@ -118,9 +121,9 @@ custom:
     bundle: true
     minify: true
     sourcemap: external
+    keepOutputDirectory: true
     loader:
       .html: text
-      .css: text
-      .png: dataurl
-      .svg: dataurl
-      .ico: dataurl
+
+  # react:
+  #   entryPoint: ./src/web/index.tsx

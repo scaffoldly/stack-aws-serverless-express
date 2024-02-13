@@ -3,7 +3,7 @@ import { Body, Controller, Header, Hidden, Post, Route, Tags } from 'tsoa';
 import { UserIdentityTable } from './db/user-identity';
 import { HttpError } from './internal/errors';
 
-@Route('/event')
+@Route('/api/event')
 @Tags('Events')
 @Hidden()
 export class EventApi extends Controller {

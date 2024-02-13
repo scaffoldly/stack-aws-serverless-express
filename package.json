@@ -17,8 +17,19 @@
     "codegen": "ts-node scripts/codegen.ts",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix && yarn run prettier --write '*/**/*.{js,ts,tsx}'"
   },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "devDependencies": {
-    "@tsoa/cli": "^6.0.0",
     "@types/aws-lambda": "^8.10.77",
     "@types/cookies": "0.7.7",
     "@types/cors": "^2.8.17",
@@ -40,14 +51,15 @@
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-prettier": "^5.1.2",
     "prettier": "^3.1.1",
+    "react-scripts": "^5.0.1",
     "serverless": "3",
     "serverless-dotenv-plugin": "^6.0.0",
     "serverless-esbuild": "^1.50.1",
     "serverless-offline": "^12.0.4",
     "serverless-offline-resources": "^0.1.17",
+    "serverless-react": "git+https://github.com/scaffoldly/serverless-react.git#9e7910f47181f0c6440aefe4c35a146378f8a1a6",
     "ts-node": "^10.9.1",
-    "typescript": "5.x",
-    "webpack": "5"
+    "typescript": "5.x"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.x",
@@ -56,6 +68,7 @@
     "@aws-sdk/client-sqs": "3.x",
     "@aws-sdk/lib-dynamodb": "3.x",
     "@aws-sdk/util-dynamodb": "3.x",
+    "@tsoa/cli": "^6.0.0",
     "@vendia/serverless-express": "^4.5.2",
     "aws-lambda": "^1.0.7",
     "axios": "^1.6.3",

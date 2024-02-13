@@ -3,9 +3,12 @@
   "compilerOptions": {
     /* Basic Options */
     "incremental": true,
-    "target": "ES2016",
+    "target": "ESNext",
     "module": "CommonJS",
+    "outDir": ".build",
     "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
     "jsx": "react",
 
     /* Strict Type-Checking Options */

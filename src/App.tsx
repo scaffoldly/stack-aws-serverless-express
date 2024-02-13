@@ -1,15 +1,12 @@
-import * as React from 'react';
-
-import { useConfig } from './components/ConfigContext';
+import React from 'react';
 import logo from './logo.svg';
+import './App.css';
 
 function App(): React.JSX.Element {
-  const config = useConfig();
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <h1>Welcome to {config.app.TITLE}</h1>
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
