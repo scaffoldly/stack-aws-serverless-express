@@ -12028,9 +12028,9 @@ serverless-offline@^12.0.4:
     velocityjs "^2.0.6"
     ws "^8.11.0"
 
-"serverless-react@git+https://github.com/scaffoldly/serverless-react.git#9e7910f47181f0c6440aefe4c35a146378f8a1a6":
-  version "0.2.2-14"
-  resolved "git+https://github.com/scaffoldly/serverless-react.git#9e7910f47181f0c6440aefe4c35a146378f8a1a6"
+"serverless-react@git+https://github.com/scaffoldly/serverless-react.git#f552c3b4f41f966f683838717ab2dac482347b0e":
+  version "0.2.2-15"
+  resolved "git+https://github.com/scaffoldly/serverless-react.git#f552c3b4f41f966f683838717ab2dac482347b0e"
   dependencies:
     "@types/fs-extra" "^11.0.4"
     "@types/node" ">=16"
