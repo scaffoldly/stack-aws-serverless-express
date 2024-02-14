@@ -1,6 +1,8 @@
 import express from 'express';
 import morganBody from 'morgan-body';
 import { configure } from '@vendia/serverless-express';
+import path from 'path';
+import mime from 'mime-types';
 import { RegisterRoutes } from './api/express/routes';
 import errorHandler from './api/express/errors';
 import { corsHandler } from './api/express/cors';
@@ -24,6 +26,18 @@ morganBody(app, {
 
 app.disable('x-powered-by');
 app.set('json spaces', 2);
+
+app.use(
+  express.static(path.join(__dirname, '..', '.react'), {
+    maxAge: '1d',
+    setHeaders: (r, p) => {
+      if (mime.lookup(p) === 'text/html') {
+        r.setHeader('Cache-Control', 'public, max-age=0');
+      }
+    },
+  }),
+);
+
 app.use(express.json({ limit: 5242880 }));
 app.use(corsHandler({ withCredentials: true }));
 app.use(cookieHandler());
@@ -32,7 +46,6 @@ app.use(refreshHandler());
 app.use(docsHandler());
 
 RegisterRoutes(app);
-app.use(express.static('.react'));
 app.use(errorHandler());
 
 export const handler = configure({
