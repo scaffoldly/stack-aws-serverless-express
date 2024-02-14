@@ -36,6 +36,6 @@ jobs:
         env:
           NODE_ENV: ${{ steps.branch-names.outputs.current_branch }}
 
-      - run: yarn deploy --stage ${{ steps.branch-names.outputs.current_branch }}
+      - run: yarn deploy --verbose --stage ${{ steps.branch-names.outputs.current_branch }}
         env:
           SECRETS: ${{ toJSON(secrets) }}
