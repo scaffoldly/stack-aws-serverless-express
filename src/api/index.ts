@@ -39,6 +39,7 @@ export class Api extends Controller {
       version: packageJson.version,
       now: new Date(),
       hrefs: {
+        api: httpRequest.apiUrl,
         openApi: httpRequest.openApiUrl,
         openApiDocs: httpRequest.openApiDocsUrl,
       },

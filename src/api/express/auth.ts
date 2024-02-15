@@ -17,6 +17,7 @@ export type EnrichedRequest = Request & {
   serviceName: string;
   baseUrl: string;
   authUrl: string;
+  apiUrl: string;
   openApiUrl: string;
   openApiDocsUrl: string;
   user?: UserIdentity;
@@ -150,12 +151,14 @@ export function requestEnricher() {
     const host =
       req.headers['x-forwarded-host'] || req.headers.host || 'localhost:3000';
     const baseUrl = `${scheme}://${host}`;
+    const apiUrl = `${baseUrl}/api`;
 
     (req as EnrichedRequest).serviceName = serviceName;
     (req as EnrichedRequest).baseUrl = baseUrl;
-    (req as EnrichedRequest).authUrl = `${baseUrl}/api/auth`;
-    (req as EnrichedRequest).openApiUrl = `${baseUrl}/openapi.json`;
-    (req as EnrichedRequest).openApiDocsUrl = `${baseUrl}/swagger.html`;
+    (req as EnrichedRequest).apiUrl = apiUrl;
+    (req as EnrichedRequest).authUrl = `${apiUrl}/auth`;
+    (req as EnrichedRequest).openApiUrl = `${apiUrl}/openapi.json`;
+    (req as EnrichedRequest).openApiDocsUrl = `${apiUrl}/swagger.html`;
 
     next();
   };

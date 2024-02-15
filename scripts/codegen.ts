@@ -12,7 +12,7 @@
       entryFile: 'src/app.ts',
       noImplicitAdditionalProperties: 'throw-on-extras',
       controllerPathGlobs: ['src/api/index.ts', 'src/api/*-api.ts'],
-      outputDirectory: './public',
+      outputDirectory: './src/api/express/docs',
       specFileBaseName: 'openapi',
       specVersion: 3,
       securityDefinitions: {
