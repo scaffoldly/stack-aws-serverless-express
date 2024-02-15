@@ -121,9 +121,9 @@ custom:
     bundle: true
     minify: true
     sourcemap: external
-    keepOutputDirectory: true
     loader:
       .html: text
 
   react:
     entryPoint: ./src/web/index.tsx
+    reloadHandler: true

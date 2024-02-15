@@ -9,7 +9,7 @@
   },
   "scripts": {
     "prepare": "yarn dotenv && yarn codegen",
-    "start": "yarn prepare && serverless offline",
+    "start": "yarn prepare && serverless offline --verbose",
     "build": "serverless webpack",
     "deploy": "serverless deploy",
     "serverless": "serverless",
@@ -58,7 +58,7 @@
     "serverless-esbuild": "^1.50.1",
     "serverless-offline": "^12.0.4",
     "serverless-offline-resources": "^0.1.17",
-    "serverless-react": "git+https://github.com/scaffoldly/serverless-react.git#b856e7d8840100b32cd1f8c81212945cf8b51133",
+    "serverless-react": "git+https://github.com/scaffoldly/serverless-react.git#cba4d96fe2795a3dda0a54a0132307139ac800f1",
     "ts-node": "^10.9.1",
     "typescript": "5.x"
   },
