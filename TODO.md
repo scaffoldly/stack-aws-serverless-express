@@ -12,6 +12,7 @@ ASSISTED BACKEND:
 
 OTHER:
 
+- eslint peer dependencies from react-scripts and yarn install
 - switch from supervisord to a regular localstack start command or the localstack devcontainer feature
 - env vars into src/env.ts from serverless.yaml
 - update README

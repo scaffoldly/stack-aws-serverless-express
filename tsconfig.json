@@ -4,7 +4,7 @@
     /* Basic Options */
     "incremental": true,
     "target": "ESNext",
-    "module": "CommonJS",
+    "module": "ESNext",
     "outDir": ".build",
     "sourceMap": true,
     "declaration": true,
@@ -38,6 +38,6 @@
     "emitDecoratorMetadata": true,
 
     /* Advanced Options */
-    "forceConsistentCasingInFileNames": true,
-  },
+    "forceConsistentCasingInFileNames": true
+  }
 }

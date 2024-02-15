@@ -16,11 +16,15 @@
 							},
 							"openApi": {
 								"type": "string"
+							},
+							"api": {
+								"type": "string"
 							}
 						},
 						"required": [
 							"openApiDocs",
-							"openApi"
+							"openApi",
+							"api"
 						],
 						"type": "object"
 					},
