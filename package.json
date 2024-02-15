@@ -58,7 +58,7 @@
     "serverless-esbuild": "^1.50.1",
     "serverless-offline": "^12.0.4",
     "serverless-offline-resources": "^0.1.17",
-    "serverless-react": "git+https://github.com/scaffoldly/serverless-react.git#cba4d96fe2795a3dda0a54a0132307139ac800f1",
+    "serverless-react": "^0.2.4",
     "ts-node": "^10.9.1",
     "typescript": "5.x"
   },
