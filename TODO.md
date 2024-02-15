@@ -2,8 +2,14 @@
 
 IMMEDIATE NEXT:
 
-- copied stuff to .esbuild/.build
-- express static serve public dir
+- refactor react into src/web, option for public dir
+- watch for changes (public+src/web)
+- make webHandler
+- fix docsHandler
+- standardize logging
+- development builds
+- decide if .react should be the folder in the zip
+- pull url logic from saml-to apis
 - autogen spec/routes w/filewatcher?
 - webpack alternative?
 

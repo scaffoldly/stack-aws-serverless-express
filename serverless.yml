@@ -125,5 +125,5 @@ custom:
     loader:
       .html: text
 
-  # react:
-  #   entryPoint: ./src/web/index.tsx
+  react:
+    entryPoint: ./src/web/index.tsx
