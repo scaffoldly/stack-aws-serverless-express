@@ -126,5 +126,4 @@ custom:
 
   react:
     buildSystem: vite
-    # entryPoint: ./src/web/index.tsx
     reloadHandler: true
