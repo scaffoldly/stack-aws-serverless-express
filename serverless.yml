@@ -125,5 +125,6 @@ custom:
       .html: text
 
   react:
-    entryPoint: ./src/web/index.tsx
+    buildSystem: vite
+    # entryPoint: ./src/web/index.tsx
     reloadHandler: true
