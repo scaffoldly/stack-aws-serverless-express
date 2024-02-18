@@ -2,8 +2,9 @@
 
 IMMEDIATE NEXT:
 
-- development builds
+- development builds / react browser plugin
 - autogen spec/routes w/filewatcher?
+- node20
 
 ASSISTED BACKEND:
 
