@@ -1,7 +1,8 @@
-service: ${file(scripts/config.js):SERVICE_NAME}
+service: ${file(serverless.config.cjs):SERVICE_NAME}
 
 plugins:
   - serverless-dotenv-plugin
+  - serverless-tsoa
   - serverless-react
   - serverless-esbuild
   - serverless-offline-resources
@@ -58,7 +59,7 @@ resources:
       Type: AWS::SecretsManager::Secret
       Properties:
         Name: ${self:service}-${self:provider.stage}
-        SecretString: ${file(scripts/config.js):SECRETS}
+        SecretString: ${file(serverless.config.cjs):SECRETS}
 
     Topic:
       Type: AWS::SNS::Topic
@@ -127,3 +128,28 @@ custom:
   react:
     buildSystem: vite
     reloadHandler: true
+
+  tsoa:
+    reloadHandler: true
+    spec:
+      basePath: '/'
+      name: ${self:service}
+      version: ${file(serverless.config.cjs):VERSION}
+      entryFile: ./src/app.ts
+      noImplicitAdditionalProperties: throw-on-extras
+      controllerPathGlobs: ['./src/api/index.ts', './src/api/*-api.ts']
+      outputDirectory: ./src/lib
+      specFileBaseName: 'openapi'
+      specVersion: 3
+      securityDefinitions:
+        jwt:
+          type: http
+          scheme: bearer
+          bearerFormat: JWT
+    routes:
+      entryFile: ./src/app.ts
+      noImplicitAdditionalProperties: throw-on-extras,
+      controllerPathGlobs: ['./src/api/index.ts', './src/api/*-api.ts']
+      routesDir: ./src/api/express
+      authenticationModule: src/api/express/auth.ts
+      noWriteIfUnchanged: true

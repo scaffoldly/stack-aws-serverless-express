@@ -2,9 +2,11 @@
 
 IMMEDIATE NEXT:
 
+- tsoa command to generate spec/routes on yarn command
 - development builds / react browser plugin
 - autogen spec/routes w/filewatcher?
 - node20
+- openapi.json is not autoreloading
 
 ASSISTED BACKEND:
 

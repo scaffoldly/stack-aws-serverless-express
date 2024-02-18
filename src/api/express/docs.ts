@@ -1,11 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
 import { Path } from 'path-parser';
-import openapi from './docs/openapi.json';
+import openapi from '../../lib/openapi.json';
 import swagger from './docs/swagger.html';
 import { EnrichedRequest } from './auth';
 
 export function docsHandler() {
-  return (req: Request, res: Response, next: NextFunction): void => {
+  return async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
     if (req.method !== 'GET') {
       next();
       return;

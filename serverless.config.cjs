@@ -1,5 +1,5 @@
 const dotenv = require('dotenv');
-const packageJson = require('../package.json');
+const packageJson = require('./package.json');
 
 const { SECRETS = '{}' } = process.env;
 
@@ -25,3 +25,4 @@ module.exports.SECRETS = JSON.stringify(
 );
 
 module.exports.SERVICE_NAME = packageJson.name;
+module.exports.VERSION = packageJson.version;
