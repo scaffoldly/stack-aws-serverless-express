@@ -11,3 +11,4 @@ dynamodb-local-metadata.json
 src/env.ts
 public/openapi.json
 src/api/express/routes.ts
+src/lib/openapi.ts

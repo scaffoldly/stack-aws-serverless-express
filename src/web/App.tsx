@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '../../public/vite.svg';
 import './App.css';
+import { health } from '../lib/openapi';
 
 function App(): React.JSX.Element {
   const [count, setCount] = useState(0);
+  const [version, setVersion] = useState('loading...');
+
+  useEffect(() => {
+    health().then((response) => setVersion(response.data.version));
+  }, []);
 
   return (
     <>
@@ -25,6 +31,11 @@ function App(): React.JSX.Element {
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
+      </p>
+      <p>
+        API Version:
+        <br />
+        <code>{version}</code>
       </p>
     </>
   );

@@ -8,13 +8,14 @@
     "node": "18"
   },
   "scripts": {
-    "prepare": "yarn dotenv && yarn codegen",
+    "prepare": "yarn dotenv && yarn codegen && yarn orval",
     "start": "yarn prepare && serverless offline --verbose",
-    "build": "serverless webpack",
+    "build": "serverless package",
     "deploy": "serverless deploy",
     "serverless": "serverless",
     "dotenv": "dotenv-out -f typescript -e .env -e .scaffoldly/.env -c $NODE_ENV -o src",
     "codegen": "ts-node scripts/codegen.ts",
+    "orval": "orval --config orval.config.cjs",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix && yarn run prettier --write '*/**/*.{js,ts,tsx}'"
   },
   "devDependencies": {
@@ -39,6 +40,7 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-prettier": "^5.1.2",
+    "orval": "^6.25.0",
     "prettier": "^3.1.1",
     "serverless": "3",
     "serverless-dotenv-plugin": "^6.0.0",

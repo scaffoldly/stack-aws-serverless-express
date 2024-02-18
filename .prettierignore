@@ -2,5 +2,6 @@
 src/env.ts
 src/api/docs/openapi.json
 src/api/express/routes.ts
+src/lib/openapi.ts
 .build/**/*
 .webpack/**/*
