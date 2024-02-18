@@ -8,7 +8,7 @@
     "node": "18"
   },
   "scripts": {
-    "prepare": "yarn dotenv",
+    "prepare": "yarn dotenv && yarn orval",
     "start": "yarn prepare && serverless offline --verbose",
     "build": "serverless package",
     "deploy": "serverless deploy",
