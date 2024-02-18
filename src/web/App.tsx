@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '../../public/vite.svg';
 import './App.css';
-import { health } from '../lib/openapi';
+import { health } from '../lib/api';
 
 function App(): React.JSX.Element {
   const [count, setCount] = useState(0);

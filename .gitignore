@@ -9,6 +9,6 @@ dynamodb-local-metadata.json
 src/env.ts
 src/api/express/routes.ts
 src/lib/openapi.json
-src/lib/openapi.ts
+src/lib/api.ts
 .esbuild/**/*
 .tsoa/**/*
