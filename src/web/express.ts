@@ -7,7 +7,10 @@ export function webHandler(): express.RequestHandler {
     maxAge: '1d',
     setHeaders: (r, p) => {
       if (mime.lookup(p) === 'text/html') {
-        r.setHeader('Cache-Control', 'public, max-age=0');
+        r.setHeader(
+          'Cache-Control',
+          'no-store, max-age=0, private, must-revalidate',
+        );
       }
     },
   });
