@@ -8,11 +8,13 @@ import { health, incrementCount, getCount } from '../lib/api';
 
 function App(): React.JSX.Element {
   const [count, setCount] = useState(0);
-  const [version, setVersion] = useState('loading...');
+  const [openApiDocs, setOpenApiDocs] = useState<string>();
 
   useEffect(() => {
-    health().then((response) => setVersion(response.data.version));
-    getCount().then((response) => setCount(response.data.count));
+    health().then((response) =>
+      setOpenApiDocs(response.data.hrefs.openApiDocs),
+    );
+    getCount().then((response) => setCount(response.data.count || 0));
   }, []);
 
   const increment = (): void => {
@@ -33,6 +35,21 @@ function App(): React.JSX.Element {
         </a>
       </div>
       <h1>Serverless + Express + React</h1>
+      <h5>powered by</h5>
+      <h3>
+        <strong>
+          GitHub Codespaces | Localstack | AWS Lambda | DynamoDB | OpenAPI
+        </strong>
+      </h3>
+      <div>
+        <a href="https://scaffoldly.dev" target="_blank">
+          <img
+            src={scaffoldlyBuilt}
+            className="built-with"
+            alt="Built with Scaffoldly"
+          />
+        </a>
+      </div>
       <div className="card">
         <button onClick={() => increment()}>count is {count}</button>
         <p>
@@ -45,25 +62,15 @@ function App(): React.JSX.Element {
         </p>
         <p>
           Open{' '}
-          <a href="api/swagger.html" target="_blank">
-            Swagger
-          </a>{' '}
-          to explore this project's OpenAPI
+          {openApiDocs ? (
+            <a href={openApiDocs} target="_blank">
+              Swagger
+            </a>
+          ) : (
+            <code>Loading...</code>
+          )}{' '}
+          to see this project's OpenAPI Docs
         </p>
-      </div>
-      <p>
-        API Version:
-        <br />
-        <code>{version}</code>
-      </p>
-      <div>
-        <a href="https://scaffoldly.dev" target="_blank">
-          <img
-            src={scaffoldlyBuilt}
-            className="logo"
-            alt="Built with Scaffoldly"
-          />
-        </a>
       </div>
     </>
   );

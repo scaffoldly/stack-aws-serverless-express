@@ -7,7 +7,6 @@ import {
   NoSecurity,
   Request,
   Path,
-  Post,
 } from 'tsoa';
 import packageJson from '../../package.json';
 import { UserIdentitySchema, UserIdentityTable } from './db/user-identity';
@@ -16,21 +15,17 @@ import { EnrichedRequest } from './express/auth';
 import { HttpError } from './internal/errors';
 import { Keys } from './db/base';
 import { HealthResponse } from '../responses';
-import { CounterSchema, CounterTable } from './db/counter';
 
 @Route('/api')
 @Tags('Api')
 export class Api extends Controller {
   userIdentityTable: UserIdentityTable;
 
-  counterTable: CounterTable;
-
   jwtService: JwtService;
 
   constructor() {
     super();
     this.userIdentityTable = new UserIdentityTable();
-    this.counterTable = new CounterTable();
     this.jwtService = new JwtService();
   }
 
@@ -49,35 +44,6 @@ export class Api extends Controller {
         openApiDocs: httpRequest.openApiDocsUrl,
       },
     };
-  }
-
-  @Get('/count')
-  public async getCount(): Promise<CounterSchema | undefined> {
-    const item = await this.counterTable
-      .get(this.counterTable.hashKey('global'), this.counterTable.rangeKey(''))
-      .exec();
-
-    return item.Item;
-  }
-
-  @Post('/count')
-  public async incrementCount(): Promise<CounterSchema> {
-    const item = await this.counterTable
-      .update(
-        this.counterTable.hashKey('global'),
-        this.counterTable.rangeKey(''),
-      )
-      .add('count', 1)
-      .return('ALL_NEW')
-      .exec();
-
-    if (!item.Attributes) {
-      throw new HttpError(500, {
-        error: new Error('Unable to increment count'),
-      });
-    }
-
-    return item.Attributes;
   }
 
   @Get('/users/me')
