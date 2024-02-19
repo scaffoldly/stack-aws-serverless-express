@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import serverlessLogo from '../../public/serverless.svg';
 import reactLogo from './assets/react.svg';
 import expressjsLogo from '../../public/expressjs.svg';
-import scaffoldlyLogo from '../../public/scaffoldly.svg';
+import scaffoldlyBuilt from '../../public/scaffoldly-built.svg';
 import './App.css';
-import { health } from '../lib/api';
+import { health, incrementCount, getCount } from '../lib/api';
 
 function App(): React.JSX.Element {
   const [count, setCount] = useState(0);
@@ -12,7 +12,12 @@ function App(): React.JSX.Element {
 
   useEffect(() => {
     health().then((response) => setVersion(response.data.version));
+    getCount().then((response) => setCount(response.data.count));
   }, []);
+
+  const increment = (): void => {
+    incrementCount().then((response) => setCount(response.data.count));
+  };
 
   return (
     <>
@@ -29,7 +34,7 @@ function App(): React.JSX.Element {
       </div>
       <h1>Serverless + Express + React</h1>
       <div className="card">
-        <button onClick={() => setCount((c) => c + 1)}>count is {count}</button>
+        <button onClick={() => increment()}>count is {count}</button>
         <p>
           Edit <code>src/api/index.ts</code> and save to modify ESBuild+Express
           API
@@ -53,7 +58,11 @@ function App(): React.JSX.Element {
       </p>
       <div>
         <a href="https://scaffoldly.dev" target="_blank">
-          <img src={scaffoldlyLogo} className="logo" alt="Scaffoldly logo" />
+          <img
+            src={scaffoldlyBuilt}
+            className="logo"
+            alt="Built with Scaffoldly"
+          />
         </a>
       </div>
     </>
