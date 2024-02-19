@@ -11,6 +11,11 @@ ASSISTED BACKEND:
 
 OTHER:
 
+- fix:
+  botocore.errorfactory.ResourceInUseException: An error occurred (ResourceInUseException) when calling the GetShardIterator operation: Stream arn:aws:kinesis:us-east-1:000000000000:stream/__ddb_stream_stack-development is not currently ACTIVE or UPDATING.
+- add openapi-types to serverless-tsoa
+- cleanup package.json and bump versions
+- mute vite log outputc
 - development builds / react browser plugin
 - eslint peer dependencies from react-scripts and yarn install
 - switch from supervisord to a regular localstack start command or the localstack devcontainer feature
