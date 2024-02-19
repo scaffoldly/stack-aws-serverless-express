@@ -2,11 +2,7 @@
 
 IMMEDIATE NEXT:
 
-- tsoa command to generate spec/routes on yarn command
-- development builds / react browser plugin
-- autogen spec/routes w/filewatcher?
 - node20
-- openapi.json is not autoreloading
 
 ASSISTED BACKEND:
 
@@ -15,6 +11,7 @@ ASSISTED BACKEND:
 
 OTHER:
 
+- development builds / react browser plugin
 - eslint peer dependencies from react-scripts and yarn install
 - switch from supervisord to a regular localstack start command or the localstack devcontainer feature
 - env vars into src/env.ts from serverless.yaml

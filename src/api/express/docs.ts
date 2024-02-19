@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { Path } from 'path-parser';
-import openapi from '../../lib/openapi.json';
+import fs from 'fs';
 import swagger from './docs/swagger.html';
 import { EnrichedRequest } from './auth';
 
@@ -17,10 +17,15 @@ export function docsHandler() {
 
     if (new Path('/api/openapi.json').test(req.path)) {
       const request = req as EnrichedRequest;
+
+      const openapi = JSON.parse(
+        fs.readFileSync('src/lib/openapi.json').toString('utf8'),
+      );
+
+      openapi.servers = [{ url: request.baseUrl }];
+
       res.type('json');
-      const json = openapi;
-      json.servers = [{ url: request.baseUrl }];
-      res.send(json);
+      res.send(openapi);
       return;
     }
 

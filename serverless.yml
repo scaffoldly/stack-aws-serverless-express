@@ -135,10 +135,10 @@ custom:
       basePath: '/'
       name: ${self:service}
       version: ${file(serverless.config.cjs):VERSION}
-      entryFile: ./src/app.ts
+      entryFile: src/app.ts
       noImplicitAdditionalProperties: throw-on-extras
-      controllerPathGlobs: ['./src/api/index.ts', './src/api/*-api.ts']
-      outputDirectory: ./src/lib
+      controllerPathGlobs: ['src/api/index.ts', 'src/api/*-api.ts']
+      outputDirectory: src/lib
       specFileBaseName: 'openapi'
       specVersion: 3
       securityDefinitions:
@@ -147,9 +147,11 @@ custom:
           scheme: bearer
           bearerFormat: JWT
     routes:
-      entryFile: ./src/app.ts
-      noImplicitAdditionalProperties: throw-on-extras,
-      controllerPathGlobs: ['./src/api/index.ts', './src/api/*-api.ts']
-      routesDir: ./src/api/express
+      entryFile: src/app.ts
+      noImplicitAdditionalProperties: throw-on-extras
+      controllerPathGlobs: ['src/api/index.ts', 'src/api/*-api.ts']
+      routesDir: src/api/express
       authenticationModule: src/api/express/auth.ts
       noWriteIfUnchanged: true
+    client:
+      target: src/lib/api.ts
