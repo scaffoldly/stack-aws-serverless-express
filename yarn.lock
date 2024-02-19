@@ -7886,10 +7886,10 @@ serverless-react@^0.2.6:
     typescript ">=5"
     vite "^5.1.3"
 
-serverless-tsoa@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/serverless-tsoa/-/serverless-tsoa-0.1.0.tgz#a11fd6238bbf3856cf67dd5311d12157dc3fb98c"
-  integrity sha512-nm2HJ1OmbUorDPKkj3kpihoa+hxtGleIQcmMNEHlsDAl2MPdE17VyJQX5OKkDhTbgRy7G6NcsXk/4aQLJJD8Ag==
+serverless-tsoa@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/serverless-tsoa/-/serverless-tsoa-0.1.1.tgz#96a434cdae3e846367ca4eaf5d58ba51e1598034"
+  integrity sha512-Zj6z1+aadRBZs32MQLVBgYuMwh2SjMr2mjZsBIZjDws1N6n9ifWptdR2LQER/12rQeE+rmnETLztK46hjU9tgg==
   dependencies:
     "@orval/core" "^6.25.0"
     "@types/fs-extra" "^11.0.4"
