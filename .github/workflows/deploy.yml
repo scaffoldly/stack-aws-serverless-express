@@ -23,7 +23,7 @@ jobs:
 
       - uses: saml-to/assume-aws-role-action@v1
         with:
-          role: arn:aws:iam::471112697609:role/OrganizationAccountAccessRole
+          role: ${{ vars.DEPLOYMENT_ROLE }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

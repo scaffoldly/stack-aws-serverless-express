@@ -24,7 +24,7 @@ OTHER:
 - mute vite log outputc
 - development builds / react browser plugin
 - eslint peer dependencies from react-scripts and yarn install
-- switch from supervisord to a regular localstack start command or the localstack devcontainer feature
+- switch from supervisord to docker compose for localstack
 - env vars into src/env.ts from serverless.yaml
 - update README
 - support for Layers

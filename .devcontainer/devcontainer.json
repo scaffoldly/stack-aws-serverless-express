@@ -8,6 +8,7 @@
     "cpus": 4,
     "memory": "16gb"
   },
+  "appPort": [3000, 4566],
   "forwardPorts": [3000, 4566],
   "portsAttributes": {
     "3000": {
@@ -30,10 +31,13 @@
   },
   "remoteEnv": {},
   "waitFor": "onCreateCommand",
-  "updateContentCommand": "yarn",
-  "postAttachCommand": {
-    "setupPorts": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME && exit",
+  "updateContentCommand": {
+    "installDependencies": "yarn",
+    // "setupPorts": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME && exit",
     "startLocalstack": "/usr/bin/supervisord -c /etc/supervisor/supervisord.conf -s && exit"
+  },
+  "postAttachCommand": {
+    "start": "yarn start"
   },
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
