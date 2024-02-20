@@ -19,7 +19,6 @@ import { HealthResponse } from '../responses';
 @Tags('Api')
 export class Api extends Controller {
   userIdentityTable: UserIdentityTable;
-
   jwtService: JwtService;
 
   constructor() {
