@@ -1,6 +1,7 @@
 {
   "extends": [
-    "airbnb/base",
+    "airbnb",
+    "airbnb/hooks",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "plugin:import/recommended",

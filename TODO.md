@@ -2,7 +2,8 @@
 
 IMMEDIATE NEXT:
 
-- node20
+- serverless-angular perhaps?
+- social auth?
 
 ASSISTED BACKEND:
 
@@ -11,8 +12,9 @@ ASSISTED BACKEND:
 
 OTHER:
 
+- embed saml.to
 - fix:
-  botocore.errorfactory.ResourceInUseException: An error occurred (ResourceInUseException) when calling the GetShardIterator operation: Stream arn:aws:kinesis:us-east-1:000000000000:stream/__ddb_stream_stack-development is not currently ACTIVE or UPDATING.
+  botocore.errorfactory.ResourceInUseException: An error occurred (ResourceInUseException) when calling the GetShardIterator operation: Stream arn:aws:kinesis:us-east-1:000000000000:stream/\_\_ddb_stream_stack-development is not currently ACTIVE or UPDATING.
 - add openapi-types to serverless-tsoa
 - cleanup package.json and bump versions
 - mute vite log outputc
@@ -28,8 +30,6 @@ OTHER:
 - Handle message failures
 - publish client libraries
 - handle errors in offline resources when localstack is restarted
-- live reloading of spec and routes
-- WHATIF... github pages is the frontend??
 - pull request deploy
 - s3 handler
 - kinesis handler
@@ -43,3 +43,5 @@ OTHER:
 - seed data into ddb
 - add localstack pods back
 - reverse engineer cra-template-typescript to make this repo
+- experiment with labda layers
+- "welcome to codespaces message"

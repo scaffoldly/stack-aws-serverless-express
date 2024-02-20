@@ -15,7 +15,8 @@
     "tsoa": "serverless tsoa",
     "serverless": "serverless",
     "dotenv": "dotenv-out -f typescript -e .env -e .scaffoldly/.env -c $NODE_ENV -o src",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix && yarn run prettier --write '*/**/*.{js,ts,tsx}'"
+    "eslint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "lint": "yarn eslint && yarn run prettier --write '*/**/*.{js,ts,tsx}'"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.77",
@@ -38,15 +39,16 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-prettier": "^5.1.2",
-    "orval": "^6.25.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^3.1.1",
     "serverless": "3",
     "serverless-dotenv-plugin": "^6.0.0",
     "serverless-esbuild": "^1.50.1",
     "serverless-offline": "^13.3.3",
     "serverless-offline-resources": "^0.1.17",
-    "serverless-react": "^0.2.6",
-    "serverless-tsoa": "^0.1.1",
+    "serverless-react": "^0.2.7",
+    "serverless-tsoa": "^0.1.2",
     "ts-node": "^10.9.1",
     "typescript": "5.x"
   },
@@ -74,7 +76,7 @@
     "path-parser": "^6.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tsoa": "^6.0.0",
+    "tsoa": "^6.0.1",
     "uuid": "9.x",
     "vite": "^5.1.3"
   }
