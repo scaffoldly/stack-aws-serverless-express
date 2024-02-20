@@ -9,14 +9,15 @@
   },
   "scripts": {
     "prepare": "yarn dotenv && yarn tsoa",
-    "start": "yarn prepare && serverless offline --verbose",
+    "start": "yarn prepare && serverless offline",
     "build": "serverless package",
     "deploy": "serverless deploy",
     "tsoa": "serverless tsoa",
     "serverless": "serverless",
     "dotenv": "dotenv-out -f typescript -e .env -e .scaffoldly/.env -c $NODE_ENV -o src",
     "eslint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
-    "lint": "yarn eslint && yarn run prettier --write '*/**/*.{js,ts,tsx}'"
+    "prettier": "prettier --write '*/**/*.{js,ts,tsx}'",
+    "lint": "yarn eslint && yarn prettier"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.77",
@@ -34,6 +35,7 @@
     "esbuild": "^0.19.11",
     "eslint": "^8.56.0",
     "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.29.1",

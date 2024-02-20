@@ -2,13 +2,28 @@ import { JWK, JWKS, JWKECKey, JWT } from 'jose';
 import Cookies from 'cookies';
 import { v1 as uuid } from 'uuid';
 import { UserIdentitySchema } from '../db/user-identity';
-import { EnrichedRequest } from '../express/auth';
 import SecretService from './aws/SecretService';
-
-export type JwkStore = 'current' | 'next';
 
 export const ACCESS_COOKIE = '__Secure-access';
 export const REFRESH_COOKIE = '__Secure-refresh';
+
+export type UserIdentity = UserIdentitySchema & {
+  token?: string;
+};
+
+export type EnrichedRequest = Request & {
+  serviceName: string;
+  baseUrl: string;
+  authUrl: string;
+  apiUrl: string;
+  openApiUrl: string;
+  openApiDocsUrl: string;
+  user?: UserIdentity;
+  setCookies?: string[];
+};
+
+export type JwkStore = 'current' | 'next';
+
 export const JWKS_STORE_NAME = 'jwks';
 export const JWKS_CURRENT: JwkStore = 'current';
 export const JWKS_NEXT: JwkStore = 'next';

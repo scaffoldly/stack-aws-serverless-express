@@ -24,13 +24,13 @@ function App(): React.JSX.Element {
   return (
     <>
       <div>
-        <a href="https://serverless.com" target="_blank">
+        <a href="https://serverless.com" target="_blank" rel="noreferrer">
           <img src={serverlessLogo} className="logo" alt="Serverless logo" />
         </a>
-        <a href="https://expressjs.com" target="_blank">
+        <a href="https://expressjs.com" target="_blank" rel="noreferrer">
           <img src={expressjsLogo} className="logo" alt="ExpressJS logo" />
         </a>
-        <a href="https://react.dev" target="_blank">
+        <a href="https://react.dev" target="_blank" rel="noreferrer">
           <img src={reactLogo} className="logo" alt="React logo" />
         </a>
       </div>
@@ -42,7 +42,7 @@ function App(): React.JSX.Element {
         </strong>
       </h3>
       <div>
-        <a href="https://scaffoldly.dev" target="_blank">
+        <a href="https://scaffoldly.dev" target="_blank" rel="noreferrer">
           <img
             src={scaffoldlyBuilt}
             className="built-with"
@@ -51,7 +51,9 @@ function App(): React.JSX.Element {
         </a>
       </div>
       <div className="card">
-        <button onClick={() => increment()}>count is {count}</button>
+        <button type="button" onClick={() => increment()}>
+          count is {count}
+        </button>
         <p>
           Edit <code>src/api/index.ts</code> and save to modify ESBuild+Express
           API
@@ -63,13 +65,13 @@ function App(): React.JSX.Element {
         <p>
           Open{' '}
           {openApiDocs ? (
-            <a href={openApiDocs} target="_blank">
+            <a href={openApiDocs} target="_blank" rel="noreferrer">
               Swagger
             </a>
           ) : (
             <code>Loading...</code>
           )}{' '}
-          to see this project's OpenAPI Docs
+          to see OpenAPI Docs for this project
         </p>
       </div>
     </>

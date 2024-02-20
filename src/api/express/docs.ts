@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { Path } from 'path-parser';
 import fs from 'fs';
 import swagger from './docs/swagger.html';
-import { EnrichedRequest } from './auth';
+import { EnrichedRequest } from '../services/JwtService';
 
 export function docsHandler() {
   return async (
@@ -16,7 +16,7 @@ export function docsHandler() {
     }
 
     if (new Path('/api/openapi.json').test(req.path)) {
-      const request = req as EnrichedRequest;
+      const request = req as unknown as EnrichedRequest;
 
       const openapi = JSON.parse(
         fs.readFileSync('src/lib/openapi.json').toString('utf8'),

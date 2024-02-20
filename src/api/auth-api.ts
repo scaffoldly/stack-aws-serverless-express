@@ -20,8 +20,8 @@ import { LoginRequest } from '../requests';
 import { UserIdentityTable } from './db/user-identity';
 import { HttpError } from './internal/errors';
 import { preventOverwrite } from './db/base';
-import { JwtService } from './services/JwtService';
-import { generateJwt, EnrichedRequest } from './express/auth';
+import { EnrichedRequest, JwtService } from './services/JwtService';
+import { generateJwt } from './express/auth';
 
 @Route('/api/auth')
 @Tags('Auth Api')

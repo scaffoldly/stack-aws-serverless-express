@@ -2,27 +2,14 @@ import { NextFunction, Request, Response, Handler } from 'express';
 import Cookies from 'cookies';
 import {
   ACCESS_COOKIE,
+  EnrichedRequest,
   JwtPayload,
   JwtService,
   REFRESH_COOKIE,
+  UserIdentity,
 } from '../services/JwtService';
 import { HttpError } from '../internal/errors';
 import { UserIdentitySchema, UserIdentityTable } from '../db/user-identity';
-
-export type UserIdentity = UserIdentitySchema & {
-  token?: string;
-};
-
-export type EnrichedRequest = Request & {
-  serviceName: string;
-  baseUrl: string;
-  authUrl: string;
-  apiUrl: string;
-  openApiUrl: string;
-  openApiDocsUrl: string;
-  user?: UserIdentity;
-  setCookies?: string[];
-};
 
 // Cache in the global scope to speed up subsequent invocations
 const userIdentityCache: {
@@ -58,7 +45,7 @@ export async function expressAuthentication(
   // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
   _scopes?: string[],
 ): Promise<UserIdentity> {
-  const request = req as EnrichedRequest;
+  const request = req as unknown as EnrichedRequest;
 
   const jwtService = new JwtService();
   const userIdentityTable = new UserIdentityTable();
@@ -153,12 +140,13 @@ export function requestEnricher() {
     const baseUrl = `${scheme}://${host}`;
     const apiUrl = `${baseUrl}/api`;
 
-    (req as EnrichedRequest).serviceName = serviceName;
-    (req as EnrichedRequest).baseUrl = baseUrl;
-    (req as EnrichedRequest).apiUrl = apiUrl;
-    (req as EnrichedRequest).authUrl = `${apiUrl}/auth`;
-    (req as EnrichedRequest).openApiUrl = `${apiUrl}/openapi.json`;
-    (req as EnrichedRequest).openApiDocsUrl = `${apiUrl}/swagger.html`;
+    (req as unknown as EnrichedRequest).serviceName = serviceName;
+    (req as unknown as EnrichedRequest).baseUrl = baseUrl;
+    (req as unknown as EnrichedRequest).apiUrl = apiUrl;
+    (req as unknown as EnrichedRequest).authUrl = `${apiUrl}/auth`;
+    (req as unknown as EnrichedRequest).openApiUrl = `${apiUrl}/openapi.json`;
+    (req as unknown as EnrichedRequest).openApiDocsUrl =
+      `${apiUrl}/swagger.html`;
 
     next();
   };
@@ -174,7 +162,7 @@ export function refreshHandler() {
     res: Response,
     next: NextFunction,
   ): Promise<Response | void> => {
-    const request = req as EnrichedRequest;
+    const request = req as unknown as EnrichedRequest;
 
     const jwtService = new JwtService();
     const userIdentityTable = new UserIdentityTable();

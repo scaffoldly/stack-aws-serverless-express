@@ -10,8 +10,7 @@ import {
 } from 'tsoa';
 import packageJson from '../../package.json';
 import { UserIdentitySchema, UserIdentityTable } from './db/user-identity';
-import { JwtService } from './services/JwtService';
-import { EnrichedRequest } from './express/auth';
+import { EnrichedRequest, JwtService } from './services/JwtService';
 import { HttpError } from './internal/errors';
 import { Keys } from './db/base';
 import { HealthResponse } from '../responses';
