@@ -35,13 +35,13 @@ function App(): React.JSX.Element {
         </a>
       </div>
       <h1>Serverless + Express + React</h1>
-      <h4>powered by</h4>
+      <h4>powered with</h4>
       <h2>
         <strong>
           GitHub Codespaces + Localstack + AWS Lambda + DynamoDB + OpenAPI
         </strong>
       </h2>
-      <h5>supercharged with</h5>
+      <h5>supercharged by</h5>
       <h3>
         <strong>
           Websockets + DynamoDB Events + SQS Queues + SNS Topics + S3 Events
