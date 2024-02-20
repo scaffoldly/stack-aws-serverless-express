@@ -7,7 +7,7 @@
     "node": "20"
   },
   "scripts": {
-    "prepare": "husky",
+    "prepare": "husky && yarn dotenv && yarn tsoa",
     "start": "serverless offline",
     "build": "serverless package",
     "deploy": "serverless deploy",
