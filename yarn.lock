@@ -8046,10 +8046,10 @@ serverless-esbuild@^1.50.1:
     ramda "^0.28.0"
     semver "^7.3.8"
 
-serverless-offline-resources@^0.1.17:
-  version "0.1.17"
-  resolved "https://registry.yarnpkg.com/serverless-offline-resources/-/serverless-offline-resources-0.1.17.tgz#b6b434716d76b345bc1f67ddb8d940623c785505"
-  integrity sha512-1SUHx/LYf+1Wsjdzxu1yoQE6GoyTctX7z13Z7nvWoYmLZRpHwXZS3o8g6TyBQZQZYAjsmCUNZIUmB6UBgZVvRg==
+serverless-offline-resources@^0.1.18:
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/serverless-offline-resources/-/serverless-offline-resources-0.1.18.tgz#016c3e766e46ec0a99eef8997c2be5d23b785de6"
+  integrity sha512-Jsf5eHCkw8wOrnYJg3YVmn1fu0d2dBkFF9Mxp7EJE+pQ/jmBCXGQavjeZ9StbLzj4l6955/rupxkUC2NK4CYBg==
   dependencies:
     "@aws-sdk/client-dynamodb-streams" ">=3"
     "@aws-sdk/client-lambda" ">=3"
@@ -8059,6 +8059,7 @@ serverless-offline-resources@^0.1.17:
     "@types/node" ">=16"
     aws-sdk ">=2"
     lodash ">=4"
+    ts-retry-promise "^0.8.0"
     typescript ">=5"
 
 serverless-offline@^13.3.3:
@@ -8101,10 +8102,10 @@ serverless-react@^0.2.7:
     "@types/webpack" "^5.28.5"
     typescript ">=5"
 
-serverless-tsoa@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/serverless-tsoa/-/serverless-tsoa-0.1.2.tgz#75070357a147afcfc0cb0a07a0cdc18668f3e6d0"
-  integrity sha512-OTgANsY98H/Z3HaH95A52qfYd9bhRatjrFtMVuEXK/3x9sRRUxjX9Y6NI6EWWwBqEM5oYRs2J+EDOQ1zvUNbhQ==
+serverless-tsoa@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/serverless-tsoa/-/serverless-tsoa-0.1.3.tgz#9613087a45c6ec34bea87b7be5f7c6221020bdd9"
+  integrity sha512-nfvJp+5N5F3g3EZfd7VI8IuLrgECeNuLAhUP5pfl4CtqRRLRikeHNLFuniFD7uqHwE7Mr6p86xgN1PCyjnIwug==
   dependencies:
     "@orval/core" "^6.25.0"
     "@types/fs-extra" "^11.0.4"
@@ -8796,6 +8797,11 @@ ts-node@^10.9.1:
     make-error "^1.1.1"
     v8-compile-cache-lib "^3.0.1"
     yn "3.1.1"
+
+ts-retry-promise@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/ts-retry-promise/-/ts-retry-promise-0.8.0.tgz#0a0c57b510827d5630da4b0c47f36b55b83a49e3"
+  integrity sha512-elI/GkojPANBikPaMWQnk4T/bOJ6tq/hqXyQRmhfC9PAD6MoHmXIXK7KilJrlpx47VAKCGcmBrTeK5dHk6YAYg==
 
 tsconfck@^2.0.1:
   version "2.1.2"
