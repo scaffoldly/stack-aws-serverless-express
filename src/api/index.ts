@@ -18,8 +18,8 @@ import { HealthResponse } from '../responses';
 @Route('/api')
 @Tags('Api')
 export class Api extends Controller {
-  jwtService: JwtService;
   userIdentityTable: UserIdentityTable;
+  jwtService: JwtService;
 
   constructor() {
     super();

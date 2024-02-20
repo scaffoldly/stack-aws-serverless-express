@@ -7,15 +7,15 @@
     "node": "20"
   },
   "scripts": {
-    "prepare": "husky",
-    "start": "yarn prepare && serverless offline",
+    "prepare": "yarn dotenv && yarn tsoa",
+    "start": "serverless offline",
     "build": "serverless package",
     "deploy": "serverless deploy",
     "tsoa": "serverless tsoa",
     "serverless": "serverless",
     "dotenv": "dotenv-out -f typescript -e .env -e .scaffoldly/.env -c $NODE_ENV -o src",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
-    "format": "prettier --write '*/**/*.{js,ts,tsx}'"
+    "lint": "eslint '*/**/*.{js,cjs,ts,tsx}' --quiet --fix",
+    "format": "prettier --write '*/**/*.{js,cjs,ts,tsx}'"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.77",
@@ -89,7 +89,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,jsx}": [
+    "*.{js,cjs,ts,tsx}": [
       "pretty-quick --staged",
       "eslint --fix",
       "git add"
