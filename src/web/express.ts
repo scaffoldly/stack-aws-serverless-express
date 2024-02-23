@@ -1,17 +1,22 @@
-import express from 'express';
-import path from 'path';
-import mime from 'mime-types';
+import express, { Request, Response, NextFunction } from 'express';
+import { Path } from 'path-parser';
 
 export function webHandler(): express.RequestHandler {
-  return express.static(path.join(__dirname, '..', '.react'), {
-    maxAge: '1d',
-    setHeaders: (r, p) => {
-      if (mime.lookup(p) === 'text/html') {
-        r.setHeader(
-          'Cache-Control',
-          'no-store, max-age=0, private, must-revalidate',
-        );
-      }
-    },
-  });
+  return async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    if (req.method !== 'GET') {
+      next();
+      return;
+    }
+
+    if (new Path('/').test(req.path)) {
+      res.redirect('/api');
+      return;
+    }
+
+    next();
+  };
 }

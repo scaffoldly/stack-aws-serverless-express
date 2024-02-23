@@ -3,7 +3,6 @@ service: ${file(serverless.config.cjs):SERVICE_NAME}
 plugins:
   - serverless-dotenv-plugin
   - serverless-tsoa
-  - serverless-react
   - serverless-esbuild
   - serverless-offline-resources
   - serverless-offline
@@ -125,10 +124,6 @@ custom:
     sourcemap: external
     loader:
       .html: text
-
-  react:
-    buildSystem: vite
-    reloadHandler: true
 
   tsoa:
     reloadHandler: true
