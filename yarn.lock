@@ -10766,9 +10766,10 @@ serve-static@1.15.0:
     parseurl "~1.3.3"
     send "0.18.0"
 
-"serverless-angular@git+https://github.com/scaffoldly/serverless-angular.git#93a6f23f37ead5b3ff54fad5a3e56f0898cec279":
-  version "0.2.8-29"
-  resolved "git+https://github.com/scaffoldly/serverless-angular.git#93a6f23f37ead5b3ff54fad5a3e56f0898cec279"
+serverless-angular@^0.2.8:
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/serverless-angular/-/serverless-angular-0.2.8.tgz#d6d20610c432ee10bb617550278bf301188df162"
+  integrity sha512-EyoO8tc64fveqBxP30f+k0iNOr22ktV+rtGLgFwJYzZWUJVfbuN54NqJm18d2O5aiRLUpish4CKXuHM5Z2SekA==
   dependencies:
     "@types/fs-extra" "^11.0.4"
     "@types/node" ">=16"
@@ -10848,10 +10849,10 @@ serverless-offline@^13.3.3:
     velocityjs "^2.0.6"
     ws "^8.16.0"
 
-serverless-tsoa@^0.1.3:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/serverless-tsoa/-/serverless-tsoa-0.1.3.tgz#9613087a45c6ec34bea87b7be5f7c6221020bdd9"
-  integrity sha512-nfvJp+5N5F3g3EZfd7VI8IuLrgECeNuLAhUP5pfl4CtqRRLRikeHNLFuniFD7uqHwE7Mr6p86xgN1PCyjnIwug==
+serverless-tsoa@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/serverless-tsoa/-/serverless-tsoa-0.1.4.tgz#a8db6f2ec1eff0b0fc1f483030fb86c9266079a1"
+  integrity sha512-s6d/S64hYbQ8GFmxoWFcM6kzUbSzI7lJ0nOuAIcQ+Gq5StO6Nrw+EHd2u2ZXed8v+qN5FvrV0joYyM4tY03zpw==
   dependencies:
     "@orval/core" "^6.25.0"
     "@types/fs-extra" "^11.0.4"
