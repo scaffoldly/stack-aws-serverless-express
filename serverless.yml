@@ -53,7 +53,10 @@ functions:
           topicName: ${self:service}-${self:provider.stage}
 
       - eventBridge:
+          name: foobar123
           schedule: rate(30 minutes)
+          input:
+            hello: world
 
 resources:
   Resources:
