@@ -1,4 +1,4 @@
-name: 'Deploy'
+name: 'Deploy (Internal)'
 
 on:
   workflow_dispatch: {}
