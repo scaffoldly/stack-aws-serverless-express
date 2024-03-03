@@ -1,0 +1,49 @@
+<div>
+  <a href="https://serverless.com" target="_blank" rel="noreferrer">
+    <img src="assets/serverless.svg" class="logo" alt="Serverless logo" />
+  </a>
+  <a href="https://expressjs.com" target="_blank" rel="noreferrer">
+    <img src="assets/expressjs.svg" class="logo" alt="ExpressJS logo" />
+  </a>
+  <a href="https://angular.io" target="_blank" rel="noreferrer">
+    <img src="assets/angular.svg" class="logo" alt="Angular logo" />
+  </a>
+</div>
+<h1>Serverless + Express + Angular</h1>
+<h4>powered with</h4>
+<h2>
+  <strong>
+    GitHub Codespaces + Localstack + AWS Lambda + DynamoDB + OpenAPI
+  </strong>
+</h2>
+<h5>supercharged by</h5>
+<h3>
+  <strong>
+    Websockets + DynamoDB Events + SQS Queues + SNS Topics + S3 Events
+  </strong>
+</h3>
+<div>
+  <a href="https://scaffoldly.dev" target="_blank" rel="noreferrer">
+    <img src="assets/scaffoldly-built.svg" class="built-with" alt="Built with Scaffoldly" />
+  </a>
+</div>
+<div class="card">
+  <button type="button" (click)="increment()">
+    count is {{ count$ | async }}
+  </button>
+  <p>
+    Edit <code>src/api/index.ts</code> and save to modify the Express API
+  </p>
+  <p>
+    Edit <code>src/web/app/app.component.html</code> and save to modify the Angular
+    Frontend
+  </p>
+  <p>
+    Open <a *ngIf="openApiDocs$ | async as openApiDocs; else loading" [href]="openApiDocs" target="_blank"
+      rel="noreferrer">
+      Swagger
+    </a><ng-template #loading>
+      <code>Loading...</code>
+    </ng-template> to see OpenAPI Docs for this project
+  </p>
+</div>

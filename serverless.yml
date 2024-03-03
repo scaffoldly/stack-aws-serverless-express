@@ -3,6 +3,7 @@ service: ${file(serverless.config.cjs):SERVICE_NAME}
 plugins:
   - serverless-dotenv-plugin
   - serverless-tsoa
+  - serverless-angular
   - serverless-esbuild
   - serverless-offline-resources
   - serverless-offline
@@ -125,6 +126,10 @@ custom:
     loader:
       .html: text
 
+  angular:
+    reloadHandler: true
+    project: web
+
   tsoa:
     reloadHandler: true
     spec:
@@ -151,3 +156,4 @@ custom:
       noWriteIfUnchanged: true
     client:
       target: src/lib/api.ts
+      client: 'angular'
