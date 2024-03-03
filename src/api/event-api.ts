@@ -69,4 +69,18 @@ export class EventApi extends Controller {
 
     console.log('SNS Records: ', event.Records);
   }
+
+  // @Post('/eventbridge')
+  // public async eventbridgeEvent(
+  //   @Header('Host') host: string,
+  //   @Body() body: unknown,
+  // ): Promise<void> {
+  //   if (host !== 'events.amazonaws.com') {
+  //     throw new HttpError(403);
+  //   }
+
+  //   const event = body as EventBridgeEvent<unknown, unknown>;
+
+  //   console.log('EventBridge Event: ', event.detail);
+  // }
 }
