@@ -3,6 +3,7 @@ service: ${file(serverless.config.cjs):SERVICE_NAME}
 plugins:
   - serverless-dotenv-plugin
   - serverless-tsoa
+  - serverless-angular
   - serverless-esbuild
   - serverless-offline-resources
   - serverless-offline
@@ -124,6 +125,9 @@ custom:
     sourcemap: external
     loader:
       .html: text
+
+  angular:
+    project: example
 
   tsoa:
     reloadHandler: true
