@@ -156,3 +156,4 @@ custom:
       noWriteIfUnchanged: true
     client:
       target: src/lib/api.ts
+      client: 'angular'
