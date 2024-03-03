@@ -35,8 +35,6 @@ jobs:
           cache: 'yarn'
 
       - run: yarn
-        env:
-          NODE_ENV: production
 
       - run: yarn deploy --verbose --stage ${{ steps.branch-names.outputs.current_branch }}
         env:
