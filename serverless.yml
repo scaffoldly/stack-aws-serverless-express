@@ -127,7 +127,8 @@ custom:
       .html: text
 
   angular:
-    project: example
+    reloadHandler: true
+    project: web
 
   tsoa:
     reloadHandler: true

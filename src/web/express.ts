@@ -11,7 +11,10 @@ export function webHandler(): express.RequestHandler {
           'no-store, max-age=0, private, must-revalidate',
         );
       } else {
-        r.setHeader('Cache-Control', 'max-age=86400');
+        r.setHeader(
+          'Cache-Control',
+          `max-age=${process.env.NODE_ENV !== 'production' ? 0 : 86400}`,
+        );
       }
     },
   });
