@@ -54,7 +54,7 @@ functions:
 
       - eventBridge:
           name: foobar123
-          schedule: rate(30 minutes)
+          schedule: rate(10 minutes)
           input:
             hello: world
 
