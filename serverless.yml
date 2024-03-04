@@ -51,10 +51,8 @@ functions:
       - sns:
           arn: !Ref Topic
           topicName: ${self:service}-${self:provider.stage}
-
       - eventBridge:
-          name: foobar123
-          schedule: rate(10 minutes)
+          schedule: rate(60 minutes)
           input:
             hello: world
 

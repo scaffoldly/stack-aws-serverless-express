@@ -1,4 +1,9 @@
-import { DynamoDBStreamEvent, SNSEvent, SQSEvent } from 'aws-lambda';
+import {
+  DynamoDBStreamEvent,
+  EventBridgeEvent,
+  SNSEvent,
+  SQSEvent,
+} from 'aws-lambda';
 import { Body, Controller, Header, Hidden, Post, Route, Tags } from 'tsoa';
 import { UserIdentityTable } from './db/user-identity';
 import { HttpError } from './internal/errors';
@@ -70,17 +75,17 @@ export class EventApi extends Controller {
     console.log('SNS Records: ', event.Records);
   }
 
-  // @Post('/eventbridge')
-  // public async eventbridgeEvent(
-  //   @Header('Host') host: string,
-  //   @Body() body: unknown,
-  // ): Promise<void> {
-  //   if (host !== 'events.amazonaws.com') {
-  //     throw new HttpError(403);
-  //   }
+  @Post('/eventbridge')
+  public async eventbridgeEvent(
+    @Header('Host') host: string,
+    @Body() body: unknown,
+  ): Promise<void> {
+    if (host !== 'events.amazonaws.com') {
+      throw new HttpError(403);
+    }
 
-  //   const event = body as EventBridgeEvent<unknown, unknown>;
+    const event = body as EventBridgeEvent<'Scheduled Event', unknown>;
 
-  //   console.log('EventBridge Event: ', event.detail);
-  // }
+    console.log('Received Scheduled Event: ', event.detail);
+  }
 }
