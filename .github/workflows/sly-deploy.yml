@@ -8,9 +8,6 @@ on:
       - react-vite
       - angular
 
-env:
-  NODE_OPTIONS: '--enable-source-maps'
-
 jobs:
   deploy:
     runs-on: ubuntu-latest

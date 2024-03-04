@@ -20,12 +20,13 @@ provider:
             - 'sns:*'
             - 'sqs:*'
           Resource: '*'
-  stage: ${env:NODE_ENV, 'development'}
+  stage: ${opt:stage, 'development'}
   logRetentionInDays: 1
   tracing:
     apiGateway: true
     lambda: true
   environment:
+    NODE_OPTIONS: --enable-source-maps
     QUEUE_URL: { Ref: Queue }
     TABLE_NAME: { Ref: Table }
     TOPIC_ARN: { Ref: Topic }

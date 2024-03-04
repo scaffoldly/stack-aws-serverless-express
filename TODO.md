@@ -3,8 +3,8 @@
 IMMEDIATE NEXT:
 
 - dotenv-out + serverless.yml
-- serverless-angular perhaps?
 - social auth?
+- remove "sly-\*" github actions in create-scaffoldly-app
 
 ASSISTED BACKEND:
 
@@ -14,11 +14,6 @@ ASSISTED BACKEND:
 OTHER:
 
 - embed saml.to
-- fix:
-  - botocore.errorfactory.ResourceInUseException: An error occurred (ResourceInUseException) when calling the GetShardIterator
-    operation: Stream arn:aws:kinesis:us-east-1:000000000000:stream/\_\_ddb_stream_stack-development is not currently ACTIVE or
-    UPDATING.
-  - AlreadyExistsException: Stack [stack-development] already exists
 - add openapi-types to serverless-tsoa
 - cleanup package.json and bump versions
 - mute vite log outputc
@@ -50,8 +45,13 @@ OTHER:
 - experiment with labda layers
 - "welcome to codespaces message"
 
+CONTRIBUTIONS:
+
+- [tj-actions/branch-names@v8]: output normalized names in snakeCase, pascalCase, etc
+
 BUGS:
 
 - [localstack] eventBridge.schedule does not update?
 - [localstack] events don't send when input is set?
+- [serverless-offline] does NODE_OPTIONS=--enable-source-maps even work?
 - [vendia/serverless-express] input might not work (might be failing in remote lambda?)
