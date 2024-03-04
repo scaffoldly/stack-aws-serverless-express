@@ -52,9 +52,7 @@ functions:
           arn: !Ref Topic
           topicName: ${self:service}-${self:provider.stage}
       - eventBridge:
-          schedule: rate(60 minutes)
-          input:
-            hello: world
+          schedule: rate(5 minutes)
 
 resources:
   Resources:

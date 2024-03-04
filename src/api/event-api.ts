@@ -86,6 +86,6 @@ export class EventApi extends Controller {
 
     const event = body as EventBridgeEvent<'Scheduled Event', unknown>;
 
-    console.log('Received Scheduled Event: ', event.detail);
+    console.log('Received Scheduled Event: ', event);
   }
 }

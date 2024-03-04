@@ -18,8 +18,8 @@ morganBody(app, {
   noColors: true,
   immediateReqLog: true,
   prettify: true,
-  logAllReqHeader: true,
-  logRequestBody: true,
+  logAllReqHeader: false,
+  logRequestBody: false,
 });
 
 app.disable('x-powered-by');
