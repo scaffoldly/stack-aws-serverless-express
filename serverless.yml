@@ -41,17 +41,22 @@ functions:
       - httpApi:
           method: '*'
           path: /{proxy+}
+
       - stream:
           type: dynamodb
           arn:
             Fn::GetAtt: [Table, StreamArn]
+
       - sqs:
           arn:
             Fn::GetAtt: [Queue, Arn]
+
       - sns:
           arn: !Ref Topic
           topicName: ${self:service}-${self:provider.stage}
+
       - eventBridge:
+          name: every-hour
           schedule: rate(60 minutes)
 
 resources:
