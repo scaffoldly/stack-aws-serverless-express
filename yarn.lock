@@ -8007,9 +8007,10 @@ serverless-esbuild@^1.50.1:
     ramda "^0.28.0"
     semver "^7.3.8"
 
-"serverless-offline-resources@git+https://github.com/scaffoldly/serverless-offline-resources.git#818e0c0e4b9a9989c6360427fdf0921aa4f9fe54":
-  version "0.1.21-2"
-  resolved "git+https://github.com/scaffoldly/serverless-offline-resources.git#818e0c0e4b9a9989c6360427fdf0921aa4f9fe54"
+serverless-offline-resources@^0.1.21:
+  version "0.1.21"
+  resolved "https://registry.yarnpkg.com/serverless-offline-resources/-/serverless-offline-resources-0.1.21.tgz#765144f30c011d5dbb40f6829df16f590834c147"
+  integrity sha512-w5UPy/nJMT53h3DKkPBEoCp0PXm6ASdcN+/Ggh6GklxQRljeajBqCNTOfpvqkYVu/3M5ViB9cSZDOPtgNeriRw==
   dependencies:
     "@aws-sdk/client-dynamodb-streams" ">=3"
     "@aws-sdk/client-lambda" ">=3"

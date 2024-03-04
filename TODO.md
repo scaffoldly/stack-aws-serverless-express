@@ -49,3 +49,9 @@ OTHER:
 - reverse engineer cra-template-typescript to make this repo
 - experiment with labda layers
 - "welcome to codespaces message"
+
+BUGS:
+
+- [localstack] eventBridge.schedule does not update?
+- [localstack] events don't send when input is set?
+- [vendia/serverless-express] input might not work (might be failing in remote lambda?)

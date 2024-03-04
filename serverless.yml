@@ -56,8 +56,8 @@ functions:
           topicName: ${self:service}-${self:provider.stage}
 
       - eventBridge:
-          name: every-hour
-          schedule: rate(60 minutes)
+          name: ${self:service}-${self:provider.stage}-hourly
+          schedule: rate(5 minutes)
 
 resources:
   Resources:
