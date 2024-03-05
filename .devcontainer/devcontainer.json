@@ -13,7 +13,8 @@
   "forwardPorts": [3000, 4566],
   "portsAttributes": {
     "3000": {
-      "label": "serverless-offline"
+      "label": "serverless-offline",
+      "onAutoForward": "openPreview"
     },
     "4566": {
       "label": "localstack"
