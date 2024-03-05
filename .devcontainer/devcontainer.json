@@ -34,11 +34,11 @@
     "installDependencies": "yarn"
   },
   "updateContentCommand": {
-    "startLocalstack": "/usr/bin/supervisord -c /etc/supervisor/supervisord.conf -s || true"
+    "startLocalstack": "/usr/bin/supervisord -c /etc/supervisor/supervisord.conf -s || true",
+    "setupPorts": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME || true"
   },
   "postCreateCommand": {},
   "postAttachCommand": {
-    "setupPorts": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME || true",
     "start": "yarn start"
   },
   "features": {
