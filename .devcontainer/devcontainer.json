@@ -4,6 +4,7 @@
     "dockerfile": "Dockerfile"
   },
   "remoteUser": "root",
+  "privileged": true,
   "hostRequirements": {
     "cpus": 4,
     "memory": "16gb"
@@ -21,9 +22,14 @@
   "otherPortsAttributes": {
     "onAutoForward": "ignore"
   },
-  "mounts": [],
+  "mounts": [
+    {
+      "source": "dind-var-lib-docker-${devcontainerId}",
+      "target": "/var/lib/docker",
+      "type": "volume"
+    }
+  ],
   "containerEnv": {
-    "DEBUG": "1",
     "NODE_ENV": "development",
     "NODE_OPTIONS": "--enable-source-maps",
     "LOCALSTACK_VOLUME_DIR": "${containerWorkspaceFolder}/.cache",
@@ -34,16 +40,16 @@
     "installDependencies": "yarn"
   },
   "updateContentCommand": {
-    "startLocalstack": "/usr/bin/supervisord -c /etc/supervisor/supervisord.conf -s || true"
+    "startSupervisor": "start supervisor"
   },
-  "postCreateCommand": {},
+  "postCreateCommand": {
+    "setupPorts": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME || true"
+  },
   "postAttachCommand": {
-    "setupPorts": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME || true",
     "start": "yarn start"
   },
   "features": {
-    "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    "ghcr.io/devcontainers/features/github-cli:1": {}
   },
   "customizations": {
     "vscode": {
