@@ -34,12 +34,13 @@
     "installDependencies": "yarn"
   },
   "updateContentCommand": {
-    "startLocalstack": "/usr/bin/supervisord -c /etc/supervisor/supervisord.conf -s || true",
+    "startLocalstack": "/usr/bin/supervisord -c /etc/supervisor/supervisord.conf -s || true"
   },
-  "postCreateCommand": {},
+  "postCreateCommand": {
+    "setupPorts": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME || true"
+  },
   "postAttachCommand": {
-    "start": "yarn start",
-    "setupPorts": "(gh codespace ports visibility 3000:public -c $CODESPACE_NAME || true) && exit"
+    "start": "yarn start"
   },
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
