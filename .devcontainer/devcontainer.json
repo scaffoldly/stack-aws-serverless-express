@@ -30,13 +30,15 @@
     "LAMBDA_DOCKER_NETWORK": "bridge"
   },
   "remoteEnv": {},
-  "waitFor": "onCreateCommand",
-  "updateContentCommand": {
-    "installDependencies": "yarn",
-    "setupPorts": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME && exit",
-    "startLocalstack": "/usr/bin/supervisord -c /etc/supervisor/supervisord.conf -s && exit"
+  "onCreateCommand": {
+    "installDependencies": "yarn"
   },
+  "updateContentCommand": {
+    "startLocalstack": "/usr/bin/supervisord -c /etc/supervisor/supervisord.conf -s || true"
+  },
+  "postCreateCommand": {},
   "postAttachCommand": {
+    "setupPorts": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME || true",
     "start": "yarn start"
   },
   "features": {
