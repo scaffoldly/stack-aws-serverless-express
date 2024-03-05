@@ -35,11 +35,11 @@
   },
   "updateContentCommand": {
     "startLocalstack": "/usr/bin/supervisord -c /etc/supervisor/supervisord.conf -s || true",
-    "setupPorts": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME || true"
   },
   "postCreateCommand": {},
   "postAttachCommand": {
-    "start": "yarn start"
+    "start": "yarn start",
+    "setupPorts": "(gh codespace ports visibility 3000:public -c $CODESPACE_NAME || true) && exit"
   },
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
