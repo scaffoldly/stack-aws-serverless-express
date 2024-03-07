@@ -37,17 +37,12 @@
     "LAMBDA_DOCKER_NETWORK": "bridge"
   },
   "remoteEnv": {},
-  "onCreateCommand": {
-    "installDependencies": "yarn"
-  },
-  "updateContentCommand": {
-    "startSupervisor": "start supervisor"
-  },
-  "postCreateCommand": {
-    "setupPorts": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME || true"
-  },
+  "waitFor": "onCreateCommand",
+  "updateContentCommand": "yarn install",
   "postAttachCommand": {
-    "start": "yarn start"
+    "serverless-offline": "yarn start",
+    "supervisord": "start supervisor",
+    "port-forward": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME || true"
   },
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {}
