@@ -4,10 +4,8 @@
     "dockerfile": "Dockerfile"
   },
   "remoteUser": "root",
-  "privileged": true,
   "hostRequirements": {
-    "cpus": 4,
-    "memory": "16gb"
+    "cpus": 4
   },
   "appPort": [3000, 4566],
   "forwardPorts": [3000, 4566],
@@ -37,15 +35,12 @@
     "LAMBDA_DOCKER_NETWORK": "bridge"
   },
   "remoteEnv": {},
-  "waitFor": "onCreateCommand",
-  "updateContentCommand": "yarn install",
-  "postAttachCommand": {
-    "serverless-offline": "yarn start",
-    "supervisord": "start supervisor",
-    "port-forward": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME || true"
-  },
+  "onCreateCommand": "yarn install",
+  "updateContentCommand": "start supervisor",
+  "postAttachCommand": "yarn start",
   "features": {
-    "ghcr.io/devcontainers/features/github-cli:1": {}
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
   },
   "customizations": {
     "vscode": {
