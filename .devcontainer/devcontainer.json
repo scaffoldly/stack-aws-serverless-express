@@ -1,8 +1,7 @@
 {
   "name": "Stack",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
+  "image": "ghcr.io/scaffoldly/aws-localstack:3.1.0-node20",
+  "privileged": true,
   "remoteUser": "root",
   "hostRequirements": {
     "cpus": 4
@@ -36,8 +35,7 @@
     "server": "yarn start"
   },
   "features": {
-    "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    "ghcr.io/devcontainers/features/github-cli:1": {}
   },
   "customizations": {
     "vscode": {
@@ -55,8 +53,8 @@
         "eslint.validate": ["javascript", "typescript"],
         "git.autofetch": true,
         "task.allowAutomaticTasks": "on",
-        "prettier.prettierPath": "/node_modules/prettier",
-        "typescript.tsdk": "/node_modules/typescript/lib",
+        "prettier.prettierPath": "${containerWorkspaceFolder}/node_modules/prettier",
+        "typescript.tsdk": "${containerWorkspaceFolder}/node_modules/typescript/lib",
         "typescript.tsserver.maxTsServerMemory": 1024,
         "typescript.preferences.importModuleSpecifier": "shortest"
       }

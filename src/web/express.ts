@@ -13,7 +13,7 @@ export function webHandler(): express.RequestHandler {
     }
 
     if (new Path('/').test(req.path)) {
-      res.redirect('/api');
+      res.redirect('/api/swagger.html');
       return;
     }
 
