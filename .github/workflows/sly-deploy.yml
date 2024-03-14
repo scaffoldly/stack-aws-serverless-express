@@ -39,5 +39,3 @@ jobs:
         env:
           SECRETS: ${{ toJSON(secrets) }}
           NODE_ENV: production
-
-      - run: ls -alR
