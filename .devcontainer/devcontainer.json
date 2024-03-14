@@ -35,8 +35,10 @@
     "LAMBDA_DOCKER_NETWORK": "bridge"
   },
   "remoteEnv": {},
+  "waitFor": "onCreateCommand",
   "onCreateCommand": "yarn install",
   "updateContentCommand": "start supervisor",
+  "postCreateCommand": "",
   "postAttachCommand": "yarn start",
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
