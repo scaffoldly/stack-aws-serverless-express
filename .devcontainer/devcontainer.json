@@ -21,13 +21,6 @@
   "otherPortsAttributes": {
     "onAutoForward": "ignore"
   },
-  "mounts": [
-    {
-      "source": "dind-var-lib-docker-${devcontainerId}",
-      "target": "/var/lib/docker",
-      "type": "volume"
-    }
-  ],
   "containerEnv": {
     "NODE_ENV": "development",
     "NODE_OPTIONS": "--enable-source-maps",
@@ -39,7 +32,9 @@
   "onCreateCommand": "yarn install",
   "updateContentCommand": "start supervisor",
   "postCreateCommand": "",
-  "postAttachCommand": "yarn start",
+  "postAttachCommand": {
+    "server": "yarn start"
+  },
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {},
     "ghcr.io/devcontainers/features/docker-in-docker:2": {}
@@ -63,8 +58,7 @@
         "prettier.prettierPath": "/node_modules/prettier",
         "typescript.tsdk": "/node_modules/typescript/lib",
         "typescript.tsserver.maxTsServerMemory": 1024,
-        "typescript.preferences.importModuleSpecifier": "shortest",
-        "extensions.experimental.deferredStartupFinishedActivation": true
+        "typescript.preferences.importModuleSpecifier": "shortest"
       }
     }
   }
