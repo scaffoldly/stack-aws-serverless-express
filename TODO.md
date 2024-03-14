@@ -35,13 +35,9 @@ OTHER:
 - source maps
 - annotations for apidocs
 - reduce memory footprint
-- start and open swagger.html at startup
-- generate spec and routes filewatcher thingy
-- research if express has a "host react in express" handler
 - add xray
 - seed data into ddb
 - add localstack pods back
-- reverse engineer cra-template-typescript to make this repo
 - experiment with labda layers
 - "welcome to codespaces message"
 
