@@ -20,6 +20,8 @@ jobs:
       - id: branch-names
         uses: tj-actions/branch-names@v8
 
+      - uses: scaffoldly/deploy-action@main
+
       - uses: saml-to/assume-aws-role-action@v1
         with:
           role: ${{ vars.DEPLOYMENT_ROLE }}
