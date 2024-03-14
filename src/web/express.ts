@@ -3,7 +3,7 @@ import path from 'path';
 import mime from 'mime-types';
 
 export function webHandler(): express.RequestHandler {
-  return express.static(path.join(__dirname, '..', '.angular', 'browser'), {
+  return express.static(path.join(__dirname, '..', '.react'), {
     setHeaders: (r, p) => {
       if (mime.lookup(p) === 'text/html') {
         r.setHeader(

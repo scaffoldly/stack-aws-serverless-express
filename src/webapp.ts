@@ -18,8 +18,8 @@ morganBody(app, {
   noColors: true,
   immediateReqLog: true,
   prettify: true,
-  logAllReqHeader: true,
-  logRequestBody: true,
+  logAllReqHeader: false,
+  logRequestBody: false,
 });
 
 app.disable('x-powered-by');
@@ -42,5 +42,6 @@ export const handler = configure({
     AWS_DYNAMODB: '/api/event/dynamodb',
     AWS_SQS: '/api/event/sqs',
     AWS_SNS: '/api/event/sns',
+    AWS_EVENTBRIDGE: '/api/event/eventbridge',
   },
 });

@@ -1,18 +1,17 @@
 {
   "name": "Stack",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
+  "image": "ghcr.io/scaffoldly/aws-localstack:3.1.0-node20",
+  "privileged": true,
   "remoteUser": "root",
   "hostRequirements": {
-    "cpus": 4,
-    "memory": "16gb"
+    "cpus": 4
   },
   "appPort": [3000, 4566],
   "forwardPorts": [3000, 4566],
   "portsAttributes": {
     "3000": {
-      "label": "serverless-offline"
+      "label": "serverless-offline",
+      "onAutoForward": "openPreview"
     },
     "4566": {
       "label": "localstack"
@@ -21,9 +20,7 @@
   "otherPortsAttributes": {
     "onAutoForward": "ignore"
   },
-  "mounts": [],
   "containerEnv": {
-    "DEBUG": "1",
     "NODE_ENV": "development",
     "NODE_OPTIONS": "--enable-source-maps",
     "LOCALSTACK_VOLUME_DIR": "${containerWorkspaceFolder}/.cache",
@@ -31,17 +28,14 @@
   },
   "remoteEnv": {},
   "waitFor": "onCreateCommand",
-  "updateContentCommand": {
-    "installDependencies": "yarn",
-    "setupPorts": "gh codespace ports visibility 3000:public -c $CODESPACE_NAME && exit",
-    "startLocalstack": "/usr/bin/supervisord -c /etc/supervisor/supervisord.conf -s && exit"
-  },
+  "onCreateCommand": "yarn install",
+  "updateContentCommand": "start supervisor",
+  "postCreateCommand": "",
   "postAttachCommand": {
-    "start": "yarn start"
+    "server": "yarn start"
   },
   "features": {
-    "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    "ghcr.io/devcontainers/features/github-cli:1": {}
   },
   "customizations": {
     "vscode": {
@@ -59,11 +53,10 @@
         "eslint.validate": ["javascript", "typescript"],
         "git.autofetch": true,
         "task.allowAutomaticTasks": "on",
-        "prettier.prettierPath": "/node_modules/prettier",
-        "typescript.tsdk": "/node_modules/typescript/lib",
+        "prettier.prettierPath": "${containerWorkspaceFolder}/node_modules/prettier",
+        "typescript.tsdk": "${containerWorkspaceFolder}/node_modules/typescript/lib",
         "typescript.tsserver.maxTsServerMemory": 1024,
-        "typescript.preferences.importModuleSpecifier": "shortest",
-        "extensions.experimental.deferredStartupFinishedActivation": true
+        "typescript.preferences.importModuleSpecifier": "shortest"
       }
     }
   }

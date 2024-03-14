@@ -50,7 +50,7 @@
     "serverless-dotenv-plugin": "^6.0.0",
     "serverless-esbuild": "^1.50.1",
     "serverless-offline": "^13.3.3",
-    "serverless-offline-resources": "^0.1.19",
+    "serverless-offline-resources": "^0.1.22",
     "serverless-react": "^0.2.8",
     "serverless-tsoa": "^0.1.4",
     "ts-node": "^10.9.1",
