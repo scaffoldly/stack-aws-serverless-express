@@ -1,10 +1,12 @@
-name: 'Deploy'
+name: 'Deploy (Internal)'
 
 on:
   workflow_dispatch: {}
   push:
     branches:
-      - production
+      - express
+      - react-vite
+      - angular
 
 jobs:
   deploy:
@@ -34,4 +36,4 @@ jobs:
       - run: yarn deploy --verbose --stage ${{ steps.branch-names.outputs.current_branch }}
         env:
           SECRETS: ${{ toJSON(secrets) }}
-          NODE_ENV: ${{ steps.branch-names.outputs.current_branch }}
+          NODE_ENV: production

@@ -21,12 +21,13 @@ provider:
             - 'sns:*'
             - 'sqs:*'
           Resource: '*'
-  stage: ${env:NODE_ENV, 'development'}
+  stage: ${opt:stage, 'development'}
   logRetentionInDays: 1
   tracing:
     apiGateway: true
     lambda: true
   environment:
+    NODE_OPTIONS: --enable-source-maps
     QUEUE_URL: { Ref: Queue }
     TABLE_NAME: { Ref: Table }
     TOPIC_ARN: { Ref: Topic }
@@ -42,16 +43,23 @@ functions:
       - httpApi:
           method: '*'
           path: /{proxy+}
+
       - stream:
           type: dynamodb
           arn:
             Fn::GetAtt: [Table, StreamArn]
+
       - sqs:
           arn:
             Fn::GetAtt: [Queue, Arn]
+
       - sns:
           arn: !Ref Topic
           topicName: ${self:service}-${self:provider.stage}
+
+      - eventBridge:
+          name: ${self:service}-${self:provider.stage}-hourly
+          schedule: rate(5 minutes)
 
 resources:
   Resources:
