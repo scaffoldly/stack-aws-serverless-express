@@ -8,6 +8,9 @@ on:
       - react-vite
       - angular
 
+permissions:
+  id-token: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
