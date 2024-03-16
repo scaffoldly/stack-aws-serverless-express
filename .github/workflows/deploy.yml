@@ -6,6 +6,9 @@ on:
     branches:
       - production
 
+permissions:
+  id-token: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -18,11 +21,9 @@ jobs:
       - id: branch-names
         uses: tj-actions/branch-names@v8
 
-      - uses: saml-to/assume-aws-role-action@v1
+      - uses: scaffoldly/deploy-action@main
         with:
           role: ${{ vars.DEPLOYMENT_ROLE }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/setup-node@v4
         with:
