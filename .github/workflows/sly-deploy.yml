@@ -25,11 +25,11 @@ jobs:
 
       - uses: scaffoldly/deploy-action@main
 
-      - uses: saml-to/assume-aws-role-action@v1
-        with:
-          role: ${{ vars.DEPLOYMENT_ROLE }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - uses: saml-to/assume-aws-role-action@v1
+      #   with:
+      #     role: ${{ vars.DEPLOYMENT_ROLE }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/setup-node@v4
         with:
