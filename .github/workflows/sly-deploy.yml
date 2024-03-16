@@ -20,13 +20,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - id: branch-names
-        uses: tj-actions/branch-names@v8
-
-      - uses: scaffoldly/deploy-action@main
-        with:
-          role: ${{ vars.DEPLOYMENT_ROLE }}
-
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -34,7 +27,12 @@ jobs:
 
       - run: yarn
 
-      - run: yarn deploy --verbose --stage ${{ steps.branch-names.outputs.current_branch }}
+      - id: deploy
+        uses: scaffoldly/deploy-action@main
+        with:
+          role: ${{ vars.DEPLOYMENT_ROLE }}
+
+      - run: yarn deploy --verbose --stage ${{ steps.deploy.outputs.stage }}
         env:
           SECRETS: ${{ toJSON(secrets) }}
           NODE_ENV: production
