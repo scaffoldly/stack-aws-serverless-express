@@ -11,6 +11,7 @@ on:
     types:
       - opened
       - reopened
+      - synchronize
       - closed
   push:
     branches:
