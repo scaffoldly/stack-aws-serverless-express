@@ -8,9 +8,10 @@ on:
         description: Destory the existing stack
         default: false
   pull_request:
-    - opened
-    - reopened
-    - closed
+    types:
+      - opened
+      - reopened
+      - closed
   push:
     branches:
       - express
