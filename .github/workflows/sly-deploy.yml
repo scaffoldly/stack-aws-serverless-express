@@ -5,7 +5,7 @@ on:
     inputs:
       destroy:
         type: boolean
-        description: Destory the existing stack
+        description: Destroy the stack instead of deploying
         default: false
   pull_request:
     types:
