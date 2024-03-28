@@ -5,7 +5,7 @@ on:
     inputs:
       destroy:
         type: boolean
-        description: Destroy the stack instead of deploying
+        description: Destroy the stack
         default: false
   pull_request:
     types:
@@ -45,16 +45,10 @@ jobs:
 
       - run: yarn
 
-      - id: deploy
-        uses: scaffoldly/deploy-action@main
+      - uses: scaffoldly/deploy-action@main
         with:
           role: ${{ vars.DEPLOYMENT_ROLE }}
-
-      - if: ${{ steps.deploy.outputs.deploy == 'true' }}
-        run: yarn deploy --verbose --stage ${{ steps.deploy.outputs.stage }}
+          cli: serverless
         env:
           SECRETS: ${{ toJSON(secrets) }}
           NODE_ENV: production
-
-      - if: ${{ steps.deploy.outputs.destroy == 'true' }}
-        run: yarn destroy --verbose --stage ${{ steps.deploy.outputs.stage }}
